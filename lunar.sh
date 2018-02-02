@@ -109,48 +109,11 @@ check_os_release () {
   echo ""
   os_name=`uname`
   if [ "$os_name" = "Linux" ]; then
-    if [ -f "/etc/redhat-release" ]; then
-    	echo ""
-    else
-      if [ -f "/etc/debian_version" ]; then
-        os_version=`lsb_release -r |awk '{print $2}' |cut -f1 -d'.'`
-        os_update=`lsb_release -r |awk '{print $2}' |cut -f2 -d'.'`
-        os_vendor=`lsb_release -i |awk '{print $3}'`
-        linux_dist="debian"
-        if [ ! -f "/usr/sbin/sysv-rc-conf" ] && [ "$os_version" -lt 16 ]; then
-          echo "Notice:    The sysv-rc-conf package is required by this script"
-		      while true; do
-      			read -p "Do you wish to install this program? " yn
-      			case $yn in
-      				[Yy]* ) apt-get install sysv-rc-conf; break;;
-      				[Nn]* ) echo "Exiting script"; exit;;
-      				* ) echo "Please answer yes or no.";;
-      			esac
-    		  done
-        fi
-        if [ ! -f "/usr/bin/bc" ]; then
-          echo "Notice:    The bc package is required by this script"
-          while true; do
-      			read -p "Do you wish to install this program?" yn
-      			case $yn in
-      				[Yy]* ) apt-get install bc; break;;
-      				[Nn]* ) echo "Exiting script"; exit;;
-      				* ) echo "Please answer yes or no.";;
-      			esac
-    		  done
-        fi
-        if [ ! -f "/usr/bin/finger" ]; then
-          echo "Notice:    The finger package is required by this script"
-    		  while true; do
-    			read -p "Do you wish to install this program?" yn
-    			case $yn in
-    				[Yy]* ) apt-get install finger; break;;
-    				[Nn]* ) echo "Exiting script"; exit;;
-    				* ) echo "Please answer yes or no.";;
-    			esac
-    		  done
-        fi
-      fi
+    if [ -f "/etc/debian_version" ]; then
+      os_version=`lsb_release -r |awk '{print $2}' |cut -f1 -d'.'`
+      os_update=`lsb_release -r |awk '{print $2}' |cut -f2 -d'.'`
+      os_vendor=`lsb_release -i |awk '{print $3}'`
+      linux_dist="debian"
     fi
   fi
 
@@ -176,21 +139,15 @@ check_os_release () {
 
 check_environment () {
   check_os_release
-  if [ "$os_name" != "VMkernel" ]; then
-    if [ "$os_name" = "SunOS" ]; then
-      id_check=`id |cut -c5`
-    else
-      id_check=`id -u`
-    fi
-    if [ "$id_check" != "0" ]; then
-      if [ "$os_name" != "Darwin" ]; then
-        echo ""
-        echo "Stopping: $0 needs to be run as root"
-        echo ""
-        exit
-      fi
-    fi
+  
+  id_check=`id -u`
+  if [ "$id_check" != "0" ]; then
+  	echo ""
+    echo "Stopping: $0 needs to be run as root"
+    echo ""
+    exit
   fi
+ 
   base_dir="$HOME/.$pkg_suffix"
   temp_dir="/tmp"
   work_dir="$base_dir/$date_suffix"
@@ -202,9 +159,7 @@ check_environment () {
       echo ""
     fi
     for file_name in `ls $functions_dir/*.sh`; do
-      if [ "$os_vendor" = "Ubuntu" ]; then
-        . $file_name
-      fi
+      . $file_name
       if [ "$verbose" = "1" ]; then
         echo "Loading:   $file_name"
       fi
@@ -218,9 +173,7 @@ check_environment () {
       echo ""
     fi
     for file_name in `ls $modules_dir/*.sh`; do
-      if [ "$os_vendor" = "Ubuntu" ]; then
-        . $file_name
-      fi
+      . $file_name
       if [ "$verbose" = "1" ]; then
         echo "Loading:   $file_name"
       fi
@@ -235,9 +188,7 @@ check_environment () {
       echo ""
     fi
     for file_name in `ls $private_dir/*.sh`; do
-      if [ "$os_vendor" = "Ubuntu" ]; then
-        . $file_name
-      fi
+      . $file_name
     done
     if [ "$verbose" = "1" ]; then
       echo "Loading:   $file_name"
@@ -246,9 +197,7 @@ check_environment () {
   if [ ! -d "$base_dir" ]; then
     mkdir -p $base_dir
     chmod 700 $base_dir
-    if [ "$os_name" != "Darwin" ]; then
-      chown root:root $base_dir
-    fi
+    chown root:root $base_dir
   fi
   if [ ! -d "$temp_dir" ]; then
     mkdir -p $temp_dir
