@@ -378,9 +378,9 @@ script_version=`cd $start_path ; cat $0 | grep '^# Version' |awk '{print $3}'`
 
 # If given no command line arguments print usage information
 
-if [ `expr "$args" : "\-"` != 1 ]; then
-  print_usage
-fi
+#if [ `expr "$args" : "\-"` != 1 ]; then
+#  print_usage
+#fi
 
 # apply_latest_patches
 #
@@ -453,6 +453,9 @@ do_select=
 
 while getopts abcdlpR:r:s:u:z:hwADSWVLx args; do
   case $args in
+    r)
+      aws_region="$OPTARG"
+      ;;
     v)
       verbose=1
       ;;
@@ -472,6 +475,33 @@ while getopts abcdlpR:r:s:u:z:hwADSWVLx args; do
       do_select=1
       function="$OPTARG"
       exit
+      ;;
+    w)
+      audit_mode=1
+      do_aws=1
+      function="$OPTARG"
+      exit
+      ;;
+    d)
+      audit_mode=1
+      do_docker=1
+      function="$OPTARG"
+      exit
+      ;;
+    x)
+      audit_mode=1
+      do_aws_rec=1
+      function="$OPTARG"
+      exit
+      ;;
+    W)
+      print_tests "AWS"
+      ;;
+    D)
+      print_tests "Docker"
+      ;;  
+    S)
+      print_tests "UNIX"
       ;;
     A)
       audit_mode=1
@@ -501,11 +531,22 @@ while getopts abcdlpR:r:s:u:z:hwADSWVLx args; do
       print_previous
       exit
       ;;
+    c)
+      print_changes
+      exit
+      ;;
     R)
       check_environment
       verbose=1
       module="$OPTARG"
       print_audit_info $module
+      ;;
+    b)
+      echo ""
+      echo "Previous backups:"
+      echo ""
+      ls $base_dir
+      exit
       ;;
     *)
       print_usage
@@ -516,6 +557,16 @@ done
 
 if [ "$audit_mode" != 3 ]; then
   echo ""
+  if [ "$audit_mode" = 2 ]; then
+    echo "Running:   In Restore mode (changes will be made to system)"
+    echo "Setting:   Restore date $restore_date"
+  fi
+  if [ "$audit_mode" = 1 ]; then
+    echo "Running:   In lockdown mode (no changes will be made to system)"
+  fi
+  if [ "$audit_mode" = 0 ]; then
+    echo "Running:   In lockdown mode (changes will be made to system)"
+  fi
   if [ "$do_fs" = 1 ]; then
     echo "           Filesystem checks will be done"
   fi
@@ -524,8 +575,16 @@ if [ "$audit_mode" != 3 ]; then
     echo "Auditing:  Selecting $function"
     funct_audit_select $audit_mode $function
   else
+    if [ "$do_docker" = 1 ]; then
+      funct_audit_docker $audit_mode
+    fi
+    if [ "$do_aws" = 1 ]; then
+      funct_audit_aws $audit_mode
+    fi
+    if [ "$do_aws_rec" = 1 ]; then
+      funct_audit_aws_rec $audit_mode
+    fi
     funct_audit_system $audit_mode
   fi
   exit
 fi
-
