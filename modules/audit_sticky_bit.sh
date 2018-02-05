@@ -1,13 +1,7 @@
 # audit_sticky_bit
 #
-# Refer to Section(s) 1.17   Page(s) 26    CIS CentOS Linux 6 Benchmark v1.0.0
-# Refer to Section(s) 1.1.21 Page(s) 46    CIS RHEL 7 Benchmark v2.1.0
-# Refer to Section(s) 1.1.17 Page(s) 28    CIS RHEL 5 Benchmark v2.1.0
-# Refer to Section(s) 1.1.17 Page(s) 27    CIS RHEL 6 Benchmark v1.2.0
-# Refer to Section(s) 2.17   Page(s) 26    CIS SLES 11 Benchmark v1.2.0
-# Refer to Section(s) 6.3    Page(s) 21-22 CIS FreeBSD Benchmark v1.0.5
-# Refer to Section(s) 5.3    Page(s) 77-8  CIS Solaris 10 Benchmark v5.1.0
-# Refer to Section(s) 1.1.18 Page(s) 42    CIS Amazon Linux Benchmark v2.0.0
+# Refer to Section 1.1.20
+# FIXME
 #.
 
 audit_sticky_bit () {

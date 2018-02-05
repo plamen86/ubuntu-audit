@@ -1,11 +1,14 @@
 # audit_autofs
 #
-# Refer to Section(s) 1.1.21 Page(s) 45 CIS Ubuntu LTS 16.04 Benchmark v1.0.0
+# Refer to Sections 1.1.21
 #.
 
 audit_autofs () {
   if [ "$os_name" = "SunOS" ] || [ "$os_name" = "Linux" ]; then
+  	verbose_message "=================="
     verbose_message "Automount services"
+    verbose_message "Sections 1.1.21"
+    verbose_message "=================="
     if [ "$os_name" = "SunOS" ]; then
       if [ "$os_version" = "10" ] || [ "$os_version" = "11" ]; then
         service_name="svc:/system/filesystem/autofs"

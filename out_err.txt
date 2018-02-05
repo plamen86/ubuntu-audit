@@ -1,0 +1,16 @@
+Usage: grep [OPTION]... PATTERN [FILE]...
+Try 'grep --help' for more information.
+Usage: grep [OPTION]... PATTERN [FILE]...
+Try 'grep --help' for more information.
+Usage: grep [OPTION]... PATTERN [FILE]...
+Try 'grep --help' for more information.
+Usage: grep [OPTION]... PATTERN [FILE]...
+Try 'grep --help' for more information.
+modules/audit_wheel_su.sh: line 8: verbose_mode: command not found
+No value set for `/apps/gdm/simple-greeter/banner_message_text'
+No value set for `/apps/gdm/simple-greeter/banner_message_enable'
+df: invalid option -- 'I'
+Try 'df --help' for more information.
+df: invalid option -- 'I'
+Try 'df --help' for more information.
+rpm: --nolinkt: unknown option

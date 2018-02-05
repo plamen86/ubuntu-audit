@@ -1,11 +1,14 @@
 # audit_core_dumps
 #
-# Refer to Section(s) 1.5.1 Page(s) 56-7 CIS Ubuntu 16.04 Benchmark v1.0.0
+# Refer to Section 1.5.1
 #.
 
 audit_core_dumps () {
   if [ "$os_name" = "SunOS" ] || [ "$os_name" = "Linux" ] || [ "$os_name" = "FreeBSD" ]; then
+  	verbose_message "============="
     verbose_message "Core Dumps"
+    verbose_message "Section 1.5.1"
+    verbose_message "============="
     if [ "$os_name" = "SunOS" ]; then
       if [ "$os_version" != "6" ]; then
         cores_dir="/var/cores"

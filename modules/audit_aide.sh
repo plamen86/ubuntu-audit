@@ -1,11 +1,14 @@
 # audit_aide
 #
-# Refer to Section(s) 1.3.1-2       Page(s) 49-52   CIS Ubuntu LTS 16.04 Benchmark v1.0.0
+# Refer to Sections 1.3.1-2
 #.
 
 audit_aide() {
   if [ "$os_name" = "Linux" ]; then
-    verbose_message "AIDE | Section(s) 1.3.1-2"
+    verbose_message "=================="
+    verbose_message "AIDE"
+    verbose_message "Section(s) 1.3.1-2"
+    verbose_message "=================="
     if [ "$os_vendor" = "CentOS" ] || [ "$os_vendor" = "Red" ] || [ "$os_vendor" = "Amazon" ]; then
       check_file="/etc/sysconfig/prelink"
       if [ -f "$check_file" ]; then

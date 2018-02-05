@@ -1,10 +1,7 @@
 # audit_mount_noexec
 #
-# Refer to Section(s) 1.1.4         Page(s) 14-5        CIS CentOS Linux 6 Benchmark v1.0.0
-# Refer to Section(s) 1.1.4         Page(s) 17-8        CIS RHEL 5 Benchmark v2.1.0
-# Refer to Section(s) 1.1.10,17,20  Page(s) 35,42,45    CIS RHEL 7 Benchmark v2.1.0
-# Refer to Section(s) 2.4           Page(s) 16-7        CIS SLES 11 Benchmark v1.0.0
-# Refer to Section(s) 1.1.3,5,10,17 Page(s) 27,29,34,41 CIS Amazon Linux Benchmark v2.0.0
+# Refer to Sections 1.1.9,16,19
+# FIXME
 #.
 
 audit_mount_noexec () {

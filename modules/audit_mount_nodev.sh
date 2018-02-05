@@ -1,19 +1,16 @@
 # audit_mount_nodev
 #
-# Refer to Section(s) 1.1.2,4,10,11,14,16 Page(s) 15-25         CIS CentOS Linux 6 Benchmark v1.0.0
-# Refer to Section(s) 1.1.2,4,10,11,14,16 Page(s) 16-26         CIS RHEL 5 Benchmark v2.1.0
-# Refer to Section(s) 1.1.2,4,10,11,14,16 Page(s) 16-26         CIS RHEL 6 Benchmark v1.0.0
-# Refer to Section(s) 1.1.3,8,14,15,18    Page(s) 33,39,40,43   CIS RHEL 7 Benchmark v2.1.0
-# Refer to Section(s) 1.1.3,8,14,15,18    Page(s) 27,31,37-8,41 CIS Ubuntu LTS 16.04 Benchmark v1.0.0
-# Refer to Section(s) 2.2,4,10,11,14,16   Page(s) 15-25         CIS SLES 11 Benchmark v1.2.0
-# Refer to Section(s) 1.1.8,14,17         Page(s) 32,38-9       CIS Amazon Linux Benchmark v2.0.0
+# Refer to Sections 1.1.3,7,13,14,17    Page(s) 27,31,37-8,41 CIS Ubuntu LTS 16.04 Benchmark v1.0.0
 #.
 
 audit_mount_nodev () {
   if [ "$os_name" = "Linux" ]; then
     check_file="/etc/fstab"
     if [ -e "$check_file" ]; then
+      verbose_message "==============================="
       verbose_message "File Systems mounted with nodev"
+      verbose_message "Sections 1.1.3,7,13,14,17"
+      verbose_message "==============================="
       if [ "$audit_mode" != "2" ]; then
         nodev_check=`cat $check_file |grep -v "^#" |egrep "ext2|ext3|swap|tmpfs" |grep -v '/ ' |grep -v '/boot' |head -1 |wc -l`
         if [ "$nodev_check" = 1 ]; then

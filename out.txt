@@ -411,7 +411,10 @@ Checking:  Parameter "echo 1 > /proc/sys/net/ipv4/tcp_syncookies" is set in /etc
 Warning:   Parameter "echo 1 > /proc/sys/net/ipv4/tcp_syncookies" does not exist in /etc/rc.d/local [125 Warnings]
 Checking:  File permissions on /etc/rc.d/local
 Notice:    File /etc/rc.d/local does not exist
+Checking:  ===========================
 Checking:  Modprobe Configuration
+Checking:  Sections 1.1.1.1-8, 3.5.1-4
+Checking:  ===========================
 Checking:  Parameter "install tipc /bin/true" is set in /etc/modprobe.conf
 Warning:   Parameter "install tipc /bin/true" does not exist in /etc/modprobe.conf [126 Warnings]
 Checking:  Parameter "install rds /bin/true" is set in /etc/modprobe.conf
@@ -837,14 +840,23 @@ Checking:  File permissions on /var/log/daemon.log
 Notice:    File /var/log/daemon.log does not exist
 Checking:  File permissions on /var/log/unused.log
 Notice:    File /var/log/unused.log does not exist
+Checking:  ==================
 Checking:  Automount services
+Checking:  Sections 1.1.21
+Checking:  ==================
 Checking:  Service autofs is disabled
+Checking:  ==========================
 Checking:  Set-UID on Mounted Devices
+Checking:  Sections 1.1.4,8,15,18
+Checking:  ==========================
 Checking:  File Systems mounted with nodev
 Warning:   Found filesystems that should be mounted nodev [227 Warnings]
 Checking:  File permissions on /etc/fstab
 Warning:   File /etc/fstab has incorrect permissions [228 Warnings]
+Checking:  ===============================
 Checking:  File Systems mounted with nodev
+Checking:  Sections 1.1.3,7,13,14,17
+Checking:  ===============================
 Warning:   Found filesystems that should be mounted nodev [229 Warnings]
 Checking:  File permissions on /etc/fstab
 Warning:   File /etc/fstab has incorrect permissions [230 Warnings]
@@ -863,33 +875,53 @@ Checking:  Service portmap is disabled
 Checking:  Service rpc is disabled
 Checking:  Service nfs-kerner-server is disabled
 Checking:  Service rpcbind is disabled
+Checking:  ==============================================
 Checking:  Filesystem /tmp is a separate partition
+Checking:  Sections 1.1.2,5,6,10,11,12
+Checking:  ==============================================
 Secure:    Filesystem /tmp is a separate filesystem [164 Passes]
+Checking:  ==============================================
 Checking:  Filesystem /var is a separate partition
+Checking:  Sections 1.1.2,5,6,10,11,12
+Checking:  ==============================================
 Secure:    Filesystem /var is a separate filesystem [165 Passes]
+Checking:  ==============================================
+Checking:  Filesystem /var/tmp is a separate partition
+Checking:  Sections 1.1.2,5,6,10,11,12
+Checking:  ==============================================
+Secure:    Filesystem /var/tmp is a separate filesystem [166 Passes]
+Checking:  ==============================================
 Checking:  Filesystem /var/log is a separate partition
-Secure:    Filesystem /var/log is a separate filesystem [166 Passes]
+Checking:  Sections 1.1.2,5,6,10,11,12
+Checking:  ==============================================
+Secure:    Filesystem /var/log is a separate filesystem [167 Passes]
+Checking:  ==============================================
 Checking:  Filesystem /var/log/audit is a separate partition
-Secure:    Filesystem /var/log/audit is a separate filesystem [167 Passes]
+Checking:  Sections 1.1.2,5,6,10,11,12
+Checking:  ==============================================
+Secure:    Filesystem /var/log/audit is a separate filesystem [168 Passes]
+Checking:  ==============================================
 Checking:  Filesystem /home is a separate partition
-Secure:    Filesystem /home is a separate filesystem [168 Passes]
+Checking:  Sections 1.1.2,5,6,10,11,12
+Checking:  ==============================================
+Secure:    Filesystem /home is a separate filesystem [169 Passes]
 Checking:  Apache and web based services
 Checking:  Service httpd is disabled
 Checking:  Checking if package is httpd uninstalled
 Checking:  Package httpd is installed
-Secure:    Package httpd is uninstalled [169 Passes]
+Secure:    Package httpd is uninstalled [170 Passes]
 Checking:  Service apache is disabled
 Checking:  Checking if package is apache uninstalled
 Checking:  Package apache is installed
-Secure:    Package apache is uninstalled [170 Passes]
+Secure:    Package apache is uninstalled [171 Passes]
 Checking:  Service apache2 is disabled
 Checking:  Checking if package is apache2 uninstalled
 Checking:  Package apache2 is installed
-Secure:    Package apache2 is uninstalled [171 Passes]
+Secure:    Package apache2 is uninstalled [172 Passes]
 Checking:  Service tomcat5 is disabled
 Checking:  Checking if package is tomcat5 uninstalled
 Checking:  Package tomcat5 is installed
-Secure:    Package tomcat5 is uninstalled [172 Passes]
+Secure:    Package tomcat5 is uninstalled [173 Passes]
 Checking:  Service squid is disabled
 Checking:  Checking if package is squid uninstalled
 Checking:  Package squid is installed
@@ -897,7 +929,7 @@ Warning:   Package squid is not uninstalled [232 Warnings]
 Checking:  Service prixovy is disabled
 Checking:  Checking if package is prixovy uninstalled
 Checking:  Package prixovy is installed
-Secure:    Package prixovy is uninstalled [173 Passes]
+Secure:    Package prixovy is uninstalled [174 Passes]
 Checking:  Printing Services
 Checking:  File permissions on /etc/init.d/cups
 Warning:   File /etc/init.d/cups has incorrect permissions [233 Warnings]
@@ -932,7 +964,7 @@ Checking:  Service vsftpd is disabled
 Checking:  Service aaeventd is disabled
 Checking:  Service tftp is disabled
 Checking:  Service acpid is disabled
-Secure:    Service acpid is disabled [174 Passes]
+Secure:    Service acpid is disabled [175 Passes]
 Checking:  Service amd is disabled
 Checking:  Service arptables_jg is disabled
 Checking:  Service arpwatch is disabled
@@ -1008,7 +1040,7 @@ Checking:  Service svcgssd is disabled
 Checking:  Service rpmconfigcheck is disabled
 Checking:  Service rsh is disabled
 Checking:  Service rsync is disabled
-Secure:    Service rsync is disabled [175 Passes]
+Secure:    Service rsync is disabled [176 Passes]
 Checking:  Service rsyncd is disabled
 Checking:  Service saslauthd is disabled
 Checking:  Service powerd is disabled
@@ -1028,7 +1060,7 @@ Checking:  Service pcscd is disabled
 Checking:  Service tog-pegasus is disabled
 Checking:  Service tux is disabled
 Checking:  Service wpa_supplicant is disabled
-Secure:    Service wpa_supplicant is disabled [176 Passes]
+Secure:    Service wpa_supplicant is disabled [177 Passes]
 Checking:  Service zebra is disabled
 Checking:  Service ncpfs is disabled
 Checking:  Legacy Inet/Init Services
@@ -1052,7 +1084,10 @@ Checking:  Value of "syslog.*" is set to "/var/log/syslog" in /etc/syslog.conf
 Warning:   Parameter "syslog.*" not set to "/var/log/syslog" in /etc/syslog.conf [252 Warnings]
 Checking:  Value of "lpr,news,uucp,local0,local1,local2,local3,local4,local5,local6.*" is set to "/var/log/unused.log" in /etc/syslog.conf
 Warning:   Parameter "lpr,news,uucp,local0,local1,local2,local3,local4,local5,local6.*" not set to "/var/log/unused.log" in /etc/syslog.conf [253 Warnings]
+Checking:  =============
 Checking:  Core Dumps
+Checking:  Section 1.5.1
+Checking:  =============
 Checking:  Core Dumps
 Checking:  Parameter "* hard core 0" is set in /etc/security/limits.conf
 Warning:   Parameter "* hard core 0" does not exist in /etc/security/limits.conf [254 Warnings]
@@ -1062,7 +1097,7 @@ Checking:  SNMP Daemons and Log Permissions
 Checking:  Network Time Protocol
 Checking:  Checking if package is ntp installed
 Checking:  Package ntp is installed
-Secure:    Package ntp is installed [177 Passes]
+Secure:    Package ntp is installed [178 Passes]
 Checking:  Checking if package is chrony installed
 Checking:  Package chrony is installed
 Warning:   Package chrony is not installed [256 Warnings]
@@ -1106,7 +1141,7 @@ Checking:  DHCP Server
 Checking:  Service dhcpd is disabled
 Checking:  Checking if package is dhcp uninstalled
 Checking:  Package dhcp is installed
-Secure:    Package dhcp is uninstalled [178 Passes]
+Secure:    Package dhcp is uninstalled [179 Passes]
 Checking:  PostgreSQL Database
 Checking:  World Writable Files
 Checking:  Set UID/GID Files
@@ -1114,7 +1149,7 @@ Checking:  System File Permissions
 Checking:  File permissions [This may take a while]
 Checking:  World Writable Directories and Sticky Bits
 
-Tests:     448
-Passes:    178
+Tests:     449
+Passes:    179
 Warnings:  270
 

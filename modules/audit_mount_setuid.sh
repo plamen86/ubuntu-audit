@@ -1,18 +1,14 @@
 # audit_mount_setuid
 #
-# Refer to Section(s) 1.1.3,13,15   Page(s) 14-25       CIS CentOS Linux 6 Benchmark v1.0.0
-# Refer to Section(s) 1.1.3,13,15   Page(s) 17-27       CIS RHEL 5 Benchmark v2.1.0
-# Refer to Section(s) 1.1.4,9,16,19 Page(s) 29,34,41,44 CIS RHEL 7 Benchmark v2.1.0
-# Refer to Section(s) 1.1.4,9,16,19 Page(s) 28,33,40,43 CIS Ubuntu LTS 16.04 Benchmark v1.0.0
-# Refer to Section(s) 2.3,13,15     Page(s) 16-25       CIS SLES 11 Benchmark v1.0.0
-# Refer to Section(s) 6.1           Page(s) 21          CIS FreeBSD Benchmark v1.0.5
-# Refer to Section(s) 5.2           Page(s) 76-7        CIS Solaris 10 Benchmark v5.1.0
-# Refer to Section(s) 1.1.4,9,16    Page(s) 28,33,40    CIS Amazon Linux Benchmark v2.0.0
+# Refer to Sections 1.1.4,8,15,18 Page(s) 28,33,40,43 CIS Ubuntu LTS 16.04 Benchmark v1.0.0
 #.
 
 audit_mount_setuid () {
   if [ "$os_name" = "SunOS" ] || [ "$os_name" = "Linux" ] || [ "$os_name" = "FreeBSD" ]; then
+  	verbose_message "=========================="
     verbose_message "Set-UID on Mounted Devices"
+    verbose_message "Sections 1.1.4,8,15,18"
+    verbose_message "=========================="
     if [ "$os_name" = "SunOS" ]; then
       if [ "$os_version" = "10" ]; then
         check_file="/etc/rmmount.conf"

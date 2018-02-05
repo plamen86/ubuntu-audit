@@ -10,10 +10,10 @@ audit_search_fs () {
     verbose_message "Filesystem Search"
     nb_check=`pkginfo -l |grep SYMCnbclt |grep PKG |awk '{print $2}'`
     if [ "$nb_check" != "SYMCnbclt" ]; then
-      audit_bpcd
+#ok      audit_bpcd
       audit_vnetd
       audit_vopied
-      audit_bpjava_msvc
+#ok      audit_bpjava_msvc
     else
       check_file="/etc/hosts.allow"
       funct_file_value $check_file bpcd colon " ALL" hash
