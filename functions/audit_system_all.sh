@@ -4,6 +4,38 @@
 #.
 
 audit_system_all () {
+	
+#Sections 1.1.1.1-8, 3.5.1-4
+  audit_modprobe_conf
+  
+#Sections 1.1.2,5,6,10,11,12
+  audit_filesystem_partitions
+  
+#Sections 1.1.3,7,13,14,17
+  audit_mount_nodev
+  
+#Sections 1.1.4,8,15,18
+  audit_mount_setuid
+  
+ #Sections 1.1.9,16,19
+   audit_mount_noexec
+   
+ #Section 1.1.20
+  audit_sticky_bit
+  
+#Section 1.1.21
+  audit_autofs
+  
+#Sections 1.3.1-2
+  audit_aide	
+ 
+#Section 1.4.1-2
+#Section 1.4.3 is audited in 6.2.1
+  audit_grub_security
+  
+#Section 1.5.1
+  audit_core_dumps
+  	
   full_audit_shell_services
   full_audit_accounting_services
   full_audit_firewall_services

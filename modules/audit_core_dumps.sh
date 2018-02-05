@@ -5,10 +5,7 @@
 
 audit_core_dumps () {
   if [ "$os_name" = "SunOS" ] || [ "$os_name" = "Linux" ] || [ "$os_name" = "FreeBSD" ]; then
-  	verbose_message "============="
     verbose_message "Core Dumps"
-    verbose_message "Section 1.5.1"
-    verbose_message "============="
     if [ "$os_name" = "SunOS" ]; then
       if [ "$os_version" != "6" ]; then
         cores_dir="/var/cores"
