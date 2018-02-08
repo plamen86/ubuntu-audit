@@ -62,42 +62,6 @@ company_name="Eniware.org"
 #
 # If given a -h or no valid switch print usage information
 
-print_usage () {
-  echo ""
-  echo "Usage: $0 -[a|A|s|S|d|p|c|l|h|c|V] -[u]"
-  echo ""
-  echo "-a: Run in audit mode (for Operating Systems - no changes made to system)"
-  echo "-A: Run in audit mode (for Operating Systems - no changes made to system)"
-  echo "    [includes filesystem checks which take some time]"
-  echo "-s: Run in selective mode (only run tests you want to)"
-  echo "-R: Print information for a specific test"
-  echo "-S: List all UNIX functions available to selective mode"
-  echo "-h: Display usage"
-  echo "-V: Display version"
-  echo "-v: Verbose mode [used with -a and -A]"
-  echo "    [Provides more information about the audit taking place]"
-  echo ""
-  echo "Examples:"
-  echo ""
-  echo "Run in Audit Mode (for Operating Systems)"
-  echo ""
-  echo "$0 -a"
-  echo ""
-  echo "Run in Audit Mode and provide more information (for Operating Systems)"
-  echo ""
-  echo "$0 -a -v"
-  echo ""
-  echo "List tests:"
-  echo ""
-  echo "$0 -S"
-  echo ""
-  echo "Only run shell based tests:"
-  echo ""
-  echo "$0 -s audit_shell_services"
-  echo ""
-  exit
-}
-
 # check_os_release
 #
 # Get OS release information
@@ -107,6 +71,7 @@ check_os_release () {
   echo ""
   echo "# SYSTEM INFORMATION:"
   echo ""
+
   os_name=`uname`
   if [ "$os_name" = "Linux" ]; then
     if [ -f "/etc/debian_version" ]; then
@@ -151,6 +116,7 @@ check_environment () {
   base_dir="$HOME/.$pkg_suffix"
   temp_dir="/tmp"
   work_dir="$base_dir/$date_suffix"
+
   # Load functions from functions directory
   if [ -d "$functions_dir" ]; then
     if [ "$verbose" = "1" ]; then
@@ -179,33 +145,15 @@ check_environment () {
       fi
     done
   fi
-  # Private modules for customers
-  if [ -d "$private_dir" ]; then
-      echo ""
-      echo "Loading Customised Modules"
-      echo ""
-    if [ "$verbose" = "1" ]; then
-      echo ""
-    fi
-    for file_name in `ls $private_dir/*.sh`; do
-      . $file_name
-    done
-    if [ "$verbose" = "1" ]; then
-      echo "Loading:   $file_name"
-    fi
-  fi
+  
   if [ ! -d "$base_dir" ]; then
     mkdir -p $base_dir
     chmod 700 $base_dir
     chown root:root $base_dir
   fi
+
   if [ ! -d "$temp_dir" ]; then
     mkdir -p $temp_dir
-  fi
-  if [ "$audit_mode" = 0 ]; then
-    if [ ! -d "$work_dir" ]; then
-      mkdir -p $work_dir
-    fi
   fi
 }
 
@@ -230,9 +178,7 @@ lockdown_command () {
 #.
 
 increment_total () {
-  if [ "$audit_mode" != 2 ]; then
-    total=`expr $total + 1` 
-  fi
+  total=`expr $total + 1` 
 }
 
 # increment_secure
@@ -241,12 +187,10 @@ increment_total () {
 #.
 
 increment_secure () {
-  if [ "$audit_mode" != 2 ]; then
-    message=$1
-    total=`expr $total + 1` 
-    secure=`expr $secure + 1`
-    echo "Secure:    $message [$secure Passes]"
-  fi
+  message=$1
+  total=`expr $total + 1` 
+  secure=`expr $secure + 1`
+  echo "Secure:    $message [$secure Passes]"
 }
 
 # increment_insecure
@@ -255,26 +199,10 @@ increment_secure () {
 #.
 
 increment_insecure () {
-  if [ "$audit_mode" != 2 ]; then
-    message=$1
-    total=`expr $total + 1` 
-    insecure=`expr $insecure + 1`
-    echo "Warning:   $message [$insecure Warnings]"
-  fi
-}
-
-# print_previous
-#
-# Print previous changes
-#.
-
-print_previous () {
-  if [ -d "$base_dir" ]; then
-    echo ""
-    echo "Printing previous settings:"
-    echo ""
-    find $base_dir -type f -print -exec cat -n {} \;
-  fi
+  message=$1
+  total=`expr $total + 1` 
+  insecure=`expr $insecure + 1`
+  echo "Warning:   $message [$insecure Warnings]"
 }
 
 #
@@ -328,79 +256,11 @@ verbose_message () {
 #.
 
 funct_audit_system () {
-  audit_mode=$1
+
   check_environment
-  if [ "$audit_mode" = 0 ]; then
-    if [ ! -d "$work_dir" ]; then
-      mkdir -p $work_dir
-    fi
-  fi
   audit_system_all
-  if [ "$do_fs" = 1 ]; then
-    audit_search_fs
-  fi
-  #audit_test_subset
-  if [ `expr "$os_platform" : "sparc"` != 1 ]; then
-    audit_system_x86
-  else
-    audit_system_sparc
-  fi
+
   print_results
-}
-
-# funct_audit_select
-#
-# Selective Audit
-#.
-
-funct_audit_select () {
-  audit_mode=$1
-  function=$2
-  check_environment
-  if [ "`echo $function |grep aws`" ]; then
-    check_aws
-  fi
-  if [ "`expr $function : audit_`" != "6" ]; then
-    function="audit_$function"
-  fi
-  print_audit_info $function
-  $function
-  print_results
-}
-
-# Get the path the script starts from
-
-start_path=`pwd`
-
-# Get the version of the script from the script itself
-
-script_version=`cd $start_path ; cat $0 | grep '^# Version' |awk '{print $3}'`
-
-# If given no command line arguments print usage information
-
-#if [ `expr "$args" : "\-"` != 1 ]; then
-#  print_usage
-#fi
-
-# apply_latest_patches
-#
-# Code to apply patches
-# Nothing done with this yet
-#.
-
-apply_latest_patches () {
-  :
-}
-
-# secure_baseline
-#
-# Establish a Secure Baseline
-# This uses the Solaris 10 svcadm baseline
-# Don't really need this so haven't coded anything for it yet
-#.
-
-secure_baseline () {
-  :
 }
 
 # print_results
@@ -410,181 +270,14 @@ secure_baseline () {
 
 print_results () {
   echo ""
-  if [ "$audit_mode" != 1 ]; then
-    if [ "$reboot" = 1 ]; then
-      reboot="Required"
-    else
-      reboot="Not Required"
-    fi
-    echo "Reboot:    $reboot"
-  fi
   echo "Tests:     $total"
   echo "Passes:    $secure"
   echo "Warnings:  $insecure"
   echo ""
 }
 
-#
-# print_tests
-# Print Tests
-# 
 
-print_tests () {
-  test_string="$1"
-  echo ""
-  if [ "$test_string" = "UNIX" ]; then
-    grep_string="-v aws"
-  else
-    grep_string="$test_string"
-  fi
-  echo "$test_string Security Tests:"
-  echo ""
-  ls $modules_dir | grep -v '^full_' |grep -i $grep_string |sed 's/\.sh//g'
-  echo ""
-}
-
-# Handle command line arguments
-
-audit_mode=3
-do_fs=3
-audit_select=0
-verbose=0
-do_select=
-
-while getopts abcdlpR:r:s:u:z:hwADSWVLx args; do
-  case $args in
-    r)
-      aws_region="$OPTARG"
-      ;;
-    v)
-      verbose=1
-      ;;
-    a)
-      audit_mode=1
-      do_fs=0
-      ;;
-    s)
-      audit_mode=1
-      do_fs=0
-      do_select=1
-      function="$OPTARG"
-      ;;
-    z)
-      audit_mode=0
-      do_fs=0
-      do_select=1
-      function="$OPTARG"
-      exit
-      ;;
-    w)
-      audit_mode=1
-      do_aws=1
-      function="$OPTARG"
-      exit
-      ;;
-    d)
-      audit_mode=1
-      do_docker=1
-      function="$OPTARG"
-      exit
-      ;;
-    x)
-      audit_mode=1
-      do_aws_rec=1
-      function="$OPTARG"
-      exit
-      ;;
-    W)
-      print_tests "AWS"
-      ;;
-    D)
-      print_tests "Docker"
-      ;;  
-    S)
-      print_tests "UNIX"
-      ;;
-    A)
-      audit_mode=1
-      do_fs=1
-      ;;
-    l)
-      audit_mode=0
-      do_fs=0
-      ;;
-    L)
-      audit_mode=0
-      do_fs=1
-      ;;
-    u)
-      audit_mode=2
-      restore_date="$OPTARG"
-      ;;
-    h)
-      print_usage
-      exit
-      ;;
-    V)
-      echo $script_version
-      exit
-      ;;
-    p)
-      print_previous
-      exit
-      ;;
-    c)
-      print_changes
-      exit
-      ;;
-    R)
-      check_environment
-      verbose=1
-      module="$OPTARG"
-      print_audit_info $module
-      ;;
-    b)
-      echo ""
-      echo "Previous backups:"
-      echo ""
-      ls $base_dir
-      exit
-      ;;
-    *)
-      print_usage
-      exit
-      ;;
-  esac
-done
-
-if [ "$audit_mode" != 3 ]; then
-  echo ""
-  if [ "$audit_mode" = 2 ]; then
-    echo "Running:   In Restore mode (changes will be made to system)"
-    echo "Setting:   Restore date $restore_date"
-  fi
-  if [ "$audit_mode" = 1 ]; then
-    echo "Running:   In lockdown mode (no changes will be made to system)"
-  fi
-  if [ "$audit_mode" = 0 ]; then
-    echo "Running:   In lockdown mode (changes will be made to system)"
-  fi
-  if [ "$do_fs" = 1 ]; then
-    echo "           Filesystem checks will be done"
-  fi
-  echo ""
-  if [ "$do_select" = 1 ]; then
-    echo "Auditing:  Selecting $function"
-    funct_audit_select $audit_mode $function
-  else
-    if [ "$do_docker" = 1 ]; then
-      funct_audit_docker $audit_mode
-    fi
-    if [ "$do_aws" = 1 ]; then
-      funct_audit_aws $audit_mode
-    fi
-    if [ "$do_aws_rec" = 1 ]; then
-      funct_audit_aws_rec $audit_mode
-    fi
-    funct_audit_system $audit_mode
-  fi
-  exit
-fi
+  verbose=1
+  audit_mode=1
+  do_fs=0
+  funct_audit_system

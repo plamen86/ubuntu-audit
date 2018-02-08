@@ -1,13 +1,12 @@
 # audit_modprobe_conf
 #
-# Refer to Sections 1.1.1.1-8,3.5.1-4
+# Refer to Sections 1.1.1.1-8, 3.5.1-4
 #
 
 audit_modprobe_conf () {
-  verbose_message "==========================="
-  verbose_message "Modprobe Configuration"
-  verbose_message "Sections 1.1.1.1-8, 3.5.1-4"
-  verbose_message "==========================="
+
+  verbose_message "Sections 1.1.1.1-8, 3.5.1-4: Modprobe Configuration"
+
   check_file="/etc/modprobe.conf"
   check_append_file $check_file "install tipc /bin/true"
   check_append_file $check_file "install rds /bin/true"

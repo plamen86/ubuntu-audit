@@ -1,6 +1,6 @@
 # audit_grub_security
 #
-# Refer to Section(s) 1.4.1,2
+# Refer to Sections 1.4.1,2
 #.
 
 audit_grub_security () {

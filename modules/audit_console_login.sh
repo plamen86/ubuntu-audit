@@ -1,55 +1,24 @@
 # audit_console_login
 #
-# Refer to Section(s) 5.5   Page(s) 248   CIS Ubuntu 16.04 Benchmark v1.0.0
+# Refer to Section 5.5
 #.
 
 audit_console_login () {
-  if [ "$os_name" = "SunOS" ]; then
-    verbose_message "Root Login to System Console"
-    if [ "$os_version" = "10" ]; then
-      check_file="/etc/default/login"
-      check_file_value $check_file CONSOLE eq /dev/console hash
-    fi
-    if [ "$os_version" = "11" ]; then
-      service_name="svc:/system/console-login:terma"
-      check_sunos_service $service_name disabled
-      service_name="svc:/system/console-login:termb"
-      check_sunos_service $service_name disabled
-    fi
-  fi
-  if [ "$os_name" = "Linux" ]; then
-    verbose_message "Root Login to System Console"
-    disable_ttys=0
-    check_file="/etc/securetty"
-    console_list=""
-    if [ "$audit_mode" != 2 ]; then
-      for console_device in `cat $check_file |grep '^tty[0-9]'`; do
-        disable_ttys=1
-        console_list="$console_list $console_device"
-      done
-      if [ "$disable_ttys" = 1 ]; then
-        if [ "$audit_mode" = 1 ]; then
-          increment_insecure "Consoles enabled on$console_list"
-          verbose_message "" fix
-          verbose_message "cat $check_file |sed 's/tty[0-9].*//g' |grep '[a-z]' > $temp_file" fix
-          verbose_message "cat $temp_file > $check_file" fix
-          verbose_message "rm $temp_file" fix
-          verbose_message "" fix
-        fi
-        if [ "$audit_mode" = 0 ]; then
-          backup_file $check_file
-          setting_message "Consoles to disabled on$console_list" 
-          cat $check_file |sed 's/tty[0-9].*//g' |grep '[a-z]' > $temp_file
-          cat $temp_file > $check_file
-          rm $temp_file
-        fi
-      else
-        if [ "$audit_mode" = 1 ]; then
-          increment_secure "No consoles enabled on tty[0-9]*"
-        fi
-      fi
-    else
-      restore_file $check_file $restore_dir
-    fi
+
+  verbose_message "Section 5.5: Root Login to System Console"
+    
+  disable_ttys=0
+  check_file="/etc/securetty"
+  console_list=""
+
+  for console_device in `cat $check_file |grep '^tty[0-9]'`; do
+    disable_ttys=1
+    console_list="$console_list $console_device"
+  done
+  
+  if [ "$disable_ttys" = 1 ]; then
+    increment_insecure "Consoles enabled on$console_list"
+  else
+    increment_secure "No consoles enabled on tty[0-9]*"
   fi
 }
