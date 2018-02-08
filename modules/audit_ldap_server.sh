@@ -4,7 +4,7 @@
 #.
 
 audit_ldap_server () {
-  verbose_mesage "Section 2.2.6: LDAP Server"
+  verbose_message "Section 2.2.6: LDAP Server"
   check_systemctl_service disable slapd
   check_linux_package uninstall openldap-clients
 }

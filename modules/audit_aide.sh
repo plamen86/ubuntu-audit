@@ -14,7 +14,7 @@ audit_aide() {
     prelink_check="no"
   fi
   if [ "$prelink_check" = "no" ]; then
-    audit_linux_package install aide
+    check_linux_package install aide
     check_append_file /etc/cron.d/aide "0 5 * * * /usr/sbin/aide --check"
   fi
   

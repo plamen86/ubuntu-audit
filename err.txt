@@ -1,25 +1,3 @@
-modules/audit_cups.sh: line 19: unexpected EOF while looking for matching `"'
-modules/audit_cups.sh: line 30: syntax error: unexpected end of file
-modules/audit_gnome_banner.sh: line 50: syntax error near unexpected token `}'
-modules/audit_gnome_banner.sh: line 50: `}'
-modules/audit_grub_security.sh: line 24: syntax error near unexpected token `else'
-modules/audit_grub_security.sh: line 24: `  else'
-modules/audit_home_ownership.sh: line 43: syntax error: unexpected end of file
-modules/audit_mount_noexec.sh: line 28: syntax error near unexpected token `}'
-modules/audit_mount_noexec.sh: line 28: `}'
-modules/audit_password_fields.sh: line 33: unexpected EOF while looking for matching `"'
-modules/audit_password_fields.sh: line 37: syntax error: unexpected end of file
-modules/audit_system_accounting.sh: line 130: syntax error near unexpected token `fi'
-modules/audit_system_accounting.sh: line 130: `  fi'
-functions/audit_system_all.sh: line 30: audit_mount_noexec: command not found
-find: ‘/run/user/1000/gvfs’: Permission denied
-modules/audit_aide.sh: line 17: audit_linux_package: command not found
-functions/audit_system_all.sh: line 47: audit_grub_security: command not found
-functions/audit_system_all.sh: line 70: audit_gnome_banner: command not found
-functions/audit_system_all.sh: line 90: audit_cups: command not found
-modules/audit_ldap_server.sh: line 7: verbose_mesage: command not found
-functions/audit_system_all.sh: line 163: audit_system_accounting: command not found
-modules/audit_syslog_server.sh: line 26: funct_file_perms: command not found
 grep: Invalid range end
 Usage: grep [OPTION]... PATTERN [FILE]...
 Try 'grep --help' for more information.
@@ -29,29 +7,5 @@ Usage: grep [OPTION]... PATTERN [FILE]...
 Try 'grep --help' for more information.
 Usage: grep [OPTION]... PATTERN [FILE]...
 Try 'grep --help' for more information.
-modules/audit_system_auth.sh: line 15: audit_system_auth_nullok: command not found
-modules/audit_system_auth.sh: line 23: audit_system_auth_password_history: command not found
-modules/audit_system_auth.sh: line 26: audit_system_auth_password_hashing: command not found
-modules/audit_system_auth.sh: line 30: audit_system_auth_nullok: command not found
-modules/audit_system_auth.sh: line 34: audit_system_auth_password_history: command not found
-modules/audit_system_auth.sh: line 37: audit_system_auth_no_magic_root: command not found
-modules/audit_system_auth.sh: line 40: audit_system_auth_account_reset: command not found
-modules/audit_system_auth.sh: line 44: audit_system_auth_password_policy: command not found
-modules/audit_system_auth.sh: line 48: audit_system_auth_password_policy: command not found
-modules/audit_system_auth.sh: line 52: audit_system_auth_password_policy: command not found
-modules/audit_system_auth.sh: line 56: audit_system_auth_password_policy: command not found
-modules/audit_system_auth.sh: line 60: audit_system_auth_password_policy: command not found
-modules/audit_system_auth.sh: line 63: audit_system_auth_password_strength: command not found
-df: invalid option -- 'I'
-Try 'df --help' for more information.
-df: invalid option -- 'I'
-Try 'df --help' for more information.
-functions/audit_system_all.sh: line 216: audit_password_fields: command not found
-functions/audit_system_all.sh: line 225: audit_home_ownership: command not found
-modules/audit_forward_files.sh: line 10: audit_dot_files: command not found
-modules/audit_netrc_files.sh: line 9: audit_dot_files: command not found
-functions/audit_system_all.sh: line 243: audit_group_exist: command not found
-modules/audit_duplicate_users.sh: line 9: audit_duplicate_ids: command not found
-modules/audit_duplicate_users.sh: line 10: audit_duplicate_ids: command not found
-modules/audit_duplicate_groups.sh: line 9: audit_duplicate_ids: command not found
-modules/audit_duplicate_groups.sh: line 10: audit_duplicate_ids: command not found
+find: ‘/run/user/1000/gvfs’: Permission denied
+find: ‘/run/user/1000/gvfs’: Permission denied

@@ -127,5 +127,4 @@ audit_system_accounting () {
     service_bname="auditd"
     check_chkconfig_service $service_name 3 on
     check_chkconfig_service $service_name 5 on
-  fi
 }

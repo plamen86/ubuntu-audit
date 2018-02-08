@@ -6,7 +6,7 @@
 #.
 
 audit_gnome_banner () {
-    verbose_message "Gnome Warning Banner"
+    verbose_message "Section 1.7.2: Gnome Warning Banner"
 
     check_file="/etc/dconf/profile/gdm"
     if [ -f "$check_file" ]; then
@@ -47,4 +47,5 @@ audit_gnome_banner () {
     else
       increment_secure "Warning banner is set to \"$warning_message\""
     fi
+ fi
 }

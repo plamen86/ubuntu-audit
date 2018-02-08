@@ -67,7 +67,7 @@ audit_system_all () {
   audit_issue_banner
   
   #Section 1.7.2
-  audit_gnome_banner
+#  audit_gnome_banner
   
 #==============================================================================  
 #===Section 2: Services
@@ -239,7 +239,7 @@ audit_system_all () {
   audit_user_rhosts
   
   #Section 6.2.15
-  audit_group_exist
+  audit_groups_exist
   
   #Section 6.2.16, 18
   audit_duplicate_users  

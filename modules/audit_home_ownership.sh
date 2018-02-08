@@ -37,6 +37,8 @@ audit_home_ownership() {
         fi
       fi
     done
+    
     if [ "$home_check" = 0 ]; then
       increment_secure "No ownership issues with home directories"
-    fi}
+    fi
+}

@@ -34,6 +34,7 @@ check_linux_package () {
           increment_insecure "Package $package_check is not $package_status"
         fi
       fi
+      
       if [ "$package_mode" = "install" ]; then
         if [ "$linux_dist" = "redhat" ]; then
           package_command="yum -y install $package_check"
@@ -45,7 +46,8 @@ check_linux_package () {
           package_command="apt-get install $package_check"
         fi
         if [ "$package_check" = "aide" ]; then
-          /usr/sbin/aide --init -B 'database_out=file:/var/lib/aide/aide.db.gz'
+		  package_command="apt-get install $package_check"
+#          /usr/sbin/aide --init -B 'database_out=file:/var/lib/aide/aide.db.gz'
         fi
       fi
       if [ "$package_mode" = "uninstall" ]; then

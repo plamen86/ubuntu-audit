@@ -8,7 +8,7 @@ audit_cups () {
   check_rpm cups
 
   if [ "$rpm_check" = "cups" ]; then
-    verbose_message "Section 2.2.4: Printing Services
+    verbose_message "Section 2.2.4: Printing Services"
 
     service_name="cups"
     check_chkconfig_service $service_name 3 off

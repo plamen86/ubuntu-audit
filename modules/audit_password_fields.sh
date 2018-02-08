@@ -28,7 +28,7 @@ audit_password_fields () {
   for check_file in /etc/passwd /etc/shadow; do
     legacy_check=`cat $check_file |grep '^+:' |head -1 |wc -l`
     if [ "$legacy_check" != "0" ]; then
-      increment_insecure "Legacy field found in $check_file
+      increment_insecure "Legacy field found in $check_file"
     else
       increment_secure "No legacy entries in $check_file"
     fi

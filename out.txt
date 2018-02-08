@@ -64,7 +64,9 @@ Loading:   modules/audit_cups.sh
 Loading:   modules/audit_default_umask.sh
 Loading:   modules/audit_dhcp_server.sh
 Loading:   modules/audit_dns_server.sh
+Loading:   modules/audit_dot_files.sh
 Loading:   modules/audit_duplicate_groups.sh
+Loading:   modules/audit_duplicate_ids.sh
 Loading:   modules/audit_duplicate_users.sh
 Loading:   modules/audit_email_daemons.sh
 Loading:   modules/audit_filesystem_partitions.sh
@@ -110,8 +112,16 @@ Loading:   modules/audit_sysctl.sh
 Loading:   modules/audit_syslog_server.sh
 Loading:   modules/audit_system_accounting.sh
 Loading:   modules/audit_system_accounts.sh
+Loading:   modules/audit_system_auth_account_reset.sh
+Loading:   modules/audit_system_auth_no_magic_root.sh
+Loading:   modules/audit_system_auth_nullok.sh
+Loading:   modules/audit_system_auth_password_hashing.sh
+Loading:   modules/audit_system_auth_password_history.sh
+Loading:   modules/audit_system_auth_password_policy.sh
+Loading:   modules/audit_system_auth_password_strength.sh
 Loading:   modules/audit_system_auth.sh
 Loading:   modules/audit_system_auth_unlock_time.sh
+Loading:   modules/audit_system_auth_use_uid.sh
 Loading:   modules/audit_talk_client.sh
 Loading:   modules/audit_tcp_wrappers.sh
 Loading:   modules/audit_telnet_client.sh
@@ -123,31 +133,6 @@ Loading:   modules/audit_writable_files.sh
 Loading:   modules/audit_xinetd_server.sh
 Loading:   modules/audit_xinetd.sh
 Loading:   modules/audit_xwindows_server.sh
-Loading:   modules/full_audit_accounting_services.sh
-Loading:   modules/full_audit_disk_services.sh
-Loading:   modules/full_audit_file_services.sh
-Loading:   modules/full_audit_firewall_services.sh
-Loading:   modules/full_audit_ftp_services.sh
-Loading:   modules/full_audit_hardware_services.sh
-Loading:   modules/full_audit_kernel_services.sh
-Loading:   modules/full_audit_log_services.sh
-Loading:   modules/full_audit_mail_services.sh
-Loading:   modules/full_audit_naming_services.sh
-Loading:   modules/full_audit_network_services.sh
-Loading:   modules/full_audit_osx_services.sh
-Loading:   modules/full_audit_other_services.sh
-Loading:   modules/full_audit_password_services.sh
-Loading:   modules/full_audit_power_services.sh
-Loading:   modules/full_audit_print_services.sh
-Loading:   modules/full_audit_routing_services.sh
-Loading:   modules/full_audit_shell_services.sh
-Loading:   modules/full_audit_startup_services.sh
-Loading:   modules/full_audit_update_services.sh
-Loading:   modules/full_audit_user_services.sh
-Loading:   modules/full_audit_virtualisation_services.sh
-Loading:   modules/full_audit_web_services.sh
-Loading:   modules/full_audit_windows_services.sh
-Loading:   modules/full_audit_x11_services.sh
 Sections 1.1.1.1-8, 3.5.1-4: Modprobe Configuration
 Parameter "install tipc /bin/true" is set in /etc/modprobe.conf
 Warning:   Parameter "install tipc /bin/true" does not exist in /etc/modprobe.conf [1 Warnings]
@@ -230,400 +215,376 @@ Warning:   File /etc/fstab has incorrect permissions [16 Warnings]
 [ Fix ]    chmod 0644 /etc/fstab
 [ Fix ]    chown root:root /etc/fstab
 
+Sections 1.1.9,16,19: Filesystems mounted with noexec
+Secure:    No filesystem that should be mounted with noexec [7 Passes]
+Checking:  File permissions on /etc/fstab
+Warning:   File /etc/fstab has incorrect permissions [17 Warnings]
+
+[ Fix ]    chmod 0644 /etc/fstab
+[ Fix ]    chown root:root /etc/fstab
+
 ==========================================
 World Writable Directories and Sticky Bits
 Section 1.1.20
 ==========================================
-Warning:   Sticky bit not set on /tmp [17 Warnings]
+"install vfat /bin/true" >> /etc/modprobe.conf =
+Warning:   Sticky bit not set on echo "install vfat /bin/true" >> /etc/modprobe.conf [18 Warnings]
 
-[ Fix ]    chmod +t /tmp
-
-Warning:   Sticky bit not set on /tmp/.X11-unix [18 Warnings]
-
-[ Fix ]    chmod +t /tmp/.X11-unix
-
-Warning:   Sticky bit not set on /tmp/.Test-unix [19 Warnings]
-
-[ Fix ]    chmod +t /tmp/.Test-unix
-
-Warning:   Sticky bit not set on /tmp/.XIM-unix [20 Warnings]
-
-[ Fix ]    chmod +t /tmp/.XIM-unix
-
-Warning:   Sticky bit not set on /tmp/systemd-private-0b4214d4c523446981f7f3cb48611473-colord.service-NrTdZd/tmp [21 Warnings]
-
-[ Fix ]    chmod +t /tmp/systemd-private-0b4214d4c523446981f7f3cb48611473-colord.service-NrTdZd/tmp
-
-Warning:   Sticky bit not set on /tmp/.font-unix [22 Warnings]
-
-[ Fix ]    chmod +t /tmp/.font-unix
-
-Warning:   Sticky bit not set on /tmp/systemd-private-0b4214d4c523446981f7f3cb48611473-rtkit-daemon.service-Nl6YQH/tmp [23 Warnings]
-
-[ Fix ]    chmod +t /tmp/systemd-private-0b4214d4c523446981f7f3cb48611473-rtkit-daemon.service-Nl6YQH/tmp
-
-Warning:   Sticky bit not set on /tmp/.ICE-unix [24 Warnings]
-
-[ Fix ]    chmod +t /tmp/.ICE-unix
-
-Warning:   Sticky bit not set on /var/tmp [25 Warnings]
-
-[ Fix ]    chmod +t /var/tmp
-
-Warning:   Sticky bit not set on /var/tmp/systemd-private-876a07bf3f334c55b15f59eb12637bfe-colord.service-Vu6uRF/tmp [26 Warnings]
-
-[ Fix ]    chmod +t /var/tmp/systemd-private-876a07bf3f334c55b15f59eb12637bfe-colord.service-Vu6uRF/tmp
-
-Warning:   Sticky bit not set on /var/tmp/systemd-private-0b4214d4c523446981f7f3cb48611473-colord.service-lVP2UM/tmp [27 Warnings]
-
-[ Fix ]    chmod +t /var/tmp/systemd-private-0b4214d4c523446981f7f3cb48611473-colord.service-lVP2UM/tmp
-
-Warning:   Sticky bit not set on /var/tmp/systemd-private-420a9f74dc9f411085dc8a19b7684285-rtkit-daemon.service-cfOKOk/tmp [28 Warnings]
-
-[ Fix ]    chmod +t /var/tmp/systemd-private-420a9f74dc9f411085dc8a19b7684285-rtkit-daemon.service-cfOKOk/tmp
-
-Warning:   Sticky bit not set on /var/tmp/systemd-private-0b4214d4c523446981f7f3cb48611473-rtkit-daemon.service-619hh0/tmp [29 Warnings]
-
-[ Fix ]    chmod +t /var/tmp/systemd-private-0b4214d4c523446981f7f3cb48611473-rtkit-daemon.service-619hh0/tmp
-
-Warning:   Sticky bit not set on /var/tmp/systemd-private-705b2e2f37214330ace2e51f8f339bb1-colord.service-LruV8m/tmp [30 Warnings]
-
-[ Fix ]    chmod +t /var/tmp/systemd-private-705b2e2f37214330ace2e51f8f339bb1-colord.service-LruV8m/tmp
-
-Warning:   Sticky bit not set on /var/tmp/systemd-private-876a07bf3f334c55b15f59eb12637bfe-rtkit-daemon.service-OX2KTf/tmp [31 Warnings]
-
-[ Fix ]    chmod +t /var/tmp/systemd-private-876a07bf3f334c55b15f59eb12637bfe-rtkit-daemon.service-OX2KTf/tmp
-
-Warning:   Sticky bit not set on /var/tmp/systemd-private-705b2e2f37214330ace2e51f8f339bb1-rtkit-daemon.service-4a7HQZ/tmp [32 Warnings]
-
-[ Fix ]    chmod +t /var/tmp/systemd-private-705b2e2f37214330ace2e51f8f339bb1-rtkit-daemon.service-4a7HQZ/tmp
-
-Warning:   Sticky bit not set on /var/metrics [33 Warnings]
-
-[ Fix ]    chmod +t /var/metrics
-
-Warning:   Sticky bit not set on /var/crash [34 Warnings]
-
-[ Fix ]    chmod +t /var/crash
-
-Warning:   Sticky bit not set on /run/lock [35 Warnings]
-
-[ Fix ]    chmod +t /run/lock
-
-Warning:   Sticky bit not set on /dev/mqueue [36 Warnings]
-
-[ Fix ]    chmod +t /dev/mqueue
-
-Warning:   Sticky bit not set on /dev/shm [37 Warnings]
-
-[ Fix ]    chmod +t /dev/shm
+[ Fix ]    chmod +t echo "install vfat /bin/true" >> /etc/modprobe.conf
 
 Section 1.1.21: Automount services
 Checking:  Service autofs is disabled
 Sections 1.3.1-2, 1.5.4: Filesystem Integrity Checking
+Checking if package is aide installed
+Checking:  Package aide is installed
+Secure:    Package aide is installed [8 Passes]
+
+[ Fix ]    echo "install vfat /bin/true" >> /etc/modprobe.conf
+
 Parameter "0 5 * * * /usr/sbin/aide --check" is set in /etc/cron.d/aide
-Warning:   Parameter "0 5 * * * /usr/sbin/aide --check" does not exist in /etc/cron.d/aide [38 Warnings]
+Warning:   Parameter "0 5 * * * /usr/sbin/aide --check" does not exist in /etc/cron.d/aide [19 Warnings]
 [ Fix ]    echo "0 5 * * * /usr/sbin/aide --check" >> /etc/cron.d/aide
 Checking if package is prelink uninstalled
 Checking:  Package prelink is installed
-Secure:    Package prelink is uninstalled [7 Passes]
+Secure:    Package prelink is uninstalled [9 Passes]
 
 [ Fix ]    echo "0 5 * * * /usr/sbin/aide --check" >> /etc/cron.d/aide
 
+Section 1.4.1-2: Secure Boot Settings
+Checking:  File permissions on /etc/grub.conf
+Notice:    File /etc/grub.conf does not exist
+Checking:  File permissions on /boot/grub/grub.cfg
+Warning:   File /boot/grub/grub.cfg has incorrect permissions [20 Warnings]
+
+[ Fix ]    chmod 0600 /boot/grub/grub.cfg
+[ Fix ]    chown root:root /boot/grub/grub.cfg
+
+Checking:  File permissions on /boot/grub/menu.list
+Notice:    File /boot/grub/menu.list does not exist
+Warning:   Grub passowrd is not set [21 Warnings]
 Section 1.5.1: Core Dumps
 Parameter "* hard core 0" is set in /etc/security/limits.conf
-Warning:   Parameter "* hard core 0" does not exist in /etc/security/limits.conf [39 Warnings]
+Warning:   Parameter "* hard core 0" does not exist in /etc/security/limits.conf [22 Warnings]
 [ Fix ]    echo "* hard core 0" >> /etc/security/limits.conf
 Checking:  Value of "fs.suid_dumpable" is set to "0" in /etc/sysctl.conf
-Warning:   Parameter "fs.suid_dumpable" not set to "0" in /etc/sysctl.conf [40 Warnings]
+Warning:   Parameter "fs.suid_dumpable" not set to "0" in /etc/sysctl.conf [23 Warnings]
 
 [ Fix ]    echo "fs.suid_dumpable=0" >> /etc/sysctl.conf
 
 1.5.3, 3.1.1-2, 3.2.1-8, 3.3.1-3: Network Configuration
 Checking:  Value of "fs.suid.dumpable" is set to "0" in /etc/sysctl.conf
-Warning:   Parameter "fs.suid.dumpable" not set to "0" in /etc/sysctl.conf [41 Warnings]
+Warning:   Parameter "fs.suid.dumpable" not set to "0" in /etc/sysctl.conf [24 Warnings]
 
 [ Fix ]    echo "fs.suid.dumpable=0" >> /etc/sysctl.conf
 
 Parameter "* hard core 0" is set in /etc/security/limits.conf
-Warning:   Parameter "* hard core 0" does not exist in /etc/security/limits.conf [42 Warnings]
+Warning:   Parameter "* hard core 0" does not exist in /etc/security/limits.conf [25 Warnings]
 [ Fix ]    echo "* hard core 0" >> /etc/security/limits.conf
 Checking:  Value of "kernel.randomize_va_space" is set to "2" in /etc/security/limits.conf
-Warning:   Parameter "kernel.randomize_va_space" not set to "2" in /etc/security/limits.conf [43 Warnings]
+Warning:   Parameter "kernel.randomize_va_space" not set to "2" in /etc/security/limits.conf [26 Warnings]
 
 [ Fix ]    echo "kernel.randomize_va_space=2" >> /etc/security/limits.conf
 
 Checking:  Value of "net.ipv4.conf.default.secure_redirects" is set to "0" in /etc/security/limits.conf
-Warning:   Parameter "net.ipv4.conf.default.secure_redirects" not set to "0" in /etc/security/limits.conf [44 Warnings]
+Warning:   Parameter "net.ipv4.conf.default.secure_redirects" not set to "0" in /etc/security/limits.conf [27 Warnings]
 
 [ Fix ]    echo "net.ipv4.conf.default.secure_redirects=0" >> /etc/security/limits.conf
 
 Checking:  Value of "net.ipv4.conf.all.secure_redirects" is set to "0" in /etc/security/limits.conf
-Warning:   Parameter "net.ipv4.conf.all.secure_redirects" not set to "0" in /etc/security/limits.conf [45 Warnings]
+Warning:   Parameter "net.ipv4.conf.all.secure_redirects" not set to "0" in /etc/security/limits.conf [28 Warnings]
 
 [ Fix ]    echo "net.ipv4.conf.all.secure_redirects=0" >> /etc/security/limits.conf
 
 Checking:  Value of "net.ipv4.icmp_echo_ignore_broadcasts" is set to "1" in /etc/security/limits.conf
-Warning:   Parameter "net.ipv4.icmp_echo_ignore_broadcasts" not set to "1" in /etc/security/limits.conf [46 Warnings]
+Warning:   Parameter "net.ipv4.icmp_echo_ignore_broadcasts" not set to "1" in /etc/security/limits.conf [29 Warnings]
 
 [ Fix ]    echo "net.ipv4.icmp_echo_ignore_broadcasts=1" >> /etc/security/limits.conf
 
 Checking:  Value of "net.ipv4.conf.all.accept_redirects" is set to "0" in /etc/security/limits.conf
-Warning:   Parameter "net.ipv4.conf.all.accept_redirects" not set to "0" in /etc/security/limits.conf [47 Warnings]
+Warning:   Parameter "net.ipv4.conf.all.accept_redirects" not set to "0" in /etc/security/limits.conf [30 Warnings]
 
 [ Fix ]    echo "net.ipv4.conf.all.accept_redirects=0" >> /etc/security/limits.conf
 
 Checking:  Value of "net.ipv4.conf.default.accept_redirects" is set to "0" in /etc/security/limits.conf
-Warning:   Parameter "net.ipv4.conf.default.accept_redirects" not set to "0" in /etc/security/limits.conf [48 Warnings]
+Warning:   Parameter "net.ipv4.conf.default.accept_redirects" not set to "0" in /etc/security/limits.conf [31 Warnings]
 
 [ Fix ]    echo "net.ipv4.conf.default.accept_redirects=0" >> /etc/security/limits.conf
 
 Checking:  Value of "net.ipv4.tcp_syncookies" is set to "1" in /etc/security/limits.conf
-Warning:   Parameter "net.ipv4.tcp_syncookies" not set to "1" in /etc/security/limits.conf [49 Warnings]
+Warning:   Parameter "net.ipv4.tcp_syncookies" not set to "1" in /etc/security/limits.conf [32 Warnings]
 
 [ Fix ]    echo "net.ipv4.tcp_syncookies=1" >> /etc/security/limits.conf
 
 Checking:  Value of "net.ipv4.tcp_max_syn_backlog" is set to "4096" in /etc/security/limits.conf
-Warning:   Parameter "net.ipv4.tcp_max_syn_backlog" not set to "4096" in /etc/security/limits.conf [50 Warnings]
+Warning:   Parameter "net.ipv4.tcp_max_syn_backlog" not set to "4096" in /etc/security/limits.conf [33 Warnings]
 
 [ Fix ]    echo "net.ipv4.tcp_max_syn_backlog=4096" >> /etc/security/limits.conf
 
 Checking:  Value of "net.ipv4.conf.all.rp_filter" is set to "1" in /etc/security/limits.conf
-Warning:   Parameter "net.ipv4.conf.all.rp_filter" not set to "1" in /etc/security/limits.conf [51 Warnings]
+Warning:   Parameter "net.ipv4.conf.all.rp_filter" not set to "1" in /etc/security/limits.conf [34 Warnings]
 
 [ Fix ]    echo "net.ipv4.conf.all.rp_filter=1" >> /etc/security/limits.conf
 
 Checking:  Value of "net.ipv4.conf.default.rp_filter" is set to "1" in /etc/security/limits.conf
-Warning:   Parameter "net.ipv4.conf.default.rp_filter" not set to "1" in /etc/security/limits.conf [52 Warnings]
+Warning:   Parameter "net.ipv4.conf.default.rp_filter" not set to "1" in /etc/security/limits.conf [35 Warnings]
 
 [ Fix ]    echo "net.ipv4.conf.default.rp_filter=1" >> /etc/security/limits.conf
 
 Checking:  Value of "net.ipv4.conf.all.accept_source_route" is set to "0" in /etc/security/limits.conf
-Warning:   Parameter "net.ipv4.conf.all.accept_source_route" not set to "0" in /etc/security/limits.conf [53 Warnings]
+Warning:   Parameter "net.ipv4.conf.all.accept_source_route" not set to "0" in /etc/security/limits.conf [36 Warnings]
 
 [ Fix ]    echo "net.ipv4.conf.all.accept_source_route=0" >> /etc/security/limits.conf
 
 Checking:  Value of "net.ipv4.conf.default.accept_source_route" is set to "0" in /etc/security/limits.conf
-Warning:   Parameter "net.ipv4.conf.default.accept_source_route" not set to "0" in /etc/security/limits.conf [54 Warnings]
+Warning:   Parameter "net.ipv4.conf.default.accept_source_route" not set to "0" in /etc/security/limits.conf [37 Warnings]
 
 [ Fix ]    echo "net.ipv4.conf.default.accept_source_route=0" >> /etc/security/limits.conf
 
 Checking:  Value of "net.ipv4.tcp_max_orphans" is set to "256" in /etc/security/limits.conf
-Warning:   Parameter "net.ipv4.tcp_max_orphans" not set to "256" in /etc/security/limits.conf [55 Warnings]
+Warning:   Parameter "net.ipv4.tcp_max_orphans" not set to "256" in /etc/security/limits.conf [38 Warnings]
 
 [ Fix ]    echo "net.ipv4.tcp_max_orphans=256" >> /etc/security/limits.conf
 
 Checking:  Value of "net.ipv4.conf.all.log_martians" is set to "1" in /etc/security/limits.conf
-Warning:   Parameter "net.ipv4.conf.all.log_martians" not set to "1" in /etc/security/limits.conf [56 Warnings]
+Warning:   Parameter "net.ipv4.conf.all.log_martians" not set to "1" in /etc/security/limits.conf [39 Warnings]
 
 [ Fix ]    echo "net.ipv4.conf.all.log_martians=1" >> /etc/security/limits.conf
 
 Checking:  Value of "net.ipv4.ip_forward" is set to "0" in /etc/security/limits.conf
-Warning:   Parameter "net.ipv4.ip_forward" not set to "0" in /etc/security/limits.conf [57 Warnings]
+Warning:   Parameter "net.ipv4.ip_forward" not set to "0" in /etc/security/limits.conf [40 Warnings]
 
 [ Fix ]    echo "net.ipv4.ip_forward=0" >> /etc/security/limits.conf
 
 Checking:  Value of "net.ipv4.conf.all.send_redirects" is set to "0" in /etc/security/limits.conf
-Warning:   Parameter "net.ipv4.conf.all.send_redirects" not set to "0" in /etc/security/limits.conf [58 Warnings]
+Warning:   Parameter "net.ipv4.conf.all.send_redirects" not set to "0" in /etc/security/limits.conf [41 Warnings]
 
 [ Fix ]    echo "net.ipv4.conf.all.send_redirects=0" >> /etc/security/limits.conf
 
 Checking:  Value of "net.ipv4.conf.default.send_redirects" is set to "0" in /etc/security/limits.conf
-Warning:   Parameter "net.ipv4.conf.default.send_redirects" not set to "0" in /etc/security/limits.conf [59 Warnings]
+Warning:   Parameter "net.ipv4.conf.default.send_redirects" not set to "0" in /etc/security/limits.conf [42 Warnings]
 
 [ Fix ]    echo "net.ipv4.conf.default.send_redirects=0" >> /etc/security/limits.conf
 
 Checking:  Value of "net.ipv4.icmp_ignore_bogus_error_responses" is set to "1" in /etc/security/limits.conf
-Warning:   Parameter "net.ipv4.icmp_ignore_bogus_error_responses" not set to "1" in /etc/security/limits.conf [60 Warnings]
+Warning:   Parameter "net.ipv4.icmp_ignore_bogus_error_responses" not set to "1" in /etc/security/limits.conf [43 Warnings]
 
 [ Fix ]    echo "net.ipv4.icmp_ignore_bogus_error_responses=1" >> /etc/security/limits.conf
 
 Checking:  Value of "net.ipv6.conf.default.accept_redirects" is set to "0" in /etc/security/limits.conf
-Warning:   Parameter "net.ipv6.conf.default.accept_redirects" not set to "0" in /etc/security/limits.conf [61 Warnings]
+Warning:   Parameter "net.ipv6.conf.default.accept_redirects" not set to "0" in /etc/security/limits.conf [44 Warnings]
 
 [ Fix ]    echo "net.ipv6.conf.default.accept_redirects=0" >> /etc/security/limits.conf
 
 Checking:  Value of "net.ipv6.conf.all.accept_ra" is set to "0" in /etc/security/limits.conf
-Warning:   Parameter "net.ipv6.conf.all.accept_ra" not set to "0" in /etc/security/limits.conf [62 Warnings]
+Warning:   Parameter "net.ipv6.conf.all.accept_ra" not set to "0" in /etc/security/limits.conf [45 Warnings]
 
 [ Fix ]    echo "net.ipv6.conf.all.accept_ra=0" >> /etc/security/limits.conf
 
 Checking:  Value of "net.ipv6.conf.default.accept_ra" is set to "0" in /etc/security/limits.conf
-Warning:   Parameter "net.ipv6.conf.default.accept_ra" not set to "0" in /etc/security/limits.conf [63 Warnings]
+Warning:   Parameter "net.ipv6.conf.default.accept_ra" not set to "0" in /etc/security/limits.conf [46 Warnings]
 
 [ Fix ]    echo "net.ipv6.conf.default.accept_ra=0" >> /etc/security/limits.conf
 
 Checking:  Value of "net.ipv6.route.flush" is set to "1" in /etc/security/limits.conf
-Warning:   Parameter "net.ipv6.route.flush" not set to "1" in /etc/security/limits.conf [64 Warnings]
+Warning:   Parameter "net.ipv6.route.flush" not set to "1" in /etc/security/limits.conf [47 Warnings]
 
 [ Fix ]    echo "net.ipv6.route.flush=1" >> /etc/security/limits.conf
 
 Checking:  Value of "kernel.exec-shield" is set to "1" in /etc/security/limits.conf
-Warning:   Parameter "kernel.exec-shield" not set to "1" in /etc/security/limits.conf [65 Warnings]
+Warning:   Parameter "kernel.exec-shield" not set to "1" in /etc/security/limits.conf [48 Warnings]
 
 [ Fix ]    echo "kernel.exec-shield=1" >> /etc/security/limits.conf
 
 Checking:  File permissions on /etc/security/limits.conf
-Warning:   File /etc/security/limits.conf has incorrect permissions [66 Warnings]
+Warning:   File /etc/security/limits.conf has incorrect permissions [49 Warnings]
 
 [ Fix ]    chmod 0600 /etc/security/limits.conf
 [ Fix ]    chown root:root /etc/security/limits.conf
 
 Sections 1.6.1.1-3 => SELinux
 Checking:  Value of "SELINUX" is set to "enforcing" in /etc/selinux/config
-Warning:   Parameter "SELINUX" not set to "enforcing" in /etc/selinux/config [67 Warnings]
+Warning:   Parameter "SELINUX" not set to "enforcing" in /etc/selinux/config [50 Warnings]
 
 [ Fix ]    echo "SELINUX=enforcing" >> /etc/selinux/config
 
 Checking:  Value of "SELINUXTYPE" is set to "targeted" in /etc/selinux/config
-Warning:   Parameter "SELINUXTYPE" not set to "targeted" in /etc/selinux/config [68 Warnings]
+Warning:   Parameter "SELINUXTYPE" not set to "targeted" in /etc/selinux/config [51 Warnings]
 
 [ Fix ]    echo "SELINUXTYPE=targeted" >> /etc/selinux/config
 
 Checking:  File permissions on /etc/selinux/config
 Notice:    File /etc/selinux/config does not exist
 Checking:  File permissions on /boot/grub/grub.cfg
-Warning:   File /boot/grub/grub.cfg has incorrect permissions [69 Warnings]
+Warning:   File /boot/grub/grub.cfg has incorrect permissions [52 Warnings]
 
 [ Fix ]    chmod 0400 /boot/grub/grub.cfg
 [ Fix ]    chown root:root /boot/grub/grub.cfg
 
 Checking:  Value of "selinux" is set to "1" in /boot/grub/grub.cfg
-Warning:   Parameter "selinux" not set to "1" in /boot/grub/grub.cfg [70 Warnings]
+Warning:   Parameter "selinux" not set to "1" in /boot/grub/grub.cfg [53 Warnings]
 
 [ Fix ]    echo "selinux=1" >> /boot/grub/grub.cfg
 
 Checking:  Value of "enforcing" is set to "1" in /boot/grub/grub.cfg
-Warning:   Parameter "enforcing" not set to "1" in /boot/grub/grub.cfg [71 Warnings]
+Warning:   Parameter "enforcing" not set to "1" in /boot/grub/grub.cfg [54 Warnings]
 
 [ Fix ]    echo "enforcing=1" >> /boot/grub/grub.cfg
 
 Sections 1.6.2.1, 1.6.3: AppArmour
 Checking if package is apparmour installed
 Checking:  Package apparmour is installed
-Warning:   Package apparmour is not installed [72 Warnings]
+Warning:   Package apparmour is not installed [55 Warnings]
 
 [ Fix ]    echo "* hard core 0" >> /etc/security/limits.conf
 
-Secure:    AppArmour enabled [8 Passes]
+Secure:    AppArmour enabled [10 Passes]
 Sections 1.7.1.1-6 => Security Warning Message
 Checking:  File permissions on /etc/issue
-Warning:   File /etc/issue has incorrect permissions [73 Warnings]
+Warning:   File /etc/issue has incorrect permissions [56 Warnings]
 
 [ Fix ]    chmod 0644 /etc/issue
 [ Fix ]    chown root:root /etc/issue
 
 Checking:  Security message in /etc/issue
-Warning:   No security message in /etc/issue [74 Warnings]
+Warning:   No security message in /etc/issue [57 Warnings]
 Checking:  File permissions on /etc/motd
 Notice:    File /etc/motd does not exist
 Checking:  Security message in /etc/motd
-Warning:   No security message in /etc/motd [75 Warnings]
+Warning:   No security message in /etc/motd [58 Warnings]
 Checking:  File permissions on /etc/issue.net
-Warning:   File /etc/issue.net has incorrect permissions [76 Warnings]
+Warning:   File /etc/issue.net has incorrect permissions [59 Warnings]
 
 [ Fix ]    chmod 0644 /etc/issue.net
 [ Fix ]    chown root:root /etc/issue.net
 
 Checking:  Security message in /etc/issue.net
-Warning:   No security message in /etc/issue.net [77 Warnings]
+Warning:   No security message in /etc/issue.net [60 Warnings]
 Legacy Inet/Init Services
 Inet Services
 Init Services
 Section 2.2.1.1 => Network Time Protocol
 Checking if package is ntp installed
 Checking:  Package ntp is installed
-Secure:    Package ntp is installed [9 Passes]
+Secure:    Package ntp is installed [11 Passes]
 
 [ Fix ]    echo "* hard core 0" >> /etc/security/limits.conf
 
 Checking if package is chrony installed
 Checking:  Package chrony is installed
-Warning:   Package chrony is not installed [78 Warnings]
+Warning:   Package chrony is not installed [61 Warnings]
 
 [ Fix ]    echo "* hard core 0" >> /etc/security/limits.conf
 
 Checking:  Value of "OPTIONS" is set to ""-u chrony"" in /etc/sysconfig/chronyd
-Warning:   Parameter "OPTIONS" not set to ""-u chrony"" in /etc/sysconfig/chronyd [79 Warnings]
+Warning:   Parameter "OPTIONS" not set to ""-u chrony"" in /etc/sysconfig/chronyd [62 Warnings]
 
 [ Fix ]    echo "OPTIONS="-u chrony"" >> /etc/sysconfig/chronyd
 
 Checking:  Value of "ExecStart" is set to "/usr/sbin/ntpd -u ntp:ntp " in /usr/lib/systemd/system/ntpd.service
-Warning:   Parameter "ExecStart" not set to "/usr/sbin/ntpd -u ntp:ntp " in /usr/lib/systemd/system/ntpd.service [80 Warnings]
+Warning:   Parameter "ExecStart" not set to "/usr/sbin/ntpd -u ntp:ntp " in /usr/lib/systemd/system/ntpd.service [63 Warnings]
 
 [ Fix ]    echo "ExecStart=/usr/sbin/ntpd -u ntp:ntp " >> /usr/lib/systemd/system/ntpd.service
 
 Checking:  NTP is enabled
-Warning:   NTP not enabled [81 Warnings]
+Warning:   NTP not enabled [64 Warnings]
 Parameter "restrict default kod nomodify nopeer notrap noquery" is set in /usr/lib/systemd/system/ntpd.service
-Warning:   Parameter "restrict default kod nomodify nopeer notrap noquery" does not exist in /usr/lib/systemd/system/ntpd.service [82 Warnings]
+Warning:   Parameter "restrict default kod nomodify nopeer notrap noquery" does not exist in /usr/lib/systemd/system/ntpd.service [65 Warnings]
 [ Fix ]    echo "restrict default kod nomodify nopeer notrap noquery" >> /usr/lib/systemd/system/ntpd.service
 Parameter "restrict -6 default kod nomodify nopeer notrap noquery" is set in /usr/lib/systemd/system/ntpd.service
-Warning:   Parameter "restrict -6 default kod nomodify nopeer notrap noquery" does not exist in /usr/lib/systemd/system/ntpd.service [83 Warnings]
+Warning:   Parameter "restrict -6 default kod nomodify nopeer notrap noquery" does not exist in /usr/lib/systemd/system/ntpd.service [66 Warnings]
 [ Fix ]    echo "restrict -6 default kod nomodify nopeer notrap noquery" >> /usr/lib/systemd/system/ntpd.service
 Checking:  Value of "OPTIONS" is set to ""-u ntp:ntp -p /var/run/ntpd.pid"" in /usr/lib/systemd/system/ntpd.service
-Warning:   Parameter "OPTIONS" not set to ""-u ntp:ntp -p /var/run/ntpd.pid"" in /usr/lib/systemd/system/ntpd.service [84 Warnings]
+Warning:   Parameter "OPTIONS" not set to ""-u ntp:ntp -p /var/run/ntpd.pid"" in /usr/lib/systemd/system/ntpd.service [67 Warnings]
 
 [ Fix ]    echo "OPTIONS="-u ntp:ntp -p /var/run/ntpd.pid"" >> /usr/lib/systemd/system/ntpd.service
 
 Checking:  Value of "server" is set to "0.en.pool.ntp.org" in /etc/chrony/chrony.conf
-Warning:   Parameter "server" not set to "0.en.pool.ntp.org" in /etc/chrony/chrony.conf [85 Warnings]
+Warning:   Parameter "server" not set to "0.en.pool.ntp.org" in /etc/chrony/chrony.conf [68 Warnings]
 
 [ Fix ]    echo "server 0.en.pool.ntp.org" >> /etc/chrony/chrony.conf
 
 Checking:  Value of "server" is set to "1.en.pool.ntp.org" in /etc/chrony/chrony.conf
-Warning:   Parameter "server" not set to "1.en.pool.ntp.org" in /etc/chrony/chrony.conf [86 Warnings]
+Warning:   Parameter "server" not set to "1.en.pool.ntp.org" in /etc/chrony/chrony.conf [69 Warnings]
 
 [ Fix ]    echo "server 1.en.pool.ntp.org" >> /etc/chrony/chrony.conf
 
 Checking:  Value of "server" is set to "2.en.pool.ntp.org" in /etc/chrony/chrony.conf
-Warning:   Parameter "server" not set to "2.en.pool.ntp.org" in /etc/chrony/chrony.conf [87 Warnings]
+Warning:   Parameter "server" not set to "2.en.pool.ntp.org" in /etc/chrony/chrony.conf [70 Warnings]
 
 [ Fix ]    echo "server 2.en.pool.ntp.org" >> /etc/chrony/chrony.conf
 
 Checking:  Value of "server" is set to "3.en.pool.ntp.org" in /etc/chrony/chrony.conf
-Warning:   Parameter "server" not set to "3.en.pool.ntp.org" in /etc/chrony/chrony.conf [88 Warnings]
+Warning:   Parameter "server" not set to "3.en.pool.ntp.org" in /etc/chrony/chrony.conf [71 Warnings]
 
 [ Fix ]    echo "server 3.en.pool.ntp.org" >> /etc/chrony/chrony.conf
 
 Checking:  Value of "server" is set to "0.en.pool.ntp.org" in /etc/ntp.conf
-Warning:   Parameter "server" not set to "0.en.pool.ntp.org" in /etc/ntp.conf [89 Warnings]
+Warning:   Parameter "server" not set to "0.en.pool.ntp.org" in /etc/ntp.conf [72 Warnings]
 
 [ Fix ]    echo "server 0.en.pool.ntp.org" >> /etc/ntp.conf
 
 Checking:  Value of "server" is set to "1.en.pool.ntp.org" in /etc/ntp.conf
-Warning:   Parameter "server" not set to "1.en.pool.ntp.org" in /etc/ntp.conf [90 Warnings]
+Warning:   Parameter "server" not set to "1.en.pool.ntp.org" in /etc/ntp.conf [73 Warnings]
 
 [ Fix ]    echo "server 1.en.pool.ntp.org" >> /etc/ntp.conf
 
 Checking:  Value of "server" is set to "2.en.pool.ntp.org" in /etc/ntp.conf
-Warning:   Parameter "server" not set to "2.en.pool.ntp.org" in /etc/ntp.conf [91 Warnings]
+Warning:   Parameter "server" not set to "2.en.pool.ntp.org" in /etc/ntp.conf [74 Warnings]
 
 [ Fix ]    echo "server 2.en.pool.ntp.org" >> /etc/ntp.conf
 
 Checking:  Value of "server" is set to "3.en.pool.ntp.org" in /etc/ntp.conf
-Warning:   Parameter "server" not set to "3.en.pool.ntp.org" in /etc/ntp.conf [92 Warnings]
+Warning:   Parameter "server" not set to "3.en.pool.ntp.org" in /etc/ntp.conf [75 Warnings]
 
 [ Fix ]    echo "server 3.en.pool.ntp.org" >> /etc/ntp.conf
 
 Section 2.2.3 => Avahi Server
 Checking:  Service avahi-daemon is disabled
-Warning:   Service avahi-daemon is not disabled [93 Warnings]
-[ Fix ]    echo "avahi-daemon,enabled" >> /home/plamen/.ubuntu-audit/08_02_2018_20_19_29/systemctl.log ; systemctl avahi-daemon disable
+Warning:   Service avahi-daemon is not disabled [76 Warnings]
+[ Fix ]    echo "avahi-daemon,enabled" >> /home/plamen/.ubuntu-audit/09_02_2018_01_29_12/systemctl.log ; systemctl avahi-daemon disable
+Section 2.2.4: Printing Services
+Checking:  File permissions on /etc/init.d/cups
+Warning:   File /etc/init.d/cups has incorrect permissions [77 Warnings]
+
+[ Fix ]    chmod 0744 /etc/init.d/cups
+[ Fix ]    chown root:root /etc/init.d/cups
+
+Checking:  File permissions on /etc/cups/cupsd.conf
+Warning:   File /etc/cups/cupsd.conf has incorrect permissions [78 Warnings]
+
+[ Fix ]    chmod 0600 /etc/cups/cupsd.conf
+[ Fix ]    chown lp:sys /etc/cups/cupsd.conf
+
+Checking:  File permissions on /etc/cups/client.conf
+Notice:    File /etc/cups/client.conf does not exist
+Checking:  Value of "User" is set to "lp" in /etc/cups/cupsd.conf
+Warning:   Parameter "User" not set to "lp" in /etc/cups/cupsd.conf [79 Warnings]
+
+[ Fix ]    echo "User lp" >> /etc/cups/cupsd.conf
+
+Checking:  Value of "Group" is set to "sys" in /etc/cups/cupsd.conf
+Warning:   Parameter "Group" not set to "sys" in /etc/cups/cupsd.conf [80 Warnings]
+
+[ Fix ]    echo "Group sys" >> /etc/cups/cupsd.conf
+
+Checking:  Service cups is disabled
+Warning:   Service cups is not disabled [81 Warnings]
+[ Fix ]    echo "cups,enabled" >> /home/plamen/.ubuntu-audit/09_02_2018_01_29_12/systemctl.log ; systemctl cups disable
 Section 2.2.5: DHCP Server
 Checking:  Service dhcpd is disabled
 Checking if package is dhcp uninstalled
 Checking:  Package dhcp is installed
-Secure:    Package dhcp is uninstalled [10 Passes]
+Secure:    Package dhcp is uninstalled [12 Passes]
 
-[ Fix ]    echo "avahi-daemon,enabled" >> /home/plamen/.ubuntu-audit/08_02_2018_20_19_29/systemctl.log ; systemctl avahi-daemon disable
+[ Fix ]    echo "cups,enabled" >> /home/plamen/.ubuntu-audit/09_02_2018_01_29_12/systemctl.log ; systemctl cups disable
 
+Section 2.2.6: LDAP Server
 Checking:  Service slapd is disabled
 Checking if package is openldap-clients uninstalled
 Checking:  Package openldap-clients is installed
-Secure:    Package openldap-clients is uninstalled [11 Passes]
+Secure:    Package openldap-clients is uninstalled [13 Passes]
 
-[ Fix ]    echo "avahi-daemon,enabled" >> /home/plamen/.ubuntu-audit/08_02_2018_20_19_29/systemctl.log ; systemctl avahi-daemon disable
+[ Fix ]    echo "cups,enabled" >> /home/plamen/.ubuntu-audit/09_02_2018_01_29_12/systemctl.log ; systemctl cups disable
 
 Section 2.2.7: NFS Services
 Checking:  Service nfs is disabled
@@ -640,242 +601,424 @@ Section 2.2.9: FTP Daemon
 Checking:  Service vsftpd is disabled
 Checking if package is vsftpd uninstalled
 Checking:  Package vsftpd is installed
-Secure:    Package vsftpd is uninstalled [12 Passes]
+Secure:    Package vsftpd is uninstalled [14 Passes]
 
-[ Fix ]    echo "avahi-daemon,enabled" >> /home/plamen/.ubuntu-audit/08_02_2018_20_19_29/systemctl.log ; systemctl avahi-daemon disable
+[ Fix ]    echo "cups,enabled" >> /home/plamen/.ubuntu-audit/09_02_2018_01_29_12/systemctl.log ; systemctl cups disable
 
 Sections 2.2.10,13 - Apache and web based services
 Checking:  Service httpd is disabled
 Checking if package is httpd uninstalled
 Checking:  Package httpd is installed
-Secure:    Package httpd is uninstalled [13 Passes]
+Secure:    Package httpd is uninstalled [15 Passes]
 
-[ Fix ]    echo "avahi-daemon,enabled" >> /home/plamen/.ubuntu-audit/08_02_2018_20_19_29/systemctl.log ; systemctl avahi-daemon disable
+[ Fix ]    echo "cups,enabled" >> /home/plamen/.ubuntu-audit/09_02_2018_01_29_12/systemctl.log ; systemctl cups disable
 
 Checking:  Service apache is disabled
 Checking if package is apache uninstalled
 Checking:  Package apache is installed
-Secure:    Package apache is uninstalled [14 Passes]
+Secure:    Package apache is uninstalled [16 Passes]
 
-[ Fix ]    echo "avahi-daemon,enabled" >> /home/plamen/.ubuntu-audit/08_02_2018_20_19_29/systemctl.log ; systemctl avahi-daemon disable
+[ Fix ]    echo "cups,enabled" >> /home/plamen/.ubuntu-audit/09_02_2018_01_29_12/systemctl.log ; systemctl cups disable
 
 Checking:  Service apache2 is disabled
 Checking if package is apache2 uninstalled
 Checking:  Package apache2 is installed
-Secure:    Package apache2 is uninstalled [15 Passes]
+Secure:    Package apache2 is uninstalled [17 Passes]
 
-[ Fix ]    echo "avahi-daemon,enabled" >> /home/plamen/.ubuntu-audit/08_02_2018_20_19_29/systemctl.log ; systemctl avahi-daemon disable
+[ Fix ]    echo "cups,enabled" >> /home/plamen/.ubuntu-audit/09_02_2018_01_29_12/systemctl.log ; systemctl cups disable
 
 Checking:  Service tomcat5 is disabled
 Checking if package is tomcat5 uninstalled
 Checking:  Package tomcat5 is installed
-Secure:    Package tomcat5 is uninstalled [16 Passes]
+Secure:    Package tomcat5 is uninstalled [18 Passes]
 
-[ Fix ]    echo "avahi-daemon,enabled" >> /home/plamen/.ubuntu-audit/08_02_2018_20_19_29/systemctl.log ; systemctl avahi-daemon disable
+[ Fix ]    echo "cups,enabled" >> /home/plamen/.ubuntu-audit/09_02_2018_01_29_12/systemctl.log ; systemctl cups disable
 
 Checking:  Service squid is disabled
 Checking if package is squid uninstalled
 Checking:  Package squid is installed
-Warning:   Package squid is not uninstalled [94 Warnings]
+Warning:   Package squid is not uninstalled [82 Warnings]
 
-[ Fix ]    echo "avahi-daemon,enabled" >> /home/plamen/.ubuntu-audit/08_02_2018_20_19_29/systemctl.log ; systemctl avahi-daemon disable
+[ Fix ]    echo "cups,enabled" >> /home/plamen/.ubuntu-audit/09_02_2018_01_29_12/systemctl.log ; systemctl cups disable
 
 Checking:  Service prixovy is disabled
 Checking if package is prixovy uninstalled
 Checking:  Package prixovy is installed
-Secure:    Package prixovy is uninstalled [17 Passes]
+Secure:    Package prixovy is uninstalled [19 Passes]
 
-[ Fix ]    echo "avahi-daemon,enabled" >> /home/plamen/.ubuntu-audit/08_02_2018_20_19_29/systemctl.log ; systemctl avahi-daemon disable
+[ Fix ]    echo "cups,enabled" >> /home/plamen/.ubuntu-audit/09_02_2018_01_29_12/systemctl.log ; systemctl cups disable
 
 Section 2.2.11: Mail Daemons
 Checking:  Service cyrus is disabled
 Checking if package is cyrus uninstalled
 Checking:  Package cyrus is installed
-Secure:    Package cyrus is uninstalled [18 Passes]
+Secure:    Package cyrus is uninstalled [20 Passes]
 
-[ Fix ]    echo "avahi-daemon,enabled" >> /home/plamen/.ubuntu-audit/08_02_2018_20_19_29/systemctl.log ; systemctl avahi-daemon disable
+[ Fix ]    echo "cups,enabled" >> /home/plamen/.ubuntu-audit/09_02_2018_01_29_12/systemctl.log ; systemctl cups disable
 
 Checking:  Service imapd is disabled
 Checking if package is imapd uninstalled
 Checking:  Package imapd is installed
-Secure:    Package imapd is uninstalled [19 Passes]
+Secure:    Package imapd is uninstalled [21 Passes]
 
-[ Fix ]    echo "avahi-daemon,enabled" >> /home/plamen/.ubuntu-audit/08_02_2018_20_19_29/systemctl.log ; systemctl avahi-daemon disable
+[ Fix ]    echo "cups,enabled" >> /home/plamen/.ubuntu-audit/09_02_2018_01_29_12/systemctl.log ; systemctl cups disable
 
 Checking:  Service qpopper is disabled
 Checking if package is qpopper uninstalled
 Checking:  Package qpopper is installed
-Secure:    Package qpopper is uninstalled [20 Passes]
+Secure:    Package qpopper is uninstalled [22 Passes]
 
-[ Fix ]    echo "avahi-daemon,enabled" >> /home/plamen/.ubuntu-audit/08_02_2018_20_19_29/systemctl.log ; systemctl avahi-daemon disable
+[ Fix ]    echo "cups,enabled" >> /home/plamen/.ubuntu-audit/09_02_2018_01_29_12/systemctl.log ; systemctl cups disable
 
 Checking:  Service dovecot is disabled
 Checking if package is dovecot uninstalled
 Checking:  Package dovecot is installed
-Secure:    Package dovecot is uninstalled [21 Passes]
+Secure:    Package dovecot is uninstalled [23 Passes]
 
-[ Fix ]    echo "avahi-daemon,enabled" >> /home/plamen/.ubuntu-audit/08_02_2018_20_19_29/systemctl.log ; systemctl avahi-daemon disable
+[ Fix ]    echo "cups,enabled" >> /home/plamen/.ubuntu-audit/09_02_2018_01_29_12/systemctl.log ; systemctl cups disable
 
 Sections 2.2.12: Samba Daemons
 Checking:  Service smb is disabled
 Checking if package is samba uninstalled
 Checking:  Package samba is installed
-Warning:   Package samba is not uninstalled [95 Warnings]
+Warning:   Package samba is not uninstalled [83 Warnings]
 
-[ Fix ]    echo "avahi-daemon,enabled" >> /home/plamen/.ubuntu-audit/08_02_2018_20_19_29/systemctl.log ; systemctl avahi-daemon disable
+[ Fix ]    echo "cups,enabled" >> /home/plamen/.ubuntu-audit/09_02_2018_01_29_12/systemctl.log ; systemctl cups disable
 
 Checking:  Value of "restrict anonymous" is set to "2" in /etc/samba/smb.conf
-Warning:   Parameter "restrict anonymous" not set to "2" in /etc/samba/smb.conf [96 Warnings]
+Warning:   Parameter "restrict anonymous" not set to "2" in /etc/samba/smb.conf [84 Warnings]
 
 [ Fix ]    cat /etc/samba/smb.conf |sed "s,\[Global\],&\nrestrict anonymous=2," > /opt/Eniwareubuntu-audit/tmp/temp_file
 [ Fix ]    cat /opt/Eniwareubuntu-audit/tmp/temp_file > /etc/samba/smb.conf
 
 Checking:  Value of "guest OK" is set to "no" in /etc/samba/smb.conf
-Warning:   Parameter "guest OK" not set to "no" in /etc/samba/smb.conf [97 Warnings]
+Warning:   Parameter "guest OK" not set to "no" in /etc/samba/smb.conf [85 Warnings]
 
 [ Fix ]    cat /etc/samba/smb.conf |sed "s,\[Global\],&\nguest OK=no," > /opt/Eniwareubuntu-audit/tmp/temp_file
 [ Fix ]    cat /opt/Eniwareubuntu-audit/tmp/temp_file > /etc/samba/smb.conf
 
 Checking:  Value of "client ntlmv2 auth" is set to "yes" in /etc/samba/smb.conf
-Warning:   Parameter "client ntlmv2 auth" not set to "yes" in /etc/samba/smb.conf [98 Warnings]
+Warning:   Parameter "client ntlmv2 auth" not set to "yes" in /etc/samba/smb.conf [86 Warnings]
 
 [ Fix ]    cat /etc/samba/smb.conf |sed "s,\[Global\],&\nclient ntlmv2 auth=yes," > /opt/Eniwareubuntu-audit/tmp/temp_file
 [ Fix ]    cat /opt/Eniwareubuntu-audit/tmp/temp_file > /etc/samba/smb.conf
 
 2.2.14: SNMP Daemons and Log Permissions
 Checking:  Value of "inet_interfaces" is set to "localhost" in /etc/postfix/main.cf
-Warning:   Parameter "inet_interfaces" not set to "localhost" in /etc/postfix/main.cf [99 Warnings]
+Warning:   Parameter "inet_interfaces" not set to "localhost" in /etc/postfix/main.cf [87 Warnings]
 
 [ Fix ]    echo "inet_interfaces=localhost" >> /etc/postfix/main.cf
 
 Section 2.2.16: RSync Service
 Checking:  Service rsync is disabled
-Secure:    Service rsync is disabled [22 Passes]
+Secure:    Service rsync is disabled [24 Passes]
 Section 2.2.17: NIS Server Daemons
 Checking:  Service nis is disabled
 Section 2.3.1: NIS Client Daemons
 Checking:  Service ypbind is disabled
 Checking if package is ypbind uninstalled
 Checking:  Package ypbind is installed
-Secure:    Package ypbind is uninstalled [23 Passes]
+Secure:    Package ypbind is uninstalled [25 Passes]
 
-[ Fix ]    echo "avahi-daemon,enabled" >> /home/plamen/.ubuntu-audit/08_02_2018_20_19_29/systemctl.log ; systemctl avahi-daemon disable
+[ Fix ]    echo "cups,enabled" >> /home/plamen/.ubuntu-audit/09_02_2018_01_29_12/systemctl.log ; systemctl cups disable
 
 Checking:  Service nis is disabled
 Checking if package is nis uninstalled
 Checking:  Package nis is installed
-Warning:   Package nis is not uninstalled [100 Warnings]
+Warning:   Package nis is not uninstalled [88 Warnings]
 
-[ Fix ]    echo "avahi-daemon,enabled" >> /home/plamen/.ubuntu-audit/08_02_2018_20_19_29/systemctl.log ; systemctl avahi-daemon disable
+[ Fix ]    echo "cups,enabled" >> /home/plamen/.ubuntu-audit/09_02_2018_01_29_12/systemctl.log ; systemctl cups disable
 
 section 2.3.2: RSH Client
 Checking if package is rsh uninstalled
 Checking:  Package rsh is installed
-Secure:    Package rsh is uninstalled [24 Passes]
+Secure:    Package rsh is uninstalled [26 Passes]
 
-[ Fix ]    echo "avahi-daemon,enabled" >> /home/plamen/.ubuntu-audit/08_02_2018_20_19_29/systemctl.log ; systemctl avahi-daemon disable
+[ Fix ]    echo "cups,enabled" >> /home/plamen/.ubuntu-audit/09_02_2018_01_29_12/systemctl.log ; systemctl cups disable
 
 Section 2.3: Talk Client
 Checking if package is tal uninstalled
 Checking:  Package tal is installed
-Secure:    Package tal is uninstalled [25 Passes]
+Secure:    Package tal is uninstalled [27 Passes]
 
-[ Fix ]    echo "avahi-daemon,enabled" >> /home/plamen/.ubuntu-audit/08_02_2018_20_19_29/systemctl.log ; systemctl avahi-daemon disable
+[ Fix ]    echo "cups,enabled" >> /home/plamen/.ubuntu-audit/09_02_2018_01_29_12/systemctl.log ; systemctl cups disable
 
 Section 2.3.4: Telnet Client
 Checking if package is telnet uninstalled
 Checking:  Package telnet is installed
-Warning:   Package telnet is not uninstalled [101 Warnings]
+Warning:   Package telnet is not uninstalled [89 Warnings]
 
-[ Fix ]    echo "avahi-daemon,enabled" >> /home/plamen/.ubuntu-audit/08_02_2018_20_19_29/systemctl.log ; systemctl avahi-daemon disable
+[ Fix ]    echo "cups,enabled" >> /home/plamen/.ubuntu-audit/09_02_2018_01_29_12/systemctl.log ; systemctl cups disable
 
 Section 2.3.5: LDAP Client
 Checking if package is openldap-clients uninstalled
 Checking:  Package openldap-clients is installed
-Secure:    Package openldap-clients is uninstalled [26 Passes]
+Secure:    Package openldap-clients is uninstalled [28 Passes]
 
-[ Fix ]    echo "avahi-daemon,enabled" >> /home/plamen/.ubuntu-audit/08_02_2018_20_19_29/systemctl.log ; systemctl avahi-daemon disable
+[ Fix ]    echo "cups,enabled" >> /home/plamen/.ubuntu-audit/09_02_2018_01_29_12/systemctl.log ; systemctl cups disable
 
 Sections 3.4.1-5: TCP Wrappers
 Checking:  Value of "ALL" is set to " ALL" in /etc/hosts.deny
-Warning:   Parameter "ALL" not set to " ALL" in /etc/hosts.deny [102 Warnings]
+Warning:   Parameter "ALL" not set to " ALL" in /etc/hosts.deny [90 Warnings]
 
 [ Fix ]    echo "ALL: ALL" >> /etc/hosts.deny
 
 Checking:  Value of "ALL" is set to " localhost" in /etc/hosts.allow
-Warning:   Parameter "ALL" not set to " localhost" in /etc/hosts.allow [103 Warnings]
+Warning:   Parameter "ALL" not set to " localhost" in /etc/hosts.allow [91 Warnings]
 
 [ Fix ]    echo "ALL: localhost" >> /etc/hosts.allow
 
 Checking:  Value of "ALL" is set to " 127.0.0.1" in /etc/hosts.allow
-Warning:   Parameter "ALL" not set to " 127.0.0.1" in /etc/hosts.allow [104 Warnings]
+Warning:   Parameter "ALL" not set to " 127.0.0.1" in /etc/hosts.allow [92 Warnings]
 
 [ Fix ]    echo "ALL: 127.0.0.1" >> /etc/hosts.allow
 
 Checking:  File permissions on /etc/hosts.deny
-Warning:   File /etc/hosts.deny has incorrect permissions [105 Warnings]
+Warning:   File /etc/hosts.deny has incorrect permissions [93 Warnings]
 
 [ Fix ]    chmod 0644 /etc/hosts.deny
 [ Fix ]    chown root:root /etc/hosts.deny
 
 Checking:  File permissions on /etc/hosts.allow
-Warning:   File /etc/hosts.allow has incorrect permissions [106 Warnings]
+Warning:   File /etc/hosts.allow has incorrect permissions [94 Warnings]
 
 [ Fix ]    chmod 0644 /etc/hosts.allow
 [ Fix ]    chown root:root /etc/hosts.allow
 
 Checking if package is tcpd installed
 Checking:  Package tcpd is installed
-Secure:    Package tcpd is installed [27 Passes]
+Secure:    Package tcpd is installed [29 Passes]
 
-[ Fix ]    echo "avahi-daemon,enabled" >> /home/plamen/.ubuntu-audit/08_02_2018_20_19_29/systemctl.log ; systemctl avahi-daemon disable
+[ Fix ]    echo "cups,enabled" >> /home/plamen/.ubuntu-audit/09_02_2018_01_29_12/systemctl.log ; systemctl cups disable
 
 Sections 3.6.1-3: IP Tables
 Checking if package is iptables installed
 Checking:  Package iptables is installed
-Secure:    Package iptables is installed [28 Passes]
+Secure:    Package iptables is installed [30 Passes]
 
-[ Fix ]    echo "avahi-daemon,enabled" >> /home/plamen/.ubuntu-audit/08_02_2018_20_19_29/systemctl.log ; systemctl avahi-daemon disable
+[ Fix ]    echo "cups,enabled" >> /home/plamen/.ubuntu-audit/09_02_2018_01_29_12/systemctl.log ; systemctl cups disable
 
 Checking:  Service iptables is enabled
 Checking:  Service ip6tables is enabled
-Warning:   All other devices allow trafic to the loopback network [107 Warnings]
+Warning:   All other devices allow trafic to the loopback network [95 Warnings]
+Sections 4.1.1.1-3, 4.1.2-18: System Accounting
+Parameter "-w /var/log/sudo.log -p wa -k actions" is set in /etc/audit/audit.rules
+Warning:   Parameter "-w /var/log/sudo.log -p wa -k actions" does not exist in /etc/audit/audit.rules [96 Warnings]
+[ Fix ]    echo "-w /var/log/sudo.log -p wa -k actions" >> /etc/audit/audit.rules
+Checking if package is sysstat uninstalled
+Checking:  Package sysstat is installed
+Warning:   Package sysstat is not uninstalled [97 Warnings]
+
+[ Fix ]    echo "-w /var/log/sudo.log -p wa -k actions" >> /etc/audit/audit.rules
+
+Checking:  Value of "ENABLED" is set to "true" in /etc/default/sysstat
+Warning:   Parameter "ENABLED" not set to "true" in /etc/default/sysstat [98 Warnings]
+
+[ Fix ]    echo "ENABLED=true" >> /etc/default/sysstat
+
+Warning:   System accounting not enabled [99 Warnings]
+
+[ Fix ]    apt-get install sysstat
+
+Parameter "-f 1" is set in /etc/audit/audit.rules
+Warning:   Parameter "-f 1" does not exist in /etc/audit/audit.rules [100 Warnings]
+[ Fix ]    echo "-f 1" >> /etc/audit/audit.rules
+Parameter "-a always,exit -F arch=b32 -S adjtimex -S settimeofday -S stime -k time-change" is set in /etc/audit/audit.rules
+Warning:   Parameter "-a always,exit -F arch=b32 -S adjtimex -S settimeofday -S stime -k time-change" does not exist in /etc/audit/audit.rules [101 Warnings]
+[ Fix ]    echo "-a always,exit -F arch=b32 -S adjtimex -S settimeofday -S stime -k time-change" >> /etc/audit/audit.rules
+Parameter "-a always,exit -F arch=b64 -S adjtimex -S settimeofday -k time-change" is set in /etc/audit/audit.rules
+Warning:   Parameter "-a always,exit -F arch=b64 -S adjtimex -S settimeofday -k time-change" does not exist in /etc/audit/audit.rules [102 Warnings]
+[ Fix ]    echo "-a always,exit -F arch=b64 -S adjtimex -S settimeofday -k time-change" >> /etc/audit/audit.rules
+Parameter "-a always,exit -F arch=b32 -S clock_settime -k time-change" is set in /etc/audit/audit.rules
+Warning:   Parameter "-a always,exit -F arch=b32 -S clock_settime -k time-change" does not exist in /etc/audit/audit.rules [103 Warnings]
+[ Fix ]    echo "-a always,exit -F arch=b32 -S clock_settime -k time-change" >> /etc/audit/audit.rules
+Parameter "-a always,exit -F arch=b64 -S clock_settime -k time-change" is set in /etc/audit/audit.rules
+Warning:   Parameter "-a always,exit -F arch=b64 -S clock_settime -k time-change" does not exist in /etc/audit/audit.rules [104 Warnings]
+[ Fix ]    echo "-a always,exit -F arch=b64 -S clock_settime -k time-change" >> /etc/audit/audit.rules
+Parameter "-w /etc/localtime -p wa -k time-change" is set in /etc/audit/audit.rules
+Warning:   Parameter "-w /etc/localtime -p wa -k time-change" does not exist in /etc/audit/audit.rules [105 Warnings]
+[ Fix ]    echo "-w /etc/localtime -p wa -k time-change" >> /etc/audit/audit.rules
+Parameter "-w /etc/group -p wa -k identity" is set in /etc/audit/audit.rules
+Warning:   Parameter "-w /etc/group -p wa -k identity" does not exist in /etc/audit/audit.rules [106 Warnings]
+[ Fix ]    echo "-w /etc/group -p wa -k identity" >> /etc/audit/audit.rules
+Parameter "-w /etc/passwd -p wa -k identity" is set in /etc/audit/audit.rules
+Warning:   Parameter "-w /etc/passwd -p wa -k identity" does not exist in /etc/audit/audit.rules [107 Warnings]
+[ Fix ]    echo "-w /etc/passwd -p wa -k identity" >> /etc/audit/audit.rules
+Parameter "-w /etc/gshadow -p wa -k identity" is set in /etc/audit/audit.rules
+Warning:   Parameter "-w /etc/gshadow -p wa -k identity" does not exist in /etc/audit/audit.rules [108 Warnings]
+[ Fix ]    echo "-w /etc/gshadow -p wa -k identity" >> /etc/audit/audit.rules
+Parameter "-w /etc/shadow -p wa -k identity" is set in /etc/audit/audit.rules
+Warning:   Parameter "-w /etc/shadow -p wa -k identity" does not exist in /etc/audit/audit.rules [109 Warnings]
+[ Fix ]    echo "-w /etc/shadow -p wa -k identity" >> /etc/audit/audit.rules
+Parameter "-w /etc/security/opasswd -p wa -k identity" is set in /etc/audit/audit.rules
+Warning:   Parameter "-w /etc/security/opasswd -p wa -k identity" does not exist in /etc/audit/audit.rules [110 Warnings]
+[ Fix ]    echo "-w /etc/security/opasswd -p wa -k identity" >> /etc/audit/audit.rules
+Parameter "-a exit,always -F arch=b32 -S sethostname -S setdomainname -k system-locale" is set in /etc/audit/audit.rules
+Warning:   Parameter "-a exit,always -F arch=b32 -S sethostname -S setdomainname -k system-locale" does not exist in /etc/audit/audit.rules [111 Warnings]
+[ Fix ]    echo "-a exit,always -F arch=b32 -S sethostname -S setdomainname -k system-locale" >> /etc/audit/audit.rules
+Parameter "-a exit,always -F arch=b64 -S sethostname -S setdomainname -k system-locale" is set in /etc/audit/audit.rules
+Warning:   Parameter "-a exit,always -F arch=b64 -S sethostname -S setdomainname -k system-locale" does not exist in /etc/audit/audit.rules [112 Warnings]
+[ Fix ]    echo "-a exit,always -F arch=b64 -S sethostname -S setdomainname -k system-locale" >> /etc/audit/audit.rules
+Parameter "-w /etc/issue -p wa -k system-locale" is set in /etc/audit/audit.rules
+Warning:   Parameter "-w /etc/issue -p wa -k system-locale" does not exist in /etc/audit/audit.rules [113 Warnings]
+[ Fix ]    echo "-w /etc/issue -p wa -k system-locale" >> /etc/audit/audit.rules
+Parameter "-w /etc/issue.net -p wa -k system-locale" is set in /etc/audit/audit.rules
+Warning:   Parameter "-w /etc/issue.net -p wa -k system-locale" does not exist in /etc/audit/audit.rules [114 Warnings]
+[ Fix ]    echo "-w /etc/issue.net -p wa -k system-locale" >> /etc/audit/audit.rules
+Parameter "-w /etc/hosts -p wa -k system-locale" is set in /etc/audit/audit.rules
+Warning:   Parameter "-w /etc/hosts -p wa -k system-locale" does not exist in /etc/audit/audit.rules [115 Warnings]
+[ Fix ]    echo "-w /etc/hosts -p wa -k system-locale" >> /etc/audit/audit.rules
+Parameter "-w /etc/sysconfig/network -p wa -k system-locale" is set in /etc/audit/audit.rules
+Warning:   Parameter "-w /etc/sysconfig/network -p wa -k system-locale" does not exist in /etc/audit/audit.rules [116 Warnings]
+[ Fix ]    echo "-w /etc/sysconfig/network -p wa -k system-locale" >> /etc/audit/audit.rules
+Parameter "-w /etc/selinux/ -p wa -k MAC-policy" is set in /etc/audit/audit.rules
+Warning:   Parameter "-w /etc/selinux/ -p wa -k MAC-policy" does not exist in /etc/audit/audit.rules [117 Warnings]
+[ Fix ]    echo "-w /etc/selinux/ -p wa -k MAC-policy" >> /etc/audit/audit.rules
+Parameter "-w /var/log/faillog -p wa -k logins" is set in /etc/audit/audit.rules
+Warning:   Parameter "-w /var/log/faillog -p wa -k logins" does not exist in /etc/audit/audit.rules [118 Warnings]
+[ Fix ]    echo "-w /var/log/faillog -p wa -k logins" >> /etc/audit/audit.rules
+Parameter "-w /var/log/lastlog -p wa -k logins" is set in /etc/audit/audit.rules
+Warning:   Parameter "-w /var/log/lastlog -p wa -k logins" does not exist in /etc/audit/audit.rules [119 Warnings]
+[ Fix ]    echo "-w /var/log/lastlog -p wa -k logins" >> /etc/audit/audit.rules
+Parameter "-w /var/run/utmp -p wa -k session" is set in /etc/audit/audit.rules
+Warning:   Parameter "-w /var/run/utmp -p wa -k session" does not exist in /etc/audit/audit.rules [120 Warnings]
+[ Fix ]    echo "-w /var/run/utmp -p wa -k session" >> /etc/audit/audit.rules
+Parameter "-w /var/log/btmp -p wa -k session" is set in /etc/audit/audit.rules
+Warning:   Parameter "-w /var/log/btmp -p wa -k session" does not exist in /etc/audit/audit.rules [121 Warnings]
+[ Fix ]    echo "-w /var/log/btmp -p wa -k session" >> /etc/audit/audit.rules
+Parameter "-w /var/log/wtmp -p wa -k session" is set in /etc/audit/audit.rules
+Warning:   Parameter "-w /var/log/wtmp -p wa -k session" does not exist in /etc/audit/audit.rules [122 Warnings]
+[ Fix ]    echo "-w /var/log/wtmp -p wa -k session" >> /etc/audit/audit.rules
+Parameter "-a always,exit -F arch=b32 -S chmod -S fchmod -S fchmodat -F auid>=500 -F auid!=4294967295 -k perm_mod" is set in /etc/audit/audit.rules
+Warning:   Parameter "-a always,exit -F arch=b32 -S chmod -S fchmod -S fchmodat -F auid>=500 -F auid!=4294967295 -k perm_mod" does not exist in /etc/audit/audit.rules [123 Warnings]
+[ Fix ]    echo "-a always,exit -F arch=b32 -S chmod -S fchmod -S fchmodat -F auid>=500 -F auid!=4294967295 -k perm_mod" >> /etc/audit/audit.rules
+Parameter "-a always,exit -F arch=b64 -S chmod -S fchmod -S fchmodat -F auid>=500 -F auid!=4294967295 -k perm_mod" is set in /etc/audit/audit.rules
+Warning:   Parameter "-a always,exit -F arch=b64 -S chmod -S fchmod -S fchmodat -F auid>=500 -F auid!=4294967295 -k perm_mod" does not exist in /etc/audit/audit.rules [124 Warnings]
+[ Fix ]    echo "-a always,exit -F arch=b64 -S chmod -S fchmod -S fchmodat -F auid>=500 -F auid!=4294967295 -k perm_mod" >> /etc/audit/audit.rules
+Parameter "-a always,exit -F arch=b32 -S chown -S fchown -S fchownat -S lchown -F auid>=500 - F auid!=4294967295 -k perm_mod" is set in /etc/audit/audit.rules
+Warning:   Parameter "-a always,exit -F arch=b32 -S chown -S fchown -S fchownat -S lchown -F auid>=500 - F auid!=4294967295 -k perm_mod" does not exist in /etc/audit/audit.rules [125 Warnings]
+[ Fix ]    echo "-a always,exit -F arch=b32 -S chown -S fchown -S fchownat -S lchown -F auid>=500 - F auid!=4294967295 -k perm_mod" >> /etc/audit/audit.rules
+Parameter "-a always,exit -F arch=b64 -S chown -S fchown -S fchownat -S lchown -F auid>=500 - F auid!=4294967295 -k perm_mod" is set in /etc/audit/audit.rules
+Warning:   Parameter "-a always,exit -F arch=b64 -S chown -S fchown -S fchownat -S lchown -F auid>=500 - F auid!=4294967295 -k perm_mod" does not exist in /etc/audit/audit.rules [126 Warnings]
+[ Fix ]    echo "-a always,exit -F arch=b64 -S chown -S fchown -S fchownat -S lchown -F auid>=500 - F auid!=4294967295 -k perm_mod" >> /etc/audit/audit.rules
+Parameter "-a always,exit -F arch=b32 -S setxattr -S lsetxattr -S fsetxattr -S removexattr -S lremovexattr -S fremovexattr -F auid>=500 -F auid!=4294967295 -k perm_mod" is set in /etc/audit/audit.rules
+Warning:   Parameter "-a always,exit -F arch=b32 -S setxattr -S lsetxattr -S fsetxattr -S removexattr -S lremovexattr -S fremovexattr -F auid>=500 -F auid!=4294967295 -k perm_mod" does not exist in /etc/audit/audit.rules [127 Warnings]
+[ Fix ]    echo "-a always,exit -F arch=b32 -S setxattr -S lsetxattr -S fsetxattr -S removexattr -S lremovexattr -S fremovexattr -F auid>=500 -F auid!=4294967295 -k perm_mod" >> /etc/audit/audit.rules
+Parameter "-a always,exit -F arch=b64 -S setxattr -S lsetxattr -S fsetxattr -S removexattr -S lremovexattr -S fremovexattr -F auid>=500 -F auid!=4294967295 -k perm_mod" is set in /etc/audit/audit.rules
+Warning:   Parameter "-a always,exit -F arch=b64 -S setxattr -S lsetxattr -S fsetxattr -S removexattr -S lremovexattr -S fremovexattr -F auid>=500 -F auid!=4294967295 -k perm_mod" does not exist in /etc/audit/audit.rules [128 Warnings]
+[ Fix ]    echo "-a always,exit -F arch=b64 -S setxattr -S lsetxattr -S fsetxattr -S removexattr -S lremovexattr -S fremovexattr -F auid>=500 -F auid!=4294967295 -k perm_mod" >> /etc/audit/audit.rules
+Parameter "-a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=500 -F auid!=4294967295 -k access" is set in /etc/audit/audit.rules
+Warning:   Parameter "-a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=500 -F auid!=4294967295 -k access" does not exist in /etc/audit/audit.rules [129 Warnings]
+[ Fix ]    echo "-a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=500 -F auid!=4294967295 -k access" >> /etc/audit/audit.rules
+Parameter "-a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=500 -F auid!=4294967295 -k access" is set in /etc/audit/audit.rules
+Warning:   Parameter "-a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=500 -F auid!=4294967295 -k access" does not exist in /etc/audit/audit.rules [130 Warnings]
+[ Fix ]    echo "-a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=500 -F auid!=4294967295 -k access" >> /etc/audit/audit.rules
+Parameter "-a always,exit -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=500 -F auid!=4294967295 -k access" is set in /etc/audit/audit.rules
+Warning:   Parameter "-a always,exit -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=500 -F auid!=4294967295 -k access" does not exist in /etc/audit/audit.rules [131 Warnings]
+[ Fix ]    echo "-a always,exit -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=500 -F auid!=4294967295 -k access" >> /etc/audit/audit.rules
+Parameter "-a always,exit -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=500 -F auid!=4294967295 -k access" is set in /etc/audit/audit.rules
+Warning:   Parameter "-a always,exit -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=500 -F auid!=4294967295 -k access" does not exist in /etc/audit/audit.rules [132 Warnings]
+[ Fix ]    echo "-a always,exit -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=500 -F auid!=4294967295 -k access" >> /etc/audit/audit.rules
+Parameter "-a always,exit -F arch=b32 -S mount -F auid>=500 -F auid!=4294967295 -k export" is set in /etc/audit/audit.rules
+Warning:   Parameter "-a always,exit -F arch=b32 -S mount -F auid>=500 -F auid!=4294967295 -k export" does not exist in /etc/audit/audit.rules [133 Warnings]
+[ Fix ]    echo "-a always,exit -F arch=b32 -S mount -F auid>=500 -F auid!=4294967295 -k export" >> /etc/audit/audit.rules
+Parameter "-a always,exit -F arch=b64 -S mount -F auid>=500 -F auid!=4294967295 -k export" is set in /etc/audit/audit.rules
+Warning:   Parameter "-a always,exit -F arch=b64 -S mount -F auid>=500 -F auid!=4294967295 -k export" does not exist in /etc/audit/audit.rules [134 Warnings]
+[ Fix ]    echo "-a always,exit -F arch=b64 -S mount -F auid>=500 -F auid!=4294967295 -k export" >> /etc/audit/audit.rules
+Parameter "-a always,exit -F arch=b32 -S unlink -S unlinkat -S rename -S renameat -F auid>=500 -F auid!=4294967295 -k delete" is set in /etc/audit/audit.rules
+Warning:   Parameter "-a always,exit -F arch=b32 -S unlink -S unlinkat -S rename -S renameat -F auid>=500 -F auid!=4294967295 -k delete" does not exist in /etc/audit/audit.rules [135 Warnings]
+[ Fix ]    echo "-a always,exit -F arch=b32 -S unlink -S unlinkat -S rename -S renameat -F auid>=500 -F auid!=4294967295 -k delete" >> /etc/audit/audit.rules
+Parameter "-a always,exit -F arch=b64 -S unlink -S unlinkat -S rename -S renameat -F auid>=500 -F auid!=4294967295 -k delete" is set in /etc/audit/audit.rules
+Warning:   Parameter "-a always,exit -F arch=b64 -S unlink -S unlinkat -S rename -S renameat -F auid>=500 -F auid!=4294967295 -k delete" does not exist in /etc/audit/audit.rules [136 Warnings]
+[ Fix ]    echo "-a always,exit -F arch=b64 -S unlink -S unlinkat -S rename -S renameat -F auid>=500 -F auid!=4294967295 -k delete" >> /etc/audit/audit.rules
+Parameter "-w /etc/sudoers -p wa -k scope" is set in /etc/audit/audit.rules
+Warning:   Parameter "-w /etc/sudoers -p wa -k scope" does not exist in /etc/audit/audit.rules [137 Warnings]
+[ Fix ]    echo "-w /etc/sudoers -p wa -k scope" >> /etc/audit/audit.rules
+Parameter "-w /etc/sudoers -p wa -k actions" is set in /etc/audit/audit.rules
+Warning:   Parameter "-w /etc/sudoers -p wa -k actions" does not exist in /etc/audit/audit.rules [138 Warnings]
+[ Fix ]    echo "-w /etc/sudoers -p wa -k actions" >> /etc/audit/audit.rules
+Parameter "-w /sbin/insmod -p x -k modules" is set in /etc/audit/audit.rules
+Warning:   Parameter "-w /sbin/insmod -p x -k modules" does not exist in /etc/audit/audit.rules [139 Warnings]
+[ Fix ]    echo "-w /sbin/insmod -p x -k modules" >> /etc/audit/audit.rules
+Parameter "-w /sbin/rmmod -p x -k modules" is set in /etc/audit/audit.rules
+Warning:   Parameter "-w /sbin/rmmod -p x -k modules" does not exist in /etc/audit/audit.rules [140 Warnings]
+[ Fix ]    echo "-w /sbin/rmmod -p x -k modules" >> /etc/audit/audit.rules
+Parameter "-w /sbin/modprobe -p x -k modules" is set in /etc/audit/audit.rules
+Warning:   Parameter "-w /sbin/modprobe -p x -k modules" does not exist in /etc/audit/audit.rules [141 Warnings]
+[ Fix ]    echo "-w /sbin/modprobe -p x -k modules" >> /etc/audit/audit.rules
+Parameter "-a always,exit -S init_module -S delete_module -k modules" is set in /etc/audit/audit.rules
+Warning:   Parameter "-a always,exit -S init_module -S delete_module -k modules" does not exist in /etc/audit/audit.rules [142 Warnings]
+[ Fix ]    echo "-a always,exit -S init_module -S delete_module -k modules" >> /etc/audit/audit.rules
+Parameter "-a always,exit -F arch=b64 -S mount -F auid>=500 -F auid!=4294967295 -k mounts" is set in /etc/audit/audit.rules
+Warning:   Parameter "-a always,exit -F arch=b64 -S mount -F auid>=500 -F auid!=4294967295 -k mounts" does not exist in /etc/audit/audit.rules [143 Warnings]
+[ Fix ]    echo "-a always,exit -F arch=b64 -S mount -F auid>=500 -F auid!=4294967295 -k mounts" >> /etc/audit/audit.rules
+Parameter "-a always,exit -F arch=b32 -S mount -F auid>=500 -F auid!=4294967295 -k mounts" is set in /etc/audit/audit.rules
+Warning:   Parameter "-a always,exit -F arch=b32 -S mount -F auid>=500 -F auid!=4294967295 -k mounts" does not exist in /etc/audit/audit.rules [144 Warnings]
+[ Fix ]    echo "-a always,exit -F arch=b32 -S mount -F auid>=500 -F auid!=4294967295 -k mounts" >> /etc/audit/audit.rules
+Parameter "" is set in /etc/audit/audit.rules
+Warning:   Parameter "" does not exist in /etc/audit/audit.rules [145 Warnings]
+[ Fix ]    echo "" >> /etc/audit/audit.rules
+Parameter "space_left_action = email" is set in /etc/audit/audit.rules
+Warning:   Parameter "space_left_action = email" does not exist in /etc/audit/audit.rules [146 Warnings]
+[ Fix ]    echo "space_left_action = email" >> /etc/audit/audit.rules
+Parameter "action_mail_acct = email" is set in /etc/audit/audit.rules
+Warning:   Parameter "action_mail_acct = email" does not exist in /etc/audit/audit.rules [147 Warnings]
+[ Fix ]    echo "action_mail_acct = email" >> /etc/audit/audit.rules
+Parameter "admin_space_left_action = email" is set in /etc/audit/audit.rules
+Warning:   Parameter "admin_space_left_action = email" does not exist in /etc/audit/audit.rules [148 Warnings]
+[ Fix ]    echo "admin_space_left_action = email" >> /etc/audit/audit.rules
+Parameter "max_log_file = MB" is set in /etc/audit/audit.rules
+Warning:   Parameter "max_log_file = MB" does not exist in /etc/audit/audit.rules [149 Warnings]
+[ Fix ]    echo "max_log_file = MB" >> /etc/audit/audit.rules
+Parameter "max_log_file_action = keep_logs" is set in /etc/audit/audit.rules
+Warning:   Parameter "max_log_file_action = keep_logs" does not exist in /etc/audit/audit.rules [150 Warnings]
+[ Fix ]    echo "max_log_file_action = keep_logs" >> /etc/audit/audit.rules
+Parameter "-e 2" is set in /etc/audit/audit.rules
+Warning:   Parameter "-e 2" does not exist in /etc/audit/audit.rules [151 Warnings]
+[ Fix ]    echo "-e 2" >> /etc/audit/audit.rules
 Checking:  Value of "auth,user.*" is set to "/var/log/messages" in /etc/rsyslog.conf
-Warning:   Parameter "auth,user.*" not set to "/var/log/messages" in /etc/rsyslog.conf [108 Warnings]
+Warning:   Parameter "auth,user.*" not set to "/var/log/messages" in /etc/rsyslog.conf [152 Warnings]
 
 [ Fix ]    echo "auth,user.*tab/var/log/messages" >> /etc/rsyslog.conf
 
 Checking:  Value of "kern.*" is set to "/var/log/kern.log" in /etc/rsyslog.conf
-Warning:   Parameter "kern.*" not set to "/var/log/kern.log" in /etc/rsyslog.conf [109 Warnings]
+Warning:   Parameter "kern.*" not set to "/var/log/kern.log" in /etc/rsyslog.conf [153 Warnings]
 
 [ Fix ]    echo "kern.*tab/var/log/kern.log" >> /etc/rsyslog.conf
 
 Checking:  Value of "daemon.*" is set to "/var/log/daemon.log" in /etc/rsyslog.conf
-Warning:   Parameter "daemon.*" not set to "/var/log/daemon.log" in /etc/rsyslog.conf [110 Warnings]
+Warning:   Parameter "daemon.*" not set to "/var/log/daemon.log" in /etc/rsyslog.conf [154 Warnings]
 
 [ Fix ]    echo "daemon.*tab/var/log/daemon.log" >> /etc/rsyslog.conf
 
 Checking:  Value of "syslog.*" is set to "/var/log/syslog" in /etc/rsyslog.conf
-Warning:   Parameter "syslog.*" not set to "/var/log/syslog" in /etc/rsyslog.conf [111 Warnings]
+Warning:   Parameter "syslog.*" not set to "/var/log/syslog" in /etc/rsyslog.conf [155 Warnings]
 
 [ Fix ]    echo "syslog.*tab/var/log/syslog" >> /etc/rsyslog.conf
 
 Checking:  Value of "lpr,news,uucp,local0,local1,local2,local3,local4,local5,local6.*" is set to "/var/log/unused.log" in /etc/rsyslog.conf
-Warning:   Parameter "lpr,news,uucp,local0,local1,local2,local3,local4,local5,local6.*" not set to "/var/log/unused.log" in /etc/rsyslog.conf [112 Warnings]
+Warning:   Parameter "lpr,news,uucp,local0,local1,local2,local3,local4,local5,local6.*" not set to "/var/log/unused.log" in /etc/rsyslog.conf [156 Warnings]
 
 [ Fix ]    echo "lpr,news,uucp,local0,local1,local2,local3,local4,local5,local6.*tab/var/log/unused.log" >> /etc/rsyslog.conf
 
 Checking:  Value of "" is set to "" in /etc/rsyslog.conf
-Secure:    Parameter "" already set to "" in /etc/rsyslog.conf [29 Passes]
+Secure:    Parameter "" already set to "" in /etc/rsyslog.conf [31 Passes]
 Checking if package is rsyslog installed
 Checking:  Package rsyslog is installed
-Secure:    Package rsyslog is installed [30 Passes]
+Secure:    Package rsyslog is installed [32 Passes]
 
-[ Fix ]    echo "avahi-daemon,enabled" >> /home/plamen/.ubuntu-audit/08_02_2018_20_19_29/systemctl.log ; systemctl avahi-daemon disable
+[ Fix ]    echo "-e 2" >> /etc/audit/audit.rules
 
 Checking:  Service rsyslog is enabled
-Secure:    Service rsyslog is enabled [31 Passes]
-Warning:   Rsyslog is not sending messages to a remote server [113 Warnings]
+Secure:    Service rsyslog is enabled [33 Passes]
+Checking:  File permissions on /etc/rsyslog.conf
+Warning:   File /etc/rsyslog.conf has incorrect permissions [157 Warnings]
+
+[ Fix ]    chmod 0600 /etc/rsyslog.conf
+[ Fix ]    chown root:root /etc/rsyslog.conf
+
+"-e 2" >> /etc/audit/audit.rules = 0
+Warning:   Rsyslog is not sending messages to a remote server [158 Warnings]
 
 [ Fix ]    Add a server entry to /etc/rsyslog.conf, eg:
 [ Fix ]    *.* @@loghost.example.com
@@ -884,300 +1027,483 @@ Section 5.1.1: Cron Daemon
 Checking:  Service crond is enabled
 Section 5.2.1-15: SSH Server Configuration
 Sections 5.3.1-4:PAM Authentication
-Checking:  Value of "minlen" is set to "14" in /etc/security/pwquality.conf
-Warning:   Parameter "minlen" not set to "14" in /etc/security/pwquality.conf [114 Warnings]
-
-[ Fix ]    echo "minlen=14" >> /etc/security/pwquality.conf
-
-Checking:  Value of "dcredit" is set to "-1" in /etc/security/pwquality.conf
-Warning:   Parameter "dcredit" not set to "-1" in /etc/security/pwquality.conf [115 Warnings]
-
-[ Fix ]    echo "dcredit=-1" >> /etc/security/pwquality.conf
-
-Checking:  Value of "ocredit" is set to "-1" in /etc/security/pwquality.conf
-Warning:   Parameter "ocredit" not set to "-1" in /etc/security/pwquality.conf [116 Warnings]
-
-[ Fix ]    echo "ocredit=-1" >> /etc/security/pwquality.conf
-
-Checking:  Value of "ucredit" is set to "-1" in /etc/security/pwquality.conf
-Warning:   Parameter "ucredit" not set to "-1" in /etc/security/pwquality.conf [117 Warnings]
-
-[ Fix ]    echo "ucredit=-1" >> /etc/security/pwquality.conf
-
-Checking:  Value of "lcredit" is set to "-1" in /etc/security/pwquality.conf
-Warning:   Parameter "lcredit" not set to "-1" in /etc/security/pwquality.conf [118 Warnings]
-
-[ Fix ]    echo "lcredit=-1" >> /etc/security/pwquality.conf
-
 Lockout time for failed password attempts enabled in /etc/pam.d/common-auth
-Warning:   Lockout time for failed password attempts not enabled in /etc/pam.d/common-auth [119 Warnings]
+Warning:   Lockout time for failed password attempts not enabled in /etc/pam.d/common-auth [159 Warnings]
 [ Fix ]    cp /etc/pam.d/common-auth /opt/Eniwareubuntu-audit/tmp/temp_file
 [ Fix ]    cat /opt/Eniwareubuntu-audit/tmp/temp_file |awk '( auth == "auth" && unlock_time == "required" && 900 == "pam_tally2.so" ) { print "auth\trequired\tpam_tally2.so onerr=fail audit silent deny=5 unlock_time=900"; print lunar.sh; next };' > /etc/pam.d/common-auth
 [ Fix ]    rm /opt/Eniwareubuntu-audit/tmp/temp_file
+Checking:  File /etc/security/opasswd exists
+Secure:    File /etc/security/opasswd exists [34 Passes]
+Checking:  File permissions on /etc/security/opasswd
+Warning:   File /etc/security/opasswd has incorrect permissions [160 Warnings]
+
+[ Fix ]    chmod 0600 /etc/security/opasswd
+[ Fix ]    chown root:root /etc/security/opasswd
+
+Password entry remember set to 5 in /etc/pam.d/common-auth
+Warning:   Password entry remember is not set to 5 in /etc/pam.d/common-auth [161 Warnings]
+[ Fix ]    cp /etc/pam.d/common-auth /opt/Eniwareubuntu-audit/tmp/temp_file
+[ Fix ]    cat /opt/Eniwareubuntu-audit/tmp/temp_file |awk '( account == "password" && 5 == "pam_unix.so" ) { print lunar.sh " remember=5"; next };' > /etc/pam.d/common-auth
+[ Fix ]    rm /opt/Eniwareubuntu-audit/tmp/temp_file
+Password minimum strength enabled in /etc/pam.d/common-auth
+Warning:   Password strength settings not enabled in /etc/pam.d/common-auth [162 Warnings]
+[ Fix ]    cp /etc/pam.d/common-auth /opt/Eniwareubuntu-audit/tmp/temp_file
+[ Fix ]    cat /opt/Eniwareubuntu-audit/tmp/temp_file |sed 's/^password\ssufficient\spam_unix.so/password sufficient pam_unix.so sha512/g' > /etc/pam.d/common-auth
+rm /opt/Eniwareubuntu-audit/tmp/temp_file
+Checking:  File /etc/security/opasswd exists
+Secure:    File /etc/security/opasswd exists [35 Passes]
+Checking:  File permissions on /etc/security/opasswd
+Warning:   File /etc/security/opasswd has incorrect permissions [163 Warnings]
+
+[ Fix ]    chmod 0600 /etc/security/opasswd
+[ Fix ]    chown root:root /etc/security/opasswd
+
+Password entry remember set to 10 in /etc/pam.d/common-auth
+Warning:   Password entry remember is not set to 10 in /etc/pam.d/common-auth [164 Warnings]
+[ Fix ]    cp /etc/pam.d/common-auth /opt/Eniwareubuntu-audit/tmp/temp_file
+[ Fix ]    cat /opt/Eniwareubuntu-audit/tmp/temp_file |awk '( account == "password" && 10 == "pam_unix.so" ) { print lunar.sh " remember=10"; next };' > /etc/pam.d/common-auth
+[ Fix ]    rm /opt/Eniwareubuntu-audit/tmp/temp_file
+Auth entry not enabled in /etc/pam.d/common-auth
+Warning:   Auth entry not enabled in /etc/pam.d/common-auth [165 Warnings]
+[ Fix ]    rm /opt/Eniwareubuntu-audit/tmp/temp_file
+[ Fix ]    cat /opt/Eniwareubuntu-audit/tmp/temp_file |awk '( auth == "auth" && no_magic_root == "required" &&  == "pam_deny.so" ) { print "auth\trequired\tpam_tally2.so onerr=fail no_magic_root"; print lunar.sh; next };' > /etc/pam.d/common-auth
+[ Fix ]    rm /opt/Eniwareubuntu-audit/tmp/temp_file
+Account reset entry not enabled in /etc/pam.d/common-auth
+Warning:   Account reset entry not enabled in /etc/pam.d/common-auth [166 Warnings]
+[ Fix ]    cp /etc/pam.d/common-auth /opt/Eniwareubuntu-audit/tmp/temp_file
+[ Fix ]    cat /opt/Eniwareubuntu-audit/tmp/temp_file |awk '( account == "account" && reset == "required" &&  == "pam_permit.so" ) { print "auth\trequired\tpam_tally2.so onerr=fail no_magic_root reset"; print lunar.sh; next };' > /etc/pam.d/common-auth
+[ Fix ]    rm /opt/Eniwareubuntu-audit/tmp/temp_file
+Password minlen is set to 9 in /etc/pam.d/common-auth
+Warning:   Password minlen is not set to 9 in /etc/pam.d/common-auth [167 Warnings]
+[ Fix ]    cp /etc/pam.d/common-auth /opt/Eniwareubuntu-audit/tmp/temp_file
+[ Fix ]    cat /opt/Eniwareubuntu-audit/tmp/temp_file |awk '( password == "password" && minlen == "requisite" && 9 == "pam_cracklib.so" ) { print lunar.sh  " dcredit=-1 lcredit=-1 ocredit=-1 ucredit=-1 minlen=9"; next }; { print }' > /etc/pam.d/common-auth
+[ Fix ]    rm /opt/Eniwareubuntu-audit/tmp/temp_file
+Password dcredit is set to -1 in /etc/pam.d/common-auth
+Warning:   Password dcredit is not set to -1 in /etc/pam.d/common-auth [168 Warnings]
+[ Fix ]    cp /etc/pam.d/common-auth /opt/Eniwareubuntu-audit/tmp/temp_file
+[ Fix ]    cat /opt/Eniwareubuntu-audit/tmp/temp_file |awk '( password == "password" && dcredit == "requisite" && -1 == "pam_cracklib.so" ) { print lunar.sh  " dcredit=-1 lcredit=-1 ocredit=-1 ucredit=-1 minlen=9"; next }; { print }' > /etc/pam.d/common-auth
+[ Fix ]    rm /opt/Eniwareubuntu-audit/tmp/temp_file
+Password lcredit is set to -1 in /etc/pam.d/common-auth
+Warning:   Password lcredit is not set to -1 in /etc/pam.d/common-auth [169 Warnings]
+[ Fix ]    cp /etc/pam.d/common-auth /opt/Eniwareubuntu-audit/tmp/temp_file
+[ Fix ]    cat /opt/Eniwareubuntu-audit/tmp/temp_file |awk '( password == "password" && lcredit == "requisite" && -1 == "pam_cracklib.so" ) { print lunar.sh  " dcredit=-1 lcredit=-1 ocredit=-1 ucredit=-1 minlen=9"; next }; { print }' > /etc/pam.d/common-auth
+[ Fix ]    rm /opt/Eniwareubuntu-audit/tmp/temp_file
+Password ocredit is set to -1 in /etc/pam.d/common-auth
+Warning:   Password ocredit is not set to -1 in /etc/pam.d/common-auth [170 Warnings]
+[ Fix ]    cp /etc/pam.d/common-auth /opt/Eniwareubuntu-audit/tmp/temp_file
+[ Fix ]    cat /opt/Eniwareubuntu-audit/tmp/temp_file |awk '( password == "password" && ocredit == "requisite" && -1 == "pam_cracklib.so" ) { print lunar.sh  " dcredit=-1 lcredit=-1 ocredit=-1 ucredit=-1 minlen=9"; next }; { print }' > /etc/pam.d/common-auth
+[ Fix ]    rm /opt/Eniwareubuntu-audit/tmp/temp_file
+Password ucredit is set to -1 in /etc/pam.d/common-auth
+Warning:   Password ucredit is not set to -1 in /etc/pam.d/common-auth [171 Warnings]
+[ Fix ]    cp /etc/pam.d/common-auth /opt/Eniwareubuntu-audit/tmp/temp_file
+[ Fix ]    cat /opt/Eniwareubuntu-audit/tmp/temp_file |awk '( password == "password" && ucredit == "requisite" && -1 == "pam_cracklib.so" ) { print lunar.sh  " dcredit=-1 lcredit=-1 ocredit=-1 ucredit=-1 minlen=9"; next }; { print }' > /etc/pam.d/common-auth
+[ Fix ]    rm /opt/Eniwareubuntu-audit/tmp/temp_file
+Password minimum strength enabled in /etc/pam.d/common-auth
+Warning:   Password strength settings not enabled in /etc/pam.d/common-auth [172 Warnings]
+[ Fix ]    cp /etc/pam.d/common-auth /opt/Eniwareubuntu-audit/tmp/temp_file
+[ Fix ]    cat /opt/Eniwareubuntu-audit/tmp/temp_file |sed 's/^password.*pam_deny.so$/&\npassword\t\trequisite\t\t\tpam_passwdqc.so min=disabled,disabled,16,12,8/' > /etc/pam.d/common-auth
+[ Fix ]    rm /opt/Eniwareubuntu-audit/tmp/temp_file
 Lockout time for failed password attempts enabled in /etc/pam.d/common-auth
-Warning:   Lockout time for failed password attempts not enabled in /etc/pam.d/common-auth [120 Warnings]
+Warning:   Lockout time for failed password attempts not enabled in /etc/pam.d/common-auth [173 Warnings]
 [ Fix ]    cp /etc/pam.d/common-auth /opt/Eniwareubuntu-audit/tmp/temp_file
 [ Fix ]    cat /opt/Eniwareubuntu-audit/tmp/temp_file |awk '( auth == "auth" && unlock_time == "required" && 900 == "pam_tally2.so" ) { print "auth\trequired\tpam_tally2.so onerr=fail audit silent deny=5 unlock_time=900"; print lunar.sh; next };' > /etc/pam.d/common-auth
 [ Fix ]    rm /opt/Eniwareubuntu-audit/tmp/temp_file
 Sections 5.4.1.1-4: Password Expiration Parameters on Active Accounts
 Checking:  Value of "PASS_MAX_DAYS" is set to "90" in /etc/login.defs
-Warning:   Parameter "PASS_MAX_DAYS" not set to "90" in /etc/login.defs [121 Warnings]
+Warning:   Parameter "PASS_MAX_DAYS" not set to "90" in /etc/login.defs [174 Warnings]
 
 [ Fix ]    echo "PASS_MAX_DAYS=90" >> /etc/login.defs
 
 Checking:  Value of "PASS_MIN_DAYS" is set to "7" in /etc/login.defs
-Warning:   Parameter "PASS_MIN_DAYS" not set to "7" in /etc/login.defs [122 Warnings]
+Warning:   Parameter "PASS_MIN_DAYS" not set to "7" in /etc/login.defs [175 Warnings]
 
 [ Fix ]    echo "PASS_MIN_DAYS=7" >> /etc/login.defs
 
 Checking:  Value of "PASS_WARN_AGE" is set to "14" in /etc/login.defs
-Warning:   Parameter "PASS_WARN_AGE" not set to "14" in /etc/login.defs [123 Warnings]
+Warning:   Parameter "PASS_WARN_AGE" not set to "14" in /etc/login.defs [176 Warnings]
 
 [ Fix ]    echo "PASS_WARN_AGE=14" >> /etc/login.defs
 
 Checking:  Value of "PASS_MIN_LEN" is set to "9" in /etc/login.defs
-Warning:   Parameter "PASS_MIN_LEN" not set to "9" in /etc/login.defs [124 Warnings]
+Warning:   Parameter "PASS_MIN_LEN" not set to "9" in /etc/login.defs [177 Warnings]
 
 [ Fix ]    echo "PASS_MIN_LEN=9" >> /etc/login.defs
 
 Checking:  File permissions on /etc/login.defs
-Warning:   File /etc/login.defs has incorrect permissions [125 Warnings]
+Warning:   File /etc/login.defs has incorrect permissions [178 Warnings]
 
 [ Fix ]    chmod 0640 /etc/login.defs
 [ Fix ]    chown root:root /etc/login.defs
 
 Sections 5.4.2: System Accounts that do not have a shell
-Warning:   System account daemon has an invalid shell [126 Warnings]
-Warning:   System account bin has an invalid shell [127 Warnings]
-Warning:   System account sys has an invalid shell [128 Warnings]
-Warning:   System account games has an invalid shell [129 Warnings]
-Warning:   System account man has an invalid shell [130 Warnings]
-Warning:   System account lp has an invalid shell [131 Warnings]
-Warning:   System account mail has an invalid shell [132 Warnings]
-Warning:   System account news has an invalid shell [133 Warnings]
-Warning:   System account uucp has an invalid shell [134 Warnings]
-Warning:   System account proxy has an invalid shell [135 Warnings]
-Warning:   System account www-data has an invalid shell [136 Warnings]
-Warning:   System account backup has an invalid shell [137 Warnings]
-Warning:   System account list has an invalid shell [138 Warnings]
-Warning:   System account irc has an invalid shell [139 Warnings]
-Warning:   System account gnats has an invalid shell [140 Warnings]
+Warning:   System account daemon has an invalid shell [179 Warnings]
+Warning:   System account bin has an invalid shell [180 Warnings]
+Warning:   System account sys has an invalid shell [181 Warnings]
+Warning:   System account games has an invalid shell [182 Warnings]
+Warning:   System account man has an invalid shell [183 Warnings]
+Warning:   System account lp has an invalid shell [184 Warnings]
+Warning:   System account mail has an invalid shell [185 Warnings]
+Warning:   System account news has an invalid shell [186 Warnings]
+Warning:   System account uucp has an invalid shell [187 Warnings]
+Warning:   System account proxy has an invalid shell [188 Warnings]
+Warning:   System account www-data has an invalid shell [189 Warnings]
+Warning:   System account backup has an invalid shell [190 Warnings]
+Warning:   System account list has an invalid shell [191 Warnings]
+Warning:   System account irc has an invalid shell [192 Warnings]
+Warning:   System account gnats has an invalid shell [193 Warnings]
 Section 5.4.3: Root Primary Group
-Secure:    Primary group for root is root [32 Passes]
+Secure:    Primary group for root is root [36 Passes]
 Section 5.4: Default umask for Users
 Checking:  Value of "umask" is set to "077" in /etc/.login
-Warning:   Parameter "umask" not set to "077" in /etc/.login [141 Warnings]
+Warning:   Parameter "umask" not set to "077" in /etc/.login [194 Warnings]
 
 [ Fix ]    echo "umask 077" >> /etc/.login
 
 Checking:  Value of "umask" is set to "077" in /etc/profile
-Warning:   Parameter "umask" not set to "077" in /etc/profile [142 Warnings]
+Warning:   Parameter "umask" not set to "077" in /etc/profile [195 Warnings]
 
 [ Fix ]    echo "umask 077" >> /etc/profile
 
 Checking:  Value of "umask" is set to "077" in /etc/skel/.bash_profile
-Warning:   Parameter "umask" not set to "077" in /etc/skel/.bash_profile [143 Warnings]
+Warning:   Parameter "umask" not set to "077" in /etc/skel/.bash_profile [196 Warnings]
 
 [ Fix ]    echo "umask 077" >> /etc/skel/.bash_profile
 
 Checking:  Value of "umask" is set to "077" in /etc/csh.login
-Warning:   Parameter "umask" not set to "077" in /etc/csh.login [144 Warnings]
+Warning:   Parameter "umask" not set to "077" in /etc/csh.login [197 Warnings]
 
 [ Fix ]    echo "umask 077" >> /etc/csh.login
 
 Checking:  Value of "umask" is set to "077" in /etc/csh.cshrc
-Warning:   Parameter "umask" not set to "077" in /etc/csh.cshrc [145 Warnings]
+Warning:   Parameter "umask" not set to "077" in /etc/csh.cshrc [198 Warnings]
 
 [ Fix ]    echo "umask 077" >> /etc/csh.cshrc
 
 Checking:  Value of "umask" is set to "077" in /etc/zprofile
-Warning:   Parameter "umask" not set to "077" in /etc/zprofile [146 Warnings]
+Warning:   Parameter "umask" not set to "077" in /etc/zprofile [199 Warnings]
 
 [ Fix ]    echo "umask 077" >> /etc/zprofile
 
 Checking:  Value of "umask" is set to "077" in /etc/skel/.zshrc
-Warning:   Parameter "umask" not set to "077" in /etc/skel/.zshrc [147 Warnings]
+Warning:   Parameter "umask" not set to "077" in /etc/skel/.zshrc [200 Warnings]
 
 [ Fix ]    echo "umask 077" >> /etc/skel/.zshrc
 
 Checking:  Value of "umask" is set to "077" in /etc/skel/.bashrc
-Warning:   Parameter "umask" not set to "077" in /etc/skel/.bashrc [148 Warnings]
+Warning:   Parameter "umask" not set to "077" in /etc/skel/.bashrc [201 Warnings]
 
 [ Fix ]    echo "umask 077" >> /etc/skel/.bashrc
 
 Checking:  Value of "UMASK" is set to "077" in /etc/bashrc
-Warning:   Parameter "UMASK" not set to "077" in /etc/bashrc [149 Warnings]
+Warning:   Parameter "UMASK" not set to "077" in /etc/bashrc [202 Warnings]
 
 [ Fix ]    echo "UMASK=077" >> /etc/bashrc
 
 Checking:  Value of "UMASK" is set to "077" in /etc/skel/.bashrc
-Warning:   Parameter "UMASK" not set to "077" in /etc/skel/.bashrc [150 Warnings]
+Warning:   Parameter "UMASK" not set to "077" in /etc/skel/.bashrc [203 Warnings]
 
 [ Fix ]    echo "UMASK=077" >> /etc/skel/.bashrc
 
 Checking:  Value of "UMASK" is set to "077" in /etc/login.defs
-Warning:   Parameter "UMASK" not set to "077" in /etc/login.defs [151 Warnings]
+Warning:   Parameter "UMASK" not set to "077" in /etc/login.defs [204 Warnings]
 
 [ Fix ]    echo "UMASK=077" >> /etc/login.defs
 
 Section 5.5: Root Login to System Console
-Warning:   Consoles enabled on tty1 tty2 tty3 tty4 tty5 tty6 tty7 tty8 tty9 tty10 tty11 tty12 tty13 tty14 tty15 tty16 tty17 tty18 tty19 tty20 tty21 tty22 tty23 tty24 tty25 tty26 tty27 tty28 tty29 tty30 tty31 tty32 tty33 tty34 tty35 tty36 tty37 tty38 tty39 tty40 tty41 tty42 tty43 tty44 tty45 tty46 tty47 tty48 tty49 tty50 tty51 tty52 tty53 tty54 tty55 tty56 tty57 tty58 tty59 tty60 tty61 tty62 tty63 [152 Warnings]
+Warning:   Consoles enabled on tty1 tty2 tty3 tty4 tty5 tty6 tty7 tty8 tty9 tty10 tty11 tty12 tty13 tty14 tty15 tty16 tty17 tty18 tty19 tty20 tty21 tty22 tty23 tty24 tty25 tty26 tty27 tty28 tty29 tty30 tty31 tty32 tty33 tty34 tty35 tty36 tty37 tty38 tty39 tty40 tty41 tty42 tty43 tty44 tty45 tty46 tty47 tty48 tty49 tty50 tty51 tty52 tty53 tty54 tty55 tty56 tty57 tty58 tty59 tty60 tty61 tty62 tty63 [205 Warnings]
 Section 5.6: PAM SU Configuration
-Warning:   Wheel group membership not required for su in /etc/pam.d/su [153 Warnings]
+Warning:   Wheel group membership not required for su in /etc/pam.d/su [206 Warnings]
 Sections 6.1.2-9: Group and Password File Permissions
 Checking:  File permissions on /etc/passwd
-Warning:   File /etc/passwd has incorrect permissions [154 Warnings]
+Warning:   File /etc/passwd has incorrect permissions [207 Warnings]
 
 [ Fix ]    chmod 0644 /etc/passwd
 [ Fix ]    chown root:root /etc/passwd
 
 Checking:  File permissions on /etc/group
-Warning:   File /etc/group has incorrect permissions [155 Warnings]
+Warning:   File /etc/group has incorrect permissions [208 Warnings]
 
 [ Fix ]    chmod 0644 /etc/group
 [ Fix ]    chown root:root /etc/group
 
 Checking:  File permissions on /etc/shadow
-Warning:   File /etc/shadow has incorrect permissions [156 Warnings]
+Warning:   File /etc/shadow has incorrect permissions [209 Warnings]
 
 [ Fix ]    chmod 0600 /etc/shadow
 [ Fix ]    chown root:root /etc/shadow
 
 Checking:  File permissions on /etc/gshadow
-Warning:   File /etc/gshadow has incorrect permissions [157 Warnings]
+Warning:   File /etc/gshadow has incorrect permissions [210 Warnings]
 
 [ Fix ]    chmod 0600 /etc/gshadow
 [ Fix ]    chown root:root /etc/gshadow
 
 Checking:  File permissions on /etc/group-
-Warning:   File /etc/group- has incorrect permissions [158 Warnings]
+Warning:   File /etc/group- has incorrect permissions [211 Warnings]
 
 [ Fix ]    chmod 0600 /etc/group-
 [ Fix ]    chown root:root /etc/group-
 
 Checking:  File permissions on /etc/passwd-
-Warning:   File /etc/passwd- has incorrect permissions [159 Warnings]
+Warning:   File /etc/passwd- has incorrect permissions [212 Warnings]
 
 [ Fix ]    chmod 0600 /etc/passwd-
 [ Fix ]    chown root:root /etc/passwd-
 
 Checking:  File permissions on /etc/shadow-
-Warning:   File /etc/shadow- has incorrect permissions [160 Warnings]
+Warning:   File /etc/shadow- has incorrect permissions [213 Warnings]
 
 [ Fix ]    chmod 0600 /etc/shadow-
 [ Fix ]    chown root:root /etc/shadow-
 
 Checking:  File permissions on /etc/gshadow-
-Warning:   File /etc/gshadow- has incorrect permissions [161 Warnings]
+Warning:   File /etc/gshadow- has incorrect permissions [214 Warnings]
 
 [ Fix ]    chmod 0600 /etc/gshadow-
 [ Fix ]    chown root:root /etc/gshadow-
 
 Section(s) 6.1.11-2: Unowned Files and Directories
+find: ‘/run/user/1000/gvfs’: Permission denied
+"-e 2" >> /etc/audit/audit.rules=
+Warning:   File echo "-e 2" >> /etc/audit/audit.rules is unowned [215 Warnings]
 Sections 6.1.13-4: Set UID/GID Files
+find: ‘/run/user/1000/gvfs’: Permission denied
+Warning:   File /bin/ping
+/bin/mount
+/bin/ping6
+/bin/ntfs-3g
+/bin/umount
+/bin/fusermount
+/bin/su
+/usr/bin/chsh
+/usr/bin/at
+/usr/bin/sudo
+/usr/bin/newgrp
+/usr/bin/gpasswd
+/usr/bin/passwd
+/usr/bin/chfn
+/usr/bin/pkexec
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/usr/lib/s-nail/s-nail-privsep
+/usr/lib/policykit-1/polkit-agent-helper-1
+/usr/lib/eject/dmcrypt-get-device
+/usr/lib/snapd/snap-confine
+/usr/lib/openssh/ssh-keysign
+/usr/sbin/pppd
+/opt/vivaldi/vivaldi-sandbox is SUID/SGID [216 Warnings]
+Sections 6.2.1-4: Password Fields
+Secure:    No empty password entries [37 Passes]
+Secure:    No legacy entries in /etc/passwd [38 Passes]
+Secure:    No legacy entries in /etc/shadow [39 Passes]
 Sections 6.2.5: Accounts with UID 0
 Section 6.2.6: Root PATH Environment Integrity
-Secure:    No empty directory in PATH [33 Passes]
-Secure:    No trailing : in PATH [34 Passes]
-Secure:    Group write permission not set on directory /usr/local/sbin [35 Passes]
-Secure:    Other write permission not set on directory /usr/local/sbin [36 Passes]
-Secure:    Group write permission not set on directory /usr/local/bin [37 Passes]
-Secure:    Other write permission not set on directory /usr/local/bin [38 Passes]
-Secure:    Group write permission not set on directory /usr/sbin [39 Passes]
-Secure:    Other write permission not set on directory /usr/sbin [40 Passes]
-Secure:    Group write permission not set on directory /usr/bin [41 Passes]
-Secure:    Other write permission not set on directory /usr/bin [42 Passes]
-Secure:    Group write permission not set on directory /sbin [43 Passes]
-Secure:    Other write permission not set on directory /sbin [44 Passes]
-Secure:    Group write permission not set on directory /bin [45 Passes]
-Secure:    Other write permission not set on directory /bin [46 Passes]
+Secure:    No empty directory in PATH [40 Passes]
+Secure:    No trailing : in PATH [41 Passes]
+Secure:    Group write permission not set on directory /usr/local/sbin [42 Passes]
+Secure:    Other write permission not set on directory /usr/local/sbin [43 Passes]
+Secure:    Group write permission not set on directory /usr/local/bin [44 Passes]
+Secure:    Other write permission not set on directory /usr/local/bin [45 Passes]
+Secure:    Group write permission not set on directory /usr/sbin [46 Passes]
+Secure:    Other write permission not set on directory /usr/sbin [47 Passes]
+Secure:    Group write permission not set on directory /usr/bin [48 Passes]
+Secure:    Other write permission not set on directory /usr/bin [49 Passes]
+Secure:    Group write permission not set on directory /sbin [50 Passes]
+Secure:    Other write permission not set on directory /sbin [51 Passes]
+Secure:    Group write permission not set on directory /bin [52 Passes]
+Secure:    Other write permission not set on directory /bin [53 Passes]
+Section 6.2.7,9: Ownership of Home Directories
+Warning:   Home Directory for sys is owned by root [217 Warnings]
+Warning:   Home Directory for proxy is owned by root [218 Warnings]
+Warning:   Home Directory for backup is owned by root [219 Warnings]
+Warning:   Home Directory for systemd-timesync is owned by root [220 Warnings]
+Warning:   Home Directory for systemd-bus-proxy is owned by root [221 Warnings]
+Warning:   Home Directory for messagebus is owned by root [222 Warnings]
+Warning:   Home Directory for uuidd is owned by root [223 Warnings]
+Warning:   Home Directory for dnsmasq is owned by root [224 Warnings]
+Warning:   User kernoops has no home directory defined [225 Warnings]
+Warning:   Home Directory for rtkit is owned by root [226 Warnings]
+Secure:    No ownership issues with home directories [54 Passes]
 Sections 6.2.8: Home Directory Permissions
 Checking:  File permissions on /home/plamen
-Warning:   File /home/plamen has incorrect permissions [162 Warnings]
+Warning:   File /home/plamen has incorrect permissions [217 Warnings]
 
 [ Fix ]    chmod 0700 /home/plamen
 
 Sections 6.2.10: User Dot Files
 Checking:  File permissions on /root/.bashrc
-Warning:   File /root/.bashrc has incorrect permissions [163 Warnings]
+Warning:   File /root/.bashrc has incorrect permissions [218 Warnings]
 
 [ Fix ]    chmod 0600 /root/.bashrc
 
 Checking:  File permissions on /root/.profile
-Warning:   File /root/.profile has incorrect permissions [164 Warnings]
+Warning:   File /root/.profile has incorrect permissions [219 Warnings]
 
 [ Fix ]    chmod 0600 /root/.profile
 
 Checking:  File permissions on /var/lib/lightdm/.Xauthority
-Warning:   File /var/lib/lightdm/.Xauthority has incorrect permissions [165 Warnings]
+Warning:   File /var/lib/lightdm/.Xauthority has incorrect permissions [220 Warnings]
 
 [ Fix ]    chmod 0600 /var/lib/lightdm/.Xauthority
 
 Checking:  File permissions on /home/plamen/.bash_history
-Warning:   File /home/plamen/.bash_history has incorrect permissions [166 Warnings]
+Warning:   File /home/plamen/.bash_history has incorrect permissions [221 Warnings]
 
 [ Fix ]    chmod 0600 /home/plamen/.bash_history
 
 Checking:  File permissions on /home/plamen/.bash_logout
-Warning:   File /home/plamen/.bash_logout has incorrect permissions [167 Warnings]
+Warning:   File /home/plamen/.bash_logout has incorrect permissions [222 Warnings]
 
 [ Fix ]    chmod 0600 /home/plamen/.bash_logout
 
 Checking:  File permissions on /home/plamen/.bashrc
-Warning:   File /home/plamen/.bashrc has incorrect permissions [168 Warnings]
+Warning:   File /home/plamen/.bashrc has incorrect permissions [223 Warnings]
 
 [ Fix ]    chmod 0600 /home/plamen/.bashrc
 
 Checking:  File permissions on /home/plamen/.dmrc
-Warning:   File /home/plamen/.dmrc has incorrect permissions [169 Warnings]
+Warning:   File /home/plamen/.dmrc has incorrect permissions [224 Warnings]
 
 [ Fix ]    chmod 0600 /home/plamen/.dmrc
 
 Checking:  File permissions on /home/plamen/.ICEauthority
-Warning:   File /home/plamen/.ICEauthority has incorrect permissions [170 Warnings]
+Warning:   File /home/plamen/.ICEauthority has incorrect permissions [225 Warnings]
 
 [ Fix ]    chmod 0600 /home/plamen/.ICEauthority
 
 Checking:  File permissions on /home/plamen/.profile
-Warning:   File /home/plamen/.profile has incorrect permissions [171 Warnings]
+Warning:   File /home/plamen/.profile has incorrect permissions [226 Warnings]
 
 [ Fix ]    chmod 0600 /home/plamen/.profile
 
 Checking:  File permissions on /home/plamen/.sudo_as_admin_successful
-Warning:   File /home/plamen/.sudo_as_admin_successful has incorrect permissions [172 Warnings]
+Warning:   File /home/plamen/.sudo_as_admin_successful has incorrect permissions [227 Warnings]
 
 [ Fix ]    chmod 0600 /home/plamen/.sudo_as_admin_successful
 
 Checking:  File permissions on /home/plamen/.viminfo
-Warning:   File /home/plamen/.viminfo has incorrect permissions [173 Warnings]
+Warning:   File /home/plamen/.viminfo has incorrect permissions [228 Warnings]
 
 [ Fix ]    chmod 0600 /home/plamen/.viminfo
 
 Checking:  File permissions on /home/plamen/.Xauthority
-Warning:   File /home/plamen/.Xauthority has incorrect permissions [174 Warnings]
+Warning:   File /home/plamen/.Xauthority has incorrect permissions [229 Warnings]
 
 [ Fix ]    chmod 0600 /home/plamen/.Xauthority
 
 Checking:  File permissions on /home/plamen/.xsession-errors
-Warning:   File /home/plamen/.xsession-errors has incorrect permissions [175 Warnings]
+Warning:   File /home/plamen/.xsession-errors has incorrect permissions [230 Warnings]
 
 [ Fix ]    chmod 0600 /home/plamen/.xsession-errors
 
 Checking:  File permissions on /home/plamen/.xsession-errors.old
-Warning:   File /home/plamen/.xsession-errors.old has incorrect permissions [176 Warnings]
+Warning:   File /home/plamen/.xsession-errors.old has incorrect permissions [231 Warnings]
 
 [ Fix ]    chmod 0600 /home/plamen/.xsession-errors.old
 
 Section 6.2.11: User Forward Files
+Dot Files
+Secure:    File /root/.forward does not exist [55 Passes]
+Secure:    File /usr/sbin/.forward does not exist [56 Passes]
+Secure:    File /bin/.forward does not exist [57 Passes]
+Secure:    File /dev/.forward does not exist [58 Passes]
+Secure:    File /bin/.forward does not exist [59 Passes]
+Secure:    File /usr/games/.forward does not exist [60 Passes]
+Secure:    File /var/cache/man/.forward does not exist [61 Passes]
+Secure:    File /var/spool/lpd/.forward does not exist [62 Passes]
+Secure:    File /var/mail/.forward does not exist [63 Passes]
+Secure:    File /var/spool/news/.forward does not exist [64 Passes]
+Secure:    File /var/spool/uucp/.forward does not exist [65 Passes]
+Secure:    File /bin/.forward does not exist [66 Passes]
+Secure:    File /var/www/.forward does not exist [67 Passes]
+Secure:    File /var/backups/.forward does not exist [68 Passes]
+Secure:    File /var/list/.forward does not exist [69 Passes]
+Secure:    File /var/run/ircd/.forward does not exist [70 Passes]
+Secure:    File /var/lib/gnats/.forward does not exist [71 Passes]
+Secure:    File /nonexistent/.forward does not exist [72 Passes]
+Secure:    File /run/systemd/.forward does not exist [73 Passes]
+Secure:    File /run/systemd/netif/.forward does not exist [74 Passes]
+Secure:    File /run/systemd/resolve/.forward does not exist [75 Passes]
+Secure:    File /run/systemd/.forward does not exist [76 Passes]
+Secure:    File /home/syslog/.forward does not exist [77 Passes]
+Secure:    File /nonexistent/.forward does not exist [78 Passes]
+Secure:    File /var/run/dbus/.forward does not exist [79 Passes]
+Secure:    File /run/uuidd/.forward does not exist [80 Passes]
+Secure:    File /var/lib/lightdm/.forward does not exist [81 Passes]
+Secure:    File /home/ntp/.forward does not exist [82 Passes]
+Secure:    File /nonexistent/.forward does not exist [83 Passes]
+Secure:    File /var/lib/avahi-autoipd/.forward does not exist [84 Passes]
+Secure:    File /var/run/avahi-daemon/.forward does not exist [85 Passes]
+Secure:    File /var/lib/colord/.forward does not exist [86 Passes]
+Secure:    File /var/lib/misc/.forward does not exist [87 Passes]
+Secure:    File /var/run/speech-dispatcher/.forward does not exist [88 Passes]
+Secure:    File /var/run/hplip/.forward does not exist [89 Passes]
+Secure:    File /.forward does not exist [90 Passes]
+Secure:    File /var/run/pulse/.forward does not exist [91 Passes]
+Secure:    File /proc/.forward does not exist [92 Passes]
+Secure:    File /var/lib/saned/.forward does not exist [93 Passes]
+Secure:    File /var/lib/usbmux/.forward does not exist [94 Passes]
+Secure:    File /home/plamen/.forward does not exist [95 Passes]
 Sections 6.2.12-3: User Netrc Files
+Dot Files
+Secure:    File /root/.netrc does not exist [96 Passes]
+Secure:    File /usr/sbin/.netrc does not exist [97 Passes]
+Secure:    File /bin/.netrc does not exist [98 Passes]
+Secure:    File /dev/.netrc does not exist [99 Passes]
+Secure:    File /bin/.netrc does not exist [100 Passes]
+Secure:    File /usr/games/.netrc does not exist [101 Passes]
+Secure:    File /var/cache/man/.netrc does not exist [102 Passes]
+Secure:    File /var/spool/lpd/.netrc does not exist [103 Passes]
+Secure:    File /var/mail/.netrc does not exist [104 Passes]
+Secure:    File /var/spool/news/.netrc does not exist [105 Passes]
+Secure:    File /var/spool/uucp/.netrc does not exist [106 Passes]
+Secure:    File /bin/.netrc does not exist [107 Passes]
+Secure:    File /var/www/.netrc does not exist [108 Passes]
+Secure:    File /var/backups/.netrc does not exist [109 Passes]
+Secure:    File /var/list/.netrc does not exist [110 Passes]
+Secure:    File /var/run/ircd/.netrc does not exist [111 Passes]
+Secure:    File /var/lib/gnats/.netrc does not exist [112 Passes]
+Secure:    File /nonexistent/.netrc does not exist [113 Passes]
+Secure:    File /run/systemd/.netrc does not exist [114 Passes]
+Secure:    File /run/systemd/netif/.netrc does not exist [115 Passes]
+Secure:    File /run/systemd/resolve/.netrc does not exist [116 Passes]
+Secure:    File /run/systemd/.netrc does not exist [117 Passes]
+Secure:    File /home/syslog/.netrc does not exist [118 Passes]
+Secure:    File /nonexistent/.netrc does not exist [119 Passes]
+Secure:    File /var/run/dbus/.netrc does not exist [120 Passes]
+Secure:    File /run/uuidd/.netrc does not exist [121 Passes]
+Secure:    File /var/lib/lightdm/.netrc does not exist [122 Passes]
+Secure:    File /home/ntp/.netrc does not exist [123 Passes]
+Secure:    File /nonexistent/.netrc does not exist [124 Passes]
+Secure:    File /var/lib/avahi-autoipd/.netrc does not exist [125 Passes]
+Secure:    File /var/run/avahi-daemon/.netrc does not exist [126 Passes]
+Secure:    File /var/lib/colord/.netrc does not exist [127 Passes]
+Secure:    File /var/lib/misc/.netrc does not exist [128 Passes]
+Secure:    File /var/run/speech-dispatcher/.netrc does not exist [129 Passes]
+Secure:    File /var/run/hplip/.netrc does not exist [130 Passes]
+Secure:    File /.netrc does not exist [131 Passes]
+Secure:    File /var/run/pulse/.netrc does not exist [132 Passes]
+Secure:    File /proc/.netrc does not exist [133 Passes]
+Secure:    File /var/lib/saned/.netrc does not exist [134 Passes]
+Secure:    File /var/lib/usbmux/.netrc does not exist [135 Passes]
+Secure:    File /home/plamen/.netrc does not exist [136 Passes]
 Section 6.2.14: User RHosts Files
-Secure:    No user rhosts files exist [47 Passes]
+Secure:    No user rhosts files exist [137 Passes]
+User Groups
+Secure:    No non existant group issues [138 Passes]
 Sections 6.2.16,18: Duplicate Users
+Duplicate IDs
+Secure:    No users with duplicate name [139 Passes]
+Duplicate IDs
+Secure:    No users with duplicate id [140 Passes]
 Sections 6.2.17,19: Duplicate Groups
+Duplicate IDs
+Secure:    No groups with duplicate name [141 Passes]
+Duplicate IDs
+Secure:    No groups with duplicate id [142 Passes]
 Section 6.2.20: Shadow Group
-Warning:   Shadow group contains members [177 Warnings]
+Warning:   Shadow group contains members [232 Warnings]
 
-Tests:     224
-Passes:    47
-Warnings:  177
+Tests:     374
+Passes:    142
+Warnings:  232
 

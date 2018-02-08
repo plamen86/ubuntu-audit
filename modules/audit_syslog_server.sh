@@ -23,10 +23,10 @@ audit_syslog_server () {
   check_chkconfig_service $service_name 3 on
   check_chkconfig_service $service_name 5 on
   
-  funct_file_perms $check_file 0600 root root
-            
-  remote_check=`cat $check_file |grep -v '#' |grep '*.* @@' |grep -v localhost |grep '[A-z]' |wc -l`
-  if [ "$remote_check" != "1" ]; then
+  check_file_perms $check_file 0600 root root
+ 
+   $command = `grep "^*.*[^I][^I]*@" /etc/rsyslog.conf |wc -l`
+   if [ "$command" != "1" ]; then
     increment_insecure "Rsyslog is not sending messages to a remote server"
     verbose_message "" fix
     verbose_message "Add a server entry to $check_file, eg:" fix
@@ -35,4 +35,16 @@ audit_syslog_server () {
   else
     increment_secure "Rsyslog is sending messages to a remote server"
   fi
+ 
+            
+#  $remote_check=`cat /etc/rsyslog.conf |grep -v '#' |grep '*.* @@' |grep -v localhost |grep '[A-z]' |wc -l`
+#  if [ "$remote_check" != "1" ]; then
+#    increment_insecure "Rsyslog is not sending messages to a remote server"
+#    verbose_message "" fix
+#    verbose_message "Add a server entry to $check_file, eg:" fix
+#    verbose_message "*.* @@loghost.example.com" fix
+#    verbose_message "" fix
+#  else
+#    increment_secure "Rsyslog is sending messages to a remote server"
+#  fi
 }

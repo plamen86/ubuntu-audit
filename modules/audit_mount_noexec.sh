@@ -5,10 +5,7 @@
 
 audit_mount_noexec () {
 
-  verbose_message "==============================="
-  verbose_message "Filesystems mounted with noexec"
-  verbose_message "Sections 1.1.9,16,19"
-  verbose_message "==============================="
+  verbose_message "Sections 1.1.9,16,19: Filesystems mounted with noexec"
 
   check_file="/etc/fstab"
   if [ -e "$check_file" ]; then
@@ -23,6 +20,7 @@ audit_mount_noexec () {
     else
       increment_secure "No filesystem that should be mounted with noexec"
     fi
+  fi
     
   check_file_perms $check_file 0644 root root
 }
