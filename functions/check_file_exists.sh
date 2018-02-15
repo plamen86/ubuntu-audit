@@ -9,48 +9,23 @@
 #.
 
 check_file_exists () {
+
   check_file=$1
   check_exists=$2
-  log_file="$work_dir/file.log"
+
   if [ "$check_exists" = "no" ]; then
-    if [ "$audit_mode" != 2 ]; then
-      echo "Checking:  File $check_file does not exist"
-    fi
+    echo "Checking:  File $check_file does not exist"
     if [ -f "$check_file" ]; then
-      if [ "$audit_mode" = 1 ]; then
-        increment_insecure "File $check_file exists"
-      fi
-      if [ "$audit_mode" = 0 ]; then
-        backup_file $check_file
-        echo "Removing:  File $check_file"
-        echo "$check_file,rm" >> $log_file
-        rm $check_file
-      fi
+      increment_insecure "File $check_file exists"
     else
-      if [ "$audit_mode" = 1 ]; then
-        increment_secure "File $check_file does not exist"
-      fi
+      increment_secure "File $check_file does not exist"
     fi
   else
-    if [ "$audit_mode" != 2 ]; then
-      echo "Checking:  File $check_file exists"
-    fi
+    echo "Checking:  File $check_file exists"
     if [ ! -f "$check_file" ]; then
-      if [ "$audit_mode" = 1 ]; then
-        increment_insecure "File $check_file does not exist"
-      fi
-      if [ "$audit_mode" = 0 ]; then
-        echo "Creating:  File $check_file"
-        touch $check_file
-        echo "$check_file,touch" >> $log_file
-      fi
+      increment_insecure "File $check_file does not exist"
     else
-      if [ "$audit_mode" = 1 ]; then
-        increment_secure "File $check_file exists"
-      fi
+      increment_secure "File $check_file exists"
     fi
-  fi
-  if [ "$audit_mode" = 2 ]; then
-    restore_file $check_file $restore_dir
   fi
 }

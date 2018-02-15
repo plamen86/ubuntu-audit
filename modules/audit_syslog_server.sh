@@ -25,13 +25,13 @@ audit_syslog_server () {
   
   check_file_perms $check_file 0600 root root
  
-   $command = `grep "^*.*[^I][^I]*@" /etc/rsyslog.conf |wc -l`
-   if [ "$command" != "1" ]; then
+  command=`grep "^*.*[^I][^I]*@" /etc/rsyslog.conf |wc -l`
+  if [ "$command" != "1" ]; then
     increment_insecure "Rsyslog is not sending messages to a remote server"
-    verbose_message "" fix
-    verbose_message "Add a server entry to $check_file, eg:" fix
-    verbose_message "*.* @@loghost.example.com" fix
-    verbose_message "" fix
+#    verbose_message "" fix
+#    verbose_message "Add a server entry to $check_file, eg:" fix
+#    verbose_message "*.* @@loghost.example.com" fix
+#    verbose_message "" fix
   else
     increment_secure "Rsyslog is sending messages to a remote server"
   fi

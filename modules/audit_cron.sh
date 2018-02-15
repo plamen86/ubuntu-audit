@@ -11,9 +11,4 @@ audit_cron () {
   check_chkconfig_service $service_name 3 on
   check_chkconfig_service $service_name 5 on
   check_systemctl_service enable $service_name
-  if [ "$anacron_enable" = "yes" ]; then
-    service_name="anacron"
-    check_chkconfig_service $service_name 3 on
-    check_chkconfig_service $service_name 5 on
-  fi
 }

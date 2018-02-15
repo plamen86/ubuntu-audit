@@ -11,7 +11,9 @@ audit_filesystem_partitions() {
 
     mount_test=`mount |awk '{print $3}' |grep "^filesystem$"`
     if [ "$mount_test" != "$filesystem" ]; then
-      increment_secure "Filesystem $filesystem is a separate filesystem"
+      increment_secure "Filesystem $filesystem is a separate partition"
+    else
+      increment_insecure "Filesystem $filesystem is not on a separate partition"
     fi
   done
 }

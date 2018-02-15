@@ -19,39 +19,33 @@ replace_file_value () {
   correct_value=$3
   new_correct_value="$correct_value"
   position=$4
+  
   if [ "$position" = "start" ]; then
     position="^"
   else
     position=""
   fi
+  
   string_check=`expr "$check_value" : "\/"`
   if [ "$string_check" = 1 ]; then
     new_check_value=`echo "$check_value" |sed 's,/,\\\/,g'`
   fi
+  
   string_check=`expr "$correct_value" : "\/"`
   if [ "$string_check" = 1 ]; then
     new_correct_value=`echo "$correct_value" |sed 's,/,\\\/,g'`
   fi
+  
   new_check_value="$position$new_check_value"
-  if [ "$audit_mode" != 2 ]; then
-    echo "Checking:  File $check_file contains \"$correct_value\" rather than \"$check_value\""
-  fi
+ # echo "Checking:  File $check_file contains \"$correct_value\" rather than \"$check_value\""
+  
   if [ -f "$check_file" ]; then
     check_dfs=`cat $check_file |grep "$new_check_value" |wc -l |sed "s/ //g"`
   fi
+  
   if [ "$check_dfs" != 0 ]; then
-    if [ "$audit_mode" != 2 ]; then
-      increment_insecure "File $check_file contains \"$check_value\" rather than \"$correct_value\""
-      backup_file $check_file
-      lockdown_command  "sed -e \"s/$new_check_value/$new_correct_value/\" < $check_file > $temp_file ; cp $temp_file $check_file ; rm $temp_file" "Setting:   Share entries in $check_file to be secure"
-      if [ "$os_version" != "11" ]; then
-        pkgchk -f -n -p $check_file 2> /dev/null
-      else
-        pkg fix `pkg search $check_file |grep pkg |awk '{print $4}'`
-      fi
-    else
-      restore_file $check_file $restore_dir
-    fi
+    increment_insecure "File $check_file contains \"$check_value\" rather than \"$correct_value\""
+#    lockdown_command  "sed -e \"s/$new_check_value/$new_correct_value/\" < $check_file > $temp_file ; cp $temp_file $check_file ; rm $temp_file" "Setting:   Share entries in $check_file to be secure"
   else
     increment_secure "File $check_file contains \"$correct_value\" rather than \"$check_value\""
   fi

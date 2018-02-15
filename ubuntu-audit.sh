@@ -1,5 +1,4 @@
 #!/bin/sh
-
 # Name:			ubuntu-audit
 # Version:      1
 # License:      CC-BA (Creative Commons By Attribution)
@@ -7,11 +6,10 @@
 # URL:          https://github.com/eniware-org/ubuntu-audit
 # Description:  Audit Ubuntu 16.04 LTS according to CIS Benchmarks
 
-# audit_mode = 1 : Audit Mode
-# audit_mode = 0 : Lockdown Mode
-# audit_mode = 2 : Restore Mode
-
 # Set up some global variables
+
+#CHECK THEM:
+# - lockdown_command
 
 args=$@
 secure=0
@@ -58,15 +56,6 @@ install_rsyslog="no"
 
 company_name="Eniware.org"
 
-# print_usage
-#
-# If given a -h or no valid switch print usage information
-
-# check_os_release
-#
-# Get OS release information
-#.
-
 check_os_release () {
   echo ""
   echo "# SYSTEM INFORMATION:"
@@ -86,6 +75,7 @@ check_os_release () {
     echo "OS not supported"
     exit
   fi
+  
   os_platform=`uname -p`
   os_machine=`uname -m`
   echo "Processor: $os_platform"
@@ -205,15 +195,6 @@ increment_insecure () {
   echo "Warning:   $message [$insecure Warnings]"
 }
 
-#
-# setting_message
-#
-# Setting message
-#.
-
-setting_message () {
-  verbose_message $1 setting
-}
 
 # verbose_message
 #
@@ -235,7 +216,8 @@ verbose_message () {
     fi
   else
     if [ ! "$style" ] && [ "$text" ]; then
-      echo "Checking:  $text"
+#      echo "Checking:  $text"
+	  do_nothing = 1
     else
       if [ "$style" = "notice" ]; then
         "Notice:    $text"
@@ -250,24 +232,6 @@ verbose_message () {
   fi
 }
 
-# funct_audit_system
-#
-# Audit System
-#.
-
-funct_audit_system () {
-
-  check_environment
-  audit_system_all
-
-  print_results
-}
-
-# print_results
-#
-# Print Results
-#.
-
 print_results () {
   echo ""
   echo "Tests:     $total"
@@ -280,4 +244,8 @@ print_results () {
   verbose=1
   audit_mode=1
   do_fs=0
-  funct_audit_system
+
+  check_environment
+  audit_system_all
+
+  print_results

@@ -22,39 +22,15 @@ disable_value () {
         comment_value="#"
       fi
     fi
-    if [ "$audit_mode" = 2 ]; then
-      restore_file $check_file $restore_dir
-    else
-      echo "Checking:  Parameter \"$parameter_name\" in $check_file is disabled"
-      if [ "$separator" = "tab" ]; then
-        check_value=`cat $check_file |grep -v "^$comment_value" |grep "$parameter_name" |uniq`
-        if [ "$check_value" != "$parameter_name" ]; then
-          increment_insecure "Parameter \"$parameter_name\" not set to \"$correct_value\" in $check_file"
-          if [ "$audit_mode" = 0 ]; then
-            echo "Setting:   Parameter \"$parameter_name\" to \"$correct_value\" in $check_file"
-            if [ "$check_file" = "/etc/system" ]; then
-              reboot=1
-              echo "Notice:    Reboot required"
-            fi
-            if [ "$check_file" = "/etc/ssh/sshd_config" ] || [ "$check_file" = "/etc/sshd_config" ]; then
-              echo "Notice:    Service restart required SSH"
-            fi
-            backup_file $check_file
-            cat $check_file |sed 's/$parameter_name/$comment_value&' > $temp_file
-            cat $temp_file > $check_file
-            if [ "$os_name" = "SunOS" ]; then
-              if [ "$os_version" != "11" ]; then
-                pkgchk -f -n -p $check_file 2> /dev/null
-              else
-                pkg fix `pkg search $check_file |grep pkg |awk '{print $4}'`
-              fi
-            fi
-            rm $temp_file
-          fi
-        fi
-      else
-        increment_secure "Parameter \"$parameter_name\" already set to \"$correct_value\" in $check_file"
+
+    echo "Checking:  Parameter \"$parameter_name\" in $check_file is disabled"
+    if [ "$separator" = "tab" ]; then
+      check_value=`cat $check_file |grep -v "^$comment_value" |grep "$parameter_name" |uniq`
+      if [ "$check_value" != "$parameter_name" ]; then
+        increment_insecure "Parameter \"$parameter_name\" not set to \"$correct_value\" in $check_file"
       fi
+    else
+      increment_secure "Parameter \"$parameter_name\" already set to \"$correct_value\" in $check_file"
     fi
   fi
 }
