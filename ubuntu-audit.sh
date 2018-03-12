@@ -17,13 +17,6 @@ insecure=0
 total=0
 syslog_server=""
 syslog_logdir=""
-pkg_company="Eniware"
-pkg_suffix="ubuntu-audit"
-base_dir="/opt/$pkg_company$pkg_suffix"
-date_suffix=`date +%d_%m_%Y_%H_%M_%S`
-work_dir="$base_dir/$date_suffix"
-temp_dir="$base_dir/tmp"
-temp_file="$temp_dir/temp_file"
 wheel_group="wheel"
 reboot=0
 verbose=0
@@ -33,7 +26,6 @@ private_dir="private"
 package_uninstall="no"
 country_suffix="en"
 language_suffix="en_US"
-osx_mdns_enable="yes"
 max_super_user_id="100"
 
 # Disable daemons
@@ -51,16 +43,9 @@ named_disable="yes"
 
 install_rsyslog="no"
 
-# This is the company name that will go into the securit message
-# Change it as required
-
 company_name="Eniware.org"
 
 check_os_release () {
-  echo ""
-  echo "# SYSTEM INFORMATION:"
-  echo ""
-
   os_name=`uname`
   if [ "$os_name" = "Linux" ]; then
     if [ -f "/etc/debian_version" ]; then
@@ -77,13 +62,6 @@ check_os_release () {
   fi
   
   os_platform=`uname -p`
-  os_machine=`uname -m`
-  echo "Processor: $os_platform"
-  echo "Machine:   $os_machine"
-  echo "Vendor:    $os_vendor"
-  echo "Name:      $os_name"
-  echo "Version:   $os_version"
-  echo "Update:    $os_update"
 }
 
 # check_environment
@@ -109,42 +87,42 @@ check_environment () {
 
   # Load functions from functions directory
   if [ -d "$functions_dir" ]; then
-    if [ "$verbose" = "1" ]; then
-      echo ""
-      echo "Loading Functions"
-      echo ""
-    fi
+#    if [ "$verbose" = "1" ]; then
+#      echo ""
+#      echo "Loading Functions"
+#      echo ""
+#    fi
     for file_name in `ls $functions_dir/*.sh`; do
       . $file_name
-      if [ "$verbose" = "1" ]; then
-        echo "Loading:   $file_name"
-      fi
+#      if [ "$verbose" = "1" ]; then
+#        echo "Loading:   $file_name"
+#      fi
     done
   fi
   # Load modules for modules directory
   if [ -d "$modules_dir" ]; then
-    if [ "$verbose" = "1" ]; then
-      echo ""
-      echo "Loading Modules"
-      echo ""
-    fi
+#    if [ "$verbose" = "1" ]; then
+#      echo ""
+#      echo "Loading Modules"
+#      echo ""
+#    fi
     for file_name in `ls $modules_dir/*.sh`; do
       . $file_name
-      if [ "$verbose" = "1" ]; then
-        echo "Loading:   $file_name"
-      fi
+#      if [ "$verbose" = "1" ]; then
+#        echo "Loading:   $file_name"
+#      fi
     done
   fi
   
-  if [ ! -d "$base_dir" ]; then
-    mkdir -p $base_dir
-    chmod 700 $base_dir
-    chown root:root $base_dir
-  fi
-
-  if [ ! -d "$temp_dir" ]; then
-    mkdir -p $temp_dir
-  fi
+#  if [ ! -d "$base_dir" ]; then
+#    mkdir -p $base_dir
+#    chmod 700 $base_dir
+#    chown root:root $base_dir
+#  fi
+#
+#  if [ ! -d "$temp_dir" ]; then
+#    mkdir -p $temp_dir
+#  fi
 }
 
 lockdown_command () {
@@ -249,3 +227,12 @@ print_results () {
   audit_system_all
 
   print_results
+  
+# Spectre & Meltdown Check
+  subcommand=`uname -r'
+  command=`grep CONFIG_PAGE_TABLE_ISOLATION=y /boot/config-$subcommand`
+  if ["$command"];
+    echo "Spectre & Meltdown: OK"
+  else
+  	echo "Spectre & Meltdown: FAIL";
+	

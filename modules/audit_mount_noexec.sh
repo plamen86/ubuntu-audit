@@ -3,7 +3,7 @@
 # Refer to Sections 1.1.9,16,19
 #.
 
-audit_mount_noexec () {
+audit_mount_noexec_old () {
 
   verbose_message "Sections 1.1.9,16,19: Filesystems mounted with noexec"
 
