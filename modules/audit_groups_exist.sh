@@ -12,25 +12,19 @@
 #.
 
 audit_groups_exist () {
-  if [ "$os_name" = "SunOS" ] || [ "$os_name" = "Linux" ]; then
-    verbose_message "User Groups"
-    check_file="/etc/group"
-    group_fail=0
-    if [ "$audit_mode" != 2 ]; then
-      for group_id in `getent passwd |cut -f4 -d ":"`; do
-        group_exists=`cat $check_file |grep -v "^#" |cut -f3 -d":" |grep "^$group_id$" |wc -l |sed "s/ //g"`
-        if [ "$group_exists" = 0 ]; then
-          group_fail=1
-          if [ "$audit_mode" = 1 ];then
-            increment_insecure "Group $group_id does not exist in group file"
-          fi
-        fi
-      done
-      if [ "$group_fail" != 1 ]; then
-        if [ "$audit_mode" = 1 ];then
-          increment_secure "No non existant group issues"
-        fi
-      fi
+  verbose_message "User Groups"
+  check_file="/etc/group"
+  group_fail=0
+
+  for group_id in `getent passwd |cut -f4 -d ":"`; do
+    group_exists=`cat $check_file |grep -v "^#" |cut -f3 -d":" |grep "^$group_id$" |wc -l |sed "s/ //g"`
+    if [ "$group_exists" = 0 ]; then
+      group_fail=1
+      increment_insecure "Group $group_id does not exist in group file"
     fi
+  done
+  
+  if [ "$group_fail" != 1 ]; then
+    increment_secure "No non existant group issues"
   fi
 }

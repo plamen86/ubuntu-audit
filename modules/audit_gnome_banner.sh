@@ -36,8 +36,7 @@ audit_gnome_banner () {
       fi
 
     actual_value=`gconftool-2 --get /apps/gdm/simple-greeter/banner_message_enable`
-    log_file="gnome_banner_status"
-    
+    log_file="gnome_banner_status"    
     
     if [ "$actual_value" != "true" ]; then
       increment_insecure "Warning banner not found in $check_file"

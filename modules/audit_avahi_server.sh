@@ -4,7 +4,7 @@
 #.
 
 audit_avahi_server () {
-  verbose_message "Section 2.2.3 => Avahi Server"
+  verbose_message "Section 2.2.3: Avahi Server"
       
   for service_name in avahi avahi-autoipd avahi-daemon avahi-dnsconfd; do
     check_chkconfig_service $service_name 3 off

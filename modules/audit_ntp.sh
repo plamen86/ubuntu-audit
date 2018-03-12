@@ -5,7 +5,7 @@
 
 audit_ntp () {
 
-  verbose_message "Section 2.2.1.1 => Network Time Protocol"
+  verbose_message "Section 2.2.1.1: Network Time Protocol"
 
   check_file="/etc/ntp.conf"
   log_file="ntp.log"
@@ -17,7 +17,7 @@ audit_ntp () {
   check_file="/usr/lib/systemd/system/ntpd.service"
   check_file_value $check_file ExecStart eq "/usr/sbin/ntpd -u ntp:ntp $OPTIONS" hash
 
-  echo "Checking:  NTP is enabled"
+#  echo "Checking:  NTP is enabled"
 
 
   if [ "$package_name" != "ntp" ]; then

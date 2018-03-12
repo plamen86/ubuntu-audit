@@ -8,63 +8,27 @@
 #.
 
 check_chkconfig_service () {
-  if [ "$os_name" = "VMkernel" ]; then
-    service_name=$1
-    correct_status=$2
-    chk_config="/bin/chkconfig"
-    log_file="chkconfig.log"
-    actual_status=`$chk_config --list $service_name |awk '{print $2}'`
-    if [ "$audit_mode" = 2 ]; then
-      restore_file="$restore_dir/$log_file"
-      if [ -f "$restore_file" ]; then
-        check_status=`cat $restore_file |grep $service_name |cut -f2 -d","`
-        if [ "$check_status" = "on" ] || [ "$check_status" = "off" ]; then
-          if [ "$check_status" != "$actual_status" ]; then
-            echo "Restoring: Service $service_name at run level $service_level to $check_status"
-            $chk_config --level $service_level $service_name $check_status
-          fi
-        fi
-      fi
-    else
-      if [ "$actual_status" = "on" ] || [ "$actual_status" = "off" ]; then
-        echo "Checking:  Service $service_name is $correct_status"
-        if [ "$actual_status" != "$correct_status" ]; then
-          increment_insecure "Service $service_name is not $correct_status"
-          log_file="$work_dir/$log_file"
-          lockdown_command "echo \"$service_name,$actual_status\" >> $log_file ; $chk_config $service_name $correct_status" "Service $service_name to $correct_status"
-        else
-          increment_secure "Service $service_name is $correct_status"
-        fi
-      fi
-    fi
+
+  service_name=$1
+  service_level=$2
+  correct_status=$3
+
+  chk_config="/usr/sbin/sysv-rc-conf"
+
+  if [ "$service_level" = "3" ]; then
+    actual_status=`$chk_config --list $service_name 2> /dev/null |awk '{print $5}' |cut -f2 -d':' |awk '{print $1}'`
   fi
-  if [ "$os_name" = "Linux" ]; then
-    service_name=$1
-    service_level=$2
-    correct_status=$3
-    if [ "$linux_dist" = "debian" ]; then
-      chk_config="/usr/sbin/sysv-rc-conf"
+  
+  if [ "$service_level" = "5" ]; then
+    actual_status=`$chk_config --list $service_name 2> /dev/null |awk '{print $7}' |cut -f2 -d':' |awk '{print $1}'`
+  fi
+    
+  if [ "$actual_status" = "on" ] || [ "$actual_status" = "off" ]; then
+#    echo "Checking:  Service $service_name at run level $service_level is $correct_status"
+    if [ "$actual_status" != "$correct_status" ]; then
+      increment_insecure "Service $service_name at run level $service_level is not $correct_status"
     else
-      chk_config="/usr/sbin/chkconfig"
+      increment_secure "Service $service_name at run level $service_level is $correct_status"
     fi
-    log_file="chkconfig.log"
-    if [ "$service_level" = "3" ]; then
-      actual_status=`$chk_config --list $service_name 2> /dev/null |awk '{print $5}' |cut -f2 -d':' |awk '{print $1}'`
-    fi
-    if [ "$service_level" = "5" ]; then
-      actual_status=`$chk_config --list $service_name 2> /dev/null |awk '{print $7}' |cut -f2 -d':' |awk '{print $1}'`
-    fi
-    
-    
-      if [ "$actual_status" = "on" ] || [ "$actual_status" = "off" ]; then
-        echo "Checking:  Service $service_name at run level $service_level is $correct_status"
-        if [ "$actual_status" != "$correct_status" ]; then
-          increment_insecure "Service $service_name at run level $service_level is not $correct_status"
-          log_file="$work_dir/$log_file"
-#          lockdown_command "echo \"$service_name,$service_level,$actual_status\" >> $log_file ; $chk_config --level $service_level $service_name $correct_status" "Service $service_name at run level $service_level to $correct_status"
-        else
-          increment_secure "Service $service_name at run level $service_level is $correct_status"
-        fi
-      fi
   fi
 }

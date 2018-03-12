@@ -1,4 +1,4 @@
-# audit_system_all
+#audit_system_all
 #
 # Audit All System
 #.
@@ -9,33 +9,36 @@ audit_system_all () {
 #===Section 1: Initial Setup
 #==============================================================================
 
+  #Sections 1.1.1.1-8, 1.1.2-16
+  disable_unused_filesystems
+
   #Sections 1.1.1.1-8, 3.5.1-4
   #12
-  audit_modprobe_conf
+  #audit_modprobe_conf
   
   #Sections 1.1.2,5,6,10,11,12
   #6
-  audit_filesystem_partitions
+#  audit_filesystem_partitions
  
   #Sections 1.1.3,7,13,14,17
   #5
-  audit_mount_nodev
+#  audit_mount_nodev
   
   #Sections 1.1.4,8,15,18
   #4
-  audit_mount_setuid
+#  audit_mount_setuid
   
   #Sections 1.1.9,16,19
   #3
-  audit_mount_noexec
+#  audit_mount_noexec
    
   #Section 1.1.20
   #1
-  audit_sticky_bit
+#  audit_sticky_bit
   
   #Section 1.1.21
   #1
-  audit_autofs
+#  audit_autofs
   
   #Sections 1.3.1-2, 1.5.4
   #1
@@ -141,7 +144,7 @@ audit_system_all () {
    audit_ldap
 
 #==============================================================================  
-#===Section 3
+#===Section 3 Network Configuration
 #==============================================================================
 
   #Sections 3.1.1-2, 3.2.1-8, 3.3.1-3 are audited in Section 1.5.3
@@ -155,7 +158,7 @@ audit_system_all () {
   audit_iptables
 
 #==============================================================================
-#===Section 4
+#===Section 4 Logging and Auditing
 #==============================================================================
 
   #Sections 4.1.1.1-3, 4.1.2-18
@@ -165,7 +168,7 @@ audit_system_all () {
   audit_syslog_server
 
 #==============================================================================
-#===Section 5
+#===Section 5 Access, Authentication and Authorization
 #==============================================================================
 
   #Section 5.1.1-8
@@ -196,7 +199,7 @@ audit_system_all () {
   audit_pam_wheel
   
 #==============================================================================
-#===Section 6
+#===Section 6 System Maintenance
 #==============================================================================
 
   #Section 6.1.2-9

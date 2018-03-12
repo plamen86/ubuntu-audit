@@ -9,7 +9,7 @@ audit_ssh_config () {
   
   for check_file in /etc/sshd_config /etc/ssh/sshd_config /usr/local/etc/sshd_config /opt/local/ssh/sshd_config; do
     if [ -f "$check_file" ]; then
-      verbose_message "SSH Configuration $sshd_file"
+#      verbose_message "SSH Configuration $sshd_file"
 
       check_file_perms $check_file 0600 root root
       check_file_value $check_file UseLogin space no hash

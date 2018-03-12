@@ -5,7 +5,6 @@
 
 audit_core_dumps () {
 
-
   verbose_message "Section 1.5.1: Core Dumps"
 
   check_file="/etc/security/limits.conf"

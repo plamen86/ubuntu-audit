@@ -16,75 +16,35 @@ check_file_perms () {
   check_perms=$2
   check_owner=$3
   check_group=$4
+  
   if [ "$id_check" = "0" ]; then
     find_command="find"
   else
     find_command="sudo find"
   fi
-  if [ "$audit_mode" != 2 ]; then
-    echo "Checking:  File permissions on $check_file"
-  fi
+  
+  echo "Checking:  File permissions on $check_file"
+  
   if [ ! -e "$check_file" ]; then
-    if [ "$audit_mode" != 2 ]; then
-      echo "Notice:    File $check_file does not exist"
-    fi
+    echo "Notice:    File $check_file does not exist"
     return
   fi
+  
   if [ "$check_owner" != "" ]; then
     check_result=`find "$check_file" -perm $check_perms -user $check_owner -group $check_group -depth 0 2> /dev/null`
   else
     check_result=`find "$check_file" -perm $check_perms -depth 0 2> /dev/null`
   fi
-  log_file="fileperms.log"
+  
   if [ "$check_result" != "$check_file" ]; then
-    if [ "$audit_mode" = 1 ]; then
-      increment_insecure "File $check_file has incorrect permissions"
-      verbose_message "" fix
-      verbose_message "chmod $check_perms $check_file" fix
-      if [ "$check_owner" != "" ]; then
-        verbose_message "chown $check_owner:$check_group $check_file" fix
-      fi
-      verbose_message "" fix
-    fi
-    if [ "$audit_mode" = 0 ]; then
-      log_file="$work_dir/$log_file"
-      if [ "$os_name" = "SunOS" ]; then
-        file_perms=`truss -vstat -tstat ls -ld $check_file 2>&1 |grep 'm=' |tail -1 |awk '{print $3}' |cut -f2 -d'=' |cut -c4-7`
-      else
-        if [ "$os_name" = "Darwin" ]; then
-          file_perms=`stat -f %p $check_file |tail -c 4`
-        else
-          file_perms=`stat -c %a $check_file`
-        fi
-      fi
-      file_owner=`ls -l $check_file |awk '{print $3","$4}'`
-      echo "$check_file,$file_perms,$file_owner" >> $log_file
-      echo "Setting:   File $check_file to have correct permissions"
-      chmod $check_perms $check_file
-      if [ "$check_owner" != "" ]; then
-        chown $check_owner:$check_group $check_file
-      fi
-    fi
+    increment_insecure "File $check_file has incorrect permissions"
+#    verbose_message "" fix
+#    verbose_message "chmod $check_perms $check_file" fix
+#    if [ "$check_owner" != "" ]; then
+#      verbose_message "chown $check_owner:$check_group $check_file" fix
+#    fi
+#    verbose_message "" fix
   else
-    if [ "$audit_mode" = 1 ]; then
-      increment_secure "File $check_file has correct permissions"
-    fi
-  fi
-  if [ "$audit_mode" = 2 ]; then
-    restore_file="$restore_dir/$log_file"
-    if [ -f "$restore_file" ]; then
-      restore_check=`cat $restore_file |grep "$check_file" |cut -f1 -d","`
-      if [ "$restore_check" = "$check_file" ]; then
-        restore_info=`cat $restore_file |grep "$check_file"`
-        restore_perms=`echo "$restore_info" |cut -f2 -d","`
-        restore_owner=`echo "$restore_info" |cut -f3 -d","`
-        restore_group=`echo "$restore_info" |cut -f4 -d","`
-        echo "Restoring: File $check_file to previous permissions"
-        chmod $restore_perms $check_file
-        if [ "$check_owner" != "" ]; then
-          chown $restore_owner:$restore_group $check_file
-        fi
-      fi
-    fi
+    increment_secure "File $check_file has correct permissions"
   fi
 }

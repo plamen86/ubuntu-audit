@@ -25,44 +25,16 @@ check_systemctl_service () {
     service_switch="disable"
     correct_status="disabled"
   fi
-  if [ "$os_name" = "Linux" ]; then
-    if [ "$os_vendor" = "Ubuntu" ] && [ "$os_version" -ge 16 ]; then
-      use_systemctl="yes"
-    fi
-    if [ "$os_vendor" = "Centos" ] || [ "$os_vendor" = "Red" ] && [ "$os_version" -ge 7 ]; then
-      use_systemctl="yes"
-    fi
-  fi
-  if [ "$use_systemctl" = "yes" ]; then
-    log_file="systemctl.log"
-    actual_status=`systemctl is-enabled $service_name 2> /dev/null`
-    if [ "$audit_mode" = 2 ]; then
-      restore_file="$restore_dir/$log_file"
-      if [ -f "$restore_file" ]; then
-        check_status=`cat $restore_file |grep $service_name |cut -f2 -d","`
-        if [ "$check_status" = "enabled" ] || [ "$check_status" = "disabled" ]; then
-          if [ "$check_status" != "$actual_status" ]; then
-            echo "Restoring: Service $service_name at run level $service_level to $check_status"
-            if [ "$check_status" = "enable" ] || [ "$check_status" = "enabled" ]; then
-              service_switch="enable"
-            else
-              service_switch="disable"
-            fi
-            systemctl $service_name $service_switch
-          fi
-        fi
-      fi
+
+  actual_status=`systemctl is-enabled $service_name 2> /dev/null`
+
+  echo "Checking:  Service $service_name is $correct_status"
+  if [ "$actual_status" = "enabled" ] || [ "$actual_status" = "disabled" ]; then
+    if [ "$actual_status" != "$correct_status" ]; then
+      increment_insecure "Service $service_name is not $correct_status"
+#      lockdown_command "echo \"$service_name,$actual_status\" >> $log_file ; systemctl $service_name $service_switch" "Service $service_name to $correct_status"
     else
-      echo "Checking:  Service $service_name is $correct_status"
-      if [ "$actual_status" = "enabled" ] || [ "$actual_status" = "disabled" ]; then
-        if [ "$actual_status" != "$correct_status" ]; then
-          increment_insecure "Service $service_name is not $correct_status"
-          log_file="$work_dir/$log_file"
-          lockdown_command "echo \"$service_name,$actual_status\" >> $log_file ; systemctl $service_name $service_switch" "Service $service_name to $correct_status"
-        else
-          increment_secure "Service $service_name is $correct_status"
-        fi
-      fi
+      increment_secure "Service $service_name is $correct_status"
     fi
   fi
 }

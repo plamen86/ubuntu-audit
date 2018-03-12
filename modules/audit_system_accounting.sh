@@ -11,42 +11,44 @@ audit_system_accounting () {
     check_append_file $check_file "-w /var/log/sudo.log -p wa -k actions"
     log_file="sysstat.log"
     check_linux_package check sysstat
-    if [ "$os_vendor" = "Debian" ] || [ "$os_vendor" = "Ubuntu" ]; then
-      check_file="/etc/default/sysstat"
-      check_file_value $check_file ENABLED eq true hash
-    fi
+
+    check_file="/etc/default/sysstat"
+    check_file_value $check_file ENABLED eq true hash
+
     if [ "$package_name" != "sysstat" ]; then
-      if [ "$audit_mode" = 1 ]; then
-        increment_insecure "System accounting not enabled"
-        verbose_message "" fix
-        if [ "$os_vendor" = "Debian" ] || [ "$os_vendor" = "Ubuntu" ]; then
-          verbose_message "apt-get install $package_check" fix
-        fi
-        verbose_message "" fix
-      fi
+      increment_insecure "System accounting not enabled"
+#      verbose_message "" fix
+#      verbose_message "apt-get install $package_check" fix
+#      verbose_message "" fix
     else
       increment_secure "System accounting enabled"
     fi
 
     check_file="/etc/audit/audit.rules"
+
     # Set failure mode to syslog notice
     check_append_file $check_file "-f 1" hash
+
     # Things that could affect time
     check_append_file $check_file "-a always,exit -F arch=b32 -S adjtimex -S settimeofday -S stime -k time-change" hash
+
     if [ "$os_platform" = "x86_64" ]; then
       check_append_file $check_file "-a always,exit -F arch=b64 -S adjtimex -S settimeofday -k time-change" hash
     fi
+
     check_append_file $check_file "-a always,exit -F arch=b32 -S clock_settime -k time-change" hash
     if [ "$os_platform" = "x86_64" ]; then
       check_append_file $check_file "-a always,exit -F arch=b64 -S clock_settime -k time-change" hash
     fi
     check_append_file $check_file "-w /etc/localtime -p wa -k time-change" hash
+
     # Things that affect identity
     check_append_file $check_file "-w /etc/group -p wa -k identity" hash
     check_append_file $check_file "-w /etc/passwd -p wa -k identity" hash
     check_append_file $check_file "-w /etc/gshadow -p wa -k identity" hash
     check_append_file $check_file "-w /etc/shadow -p wa -k identity" hash
     check_append_file $check_file "-w /etc/security/opasswd -p wa -k identity" hash
+
     # Things that could affect system locale
     check_append_file $check_file "-a exit,always -F arch=b32 -S sethostname -S setdomainname -k system-locale" hash
     if [ "$os_platform" = "x86_64" ]; then

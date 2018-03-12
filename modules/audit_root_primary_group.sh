@@ -6,7 +6,7 @@
 audit_root_primary_group () {
 	
   verbose_message "Section 5.4.3: Root Primary Group"
-  log_file="root_primary_grooup.log"
+  
   check_file="/etc/group"
   group_check=`grep "^root:" /etc/passwd | cut -f4 -d:`
 
