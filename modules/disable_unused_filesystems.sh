@@ -85,7 +85,6 @@ audit_sticky_bits () {
   	increment_secure $message+"OK"
   else
   	increment_insecure $message
-  	#echo "$dir_list"
   fi
 }
 
